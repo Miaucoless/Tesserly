@@ -1,22 +1,27 @@
 {
   "name": "tesserly",
   "version": "1.0.0",
-  "description": "Tesserly — USMLE Prep Platform (Electron desktop app)",
+  "description": "Tesserly – USMLE Prep Platform (Electron desktop app)",
   "author": "You",
   "license": "MIT",
   "main": "src/main.js",
+
   "scripts": {
     "start": "electron .",
     "build": "electron-builder --mac dmg --x64 --arm64",
     "build:win": "electron-builder --win nsis"
   },
+
   "devDependencies": {
-    "electron": "^30.5.1",
+    "electron": "30.5.1",
     "electron-builder": "24.13.3"
   },
+
   "build": {
     "appId": "com.tesserly.app",
     "productName": "Tesserly",
+
+    "publish": "never",
 
     "files": [
       "src/**/*",
@@ -50,9 +55,7 @@
     },
 
     "win": {
-      "target": [
-        "nsis"
-      ],
+      "target": ["nsis"],
       "icon": "icons/icon.ico"
     },
 
