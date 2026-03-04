@@ -4,10 +4,15 @@ on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
+    tags: [ "*" ]     # allows tagged builds to publish to Releases
 
 jobs:
   build:
     runs-on: windows-latest
+
+    # Make the token available to electron-builder
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
     steps:
       - name: Checkout repository
@@ -18,12 +23,23 @@ jobs:
         with:
           node-version: 20
 
+      # Quick sanity check: DO NOT print the token; only verify presence
+      - name: Verify GH_TOKEN is present (no value is printed)
+        shell: pwsh
+        run: |
+          if ($env:GH_TOKEN) {
+            Write-Host "GH_TOKEN present = TRUE"
+          } else {
+            throw "GH_TOKEN present = FALSE"
+          }
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build Windows installer
         run: npm run build:win
 
+      # Always upload the .exe as an artifact (even for tag builds)
       - name: Upload Windows installer
         uses: actions/upload-artifact@v4
         with:
