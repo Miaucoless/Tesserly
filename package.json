@@ -1,0 +1,69 @@
+{
+  "name": "tesserly",
+  "version": "1.0.0",
+  "description": "Tesserly — USMLE Prep Platform (Electron desktop app)",
+  "author": "You",
+  "license": "MIT",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac dmg --x64 --arm64",
+    "build:win": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^30.5.1",
+    "electron-builder": "24.13.3"
+  },
+  "build": {
+    "appId": "com.tesserly.app",
+    "productName": "Tesserly",
+
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "!**/*.map"
+    ],
+
+    "directories": {
+      "output": "dist"
+    },
+
+    "mac": {
+      "category": "public.app-category.education",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "icons/icon.icns"
+    },
+
+    "dmg": {
+      "background": "build/dmg-background.png",
+      "window": {
+        "width": 600,
+        "height": 400
+      },
+      "contents": [
+        { "x": 130, "y": 200, "type": "file" },
+        { "x": 450, "y": 200, "type": "link", "path": "/Applications" }
+      ]
+    },
+
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icons/icon.ico"
+    },
+
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icons/icon.ico",
+      "uninstallerIcon": "icons/icon.ico",
+      "installerHeaderIcon": "icons/icon.ico",
+      "deleteAppDataOnUninstall": true
+    }
+  }
+}
