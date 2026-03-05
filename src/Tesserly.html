@@ -37,7 +37,34 @@ function saveUserPrevStems(){ try{ sv(userKey('prev_q_stems'), STATE.prevQStems|
 // --- Saved Pads: simple stable helpers (revert-like) ---
 if (typeof padFolderListHTML !== 'function') {
   function padFolderListHTML(){
-    return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px"></div>`;
+    const folders = STATE.padFolders || [];
+    if (!folders.length) return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No folders yet. Click "+ New Folder" to add one.</div>`;
+    return folders.map((f) => {
+      const name = (f.name || 'New folder').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+      return `<div class="pad-folder-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:var(--surface2)" data-pad-folder-id="${f.id}">
+        <span style="font-size:13px;color:var(--text)">${name}</span>
+        <button type="button" class="btn btn-ghost btn-sm" style="padding:2px 6px;font-size:11px" onclick="deletePadFolder('${f.id}')" title="Delete folder">✕</button>
+      </div>`;
+    }).join('');
+  }
+}
+if (typeof createPadFolder !== 'function') {
+  function createPadFolder() {
+    STATE.padFolders = STATE.padFolders || [];
+    STATE.padFolders.push({ id: 'pf' + Date.now(), name: 'New folder' });
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
+    showToast('Folder created');
+  }
+}
+if (typeof deletePadFolder !== 'function') {
+  function deletePadFolder(id) {
+    if (!confirm('Delete this folder? Pads inside will not be deleted.')) return;
+    STATE.padFolders = (STATE.padFolders || []).filter(f => f.id !== id);
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
   }
 }
 if (typeof padItemHTML !== 'function' || String(padItemHTML).indexOf('pad-item-title')<0) {
@@ -288,7 +315,34 @@ function saveUserPrevStems(){ try{ sv(userKey('prev_q_stems'), STATE.prevQStems|
 // --- Saved Pads: simple stable helpers (revert-like) ---
 if (typeof padFolderListHTML !== 'function') {
   function padFolderListHTML(){
-    return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px"></div>`;
+    const folders = STATE.padFolders || [];
+    if (!folders.length) return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No folders yet. Click "+ New Folder" to add one.</div>`;
+    return folders.map((f) => {
+      const name = (f.name || 'New folder').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+      return `<div class="pad-folder-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:var(--surface2)" data-pad-folder-id="${f.id}">
+        <span style="font-size:13px;color:var(--text)">${name}</span>
+        <button type="button" class="btn btn-ghost btn-sm" style="padding:2px 6px;font-size:11px" onclick="deletePadFolder('${f.id}')" title="Delete folder">✕</button>
+      </div>`;
+    }).join('');
+  }
+}
+if (typeof createPadFolder !== 'function') {
+  function createPadFolder() {
+    STATE.padFolders = STATE.padFolders || [];
+    STATE.padFolders.push({ id: 'pf' + Date.now(), name: 'New folder' });
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
+    showToast('Folder created');
+  }
+}
+if (typeof deletePadFolder !== 'function') {
+  function deletePadFolder(id) {
+    if (!confirm('Delete this folder? Pads inside will not be deleted.')) return;
+    STATE.padFolders = (STATE.padFolders || []).filter(f => f.id !== id);
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
   }
 }
 if (typeof padItemHTML !== 'function' || String(padItemHTML).indexOf('pad-item-title')<0) {
@@ -539,7 +593,34 @@ function saveUserPrevStems(){ try{ sv(userKey('prev_q_stems'), STATE.prevQStems|
 // --- Saved Pads: simple stable helpers (revert-like) ---
 if (typeof padFolderListHTML !== 'function') {
   function padFolderListHTML(){
-    return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px"></div>`;
+    const folders = STATE.padFolders || [];
+    if (!folders.length) return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No folders yet. Click "+ New Folder" to add one.</div>`;
+    return folders.map((f) => {
+      const name = (f.name || 'New folder').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+      return `<div class="pad-folder-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:var(--surface2)" data-pad-folder-id="${f.id}">
+        <span style="font-size:13px;color:var(--text)">${name}</span>
+        <button type="button" class="btn btn-ghost btn-sm" style="padding:2px 6px;font-size:11px" onclick="deletePadFolder('${f.id}')" title="Delete folder">✕</button>
+      </div>`;
+    }).join('');
+  }
+}
+if (typeof createPadFolder !== 'function') {
+  function createPadFolder() {
+    STATE.padFolders = STATE.padFolders || [];
+    STATE.padFolders.push({ id: 'pf' + Date.now(), name: 'New folder' });
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
+    showToast('Folder created');
+  }
+}
+if (typeof deletePadFolder !== 'function') {
+  function deletePadFolder(id) {
+    if (!confirm('Delete this folder? Pads inside will not be deleted.')) return;
+    STATE.padFolders = (STATE.padFolders || []).filter(f => f.id !== id);
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
   }
 }
 if (typeof padItemHTML !== 'function' || String(padItemHTML).indexOf('pad-item-title')<0) {
@@ -938,19 +1019,21 @@ body[data-bg-pattern="noise"]:before{content:'';position:fixed;inset:0;backgroun
 .sticky-handle-btn.save:hover{background:var(--accent);color:#070b14}
 
 .sticky-toolbar{
-  display:flex;align-items:center;gap:3px;padding:6px 10px;
+  display:flex;align-items:center;gap:0;padding:8px 12px;
   border-bottom:1px solid var(--border);background:var(--surface2);flex-shrink:0;flex-wrap:wrap;overflow-x:auto;
 }
+.sticky-toolbar-group{display:flex;align-items:center;gap:2px;padding:0 8px;border-right:1px solid var(--border2);margin-right:4px}
+.sticky-toolbar-group:last-of-type{border-right:none;margin-right:0;padding-right:0}
 .sticky-tool{
   background:transparent;border:1px solid transparent;color:var(--text2);
-  border-radius:5px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+  border-radius:6px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;
   cursor:pointer;font-size:13px;font-weight:600;transition:all var(--tr);
 }
 .sticky-tool:hover{background:var(--surface3);color:var(--text);border-color:var(--border2)}
 .sticky-tool.active{background:var(--accent-dim);color:var(--accent);border-color:rgba(93,253,203,0.3)}
-.sticky-divider{width:1px;height:20px;background:var(--border2);margin:0 4px;flex-shrink:0}
-.sticky-font-sel{background:var(--surface3);border:1px solid var(--border2);color:var(--text);border-radius:5px;padding:3px 6px;font-size:11px;cursor:pointer;max-width:90px}
-.sticky-size-sel{background:var(--surface3);border:1px solid var(--border2);color:var(--text);border-radius:5px;padding:3px 6px;font-size:11px;cursor:pointer;width:52px}
+.sticky-divider{width:1px;height:18px;background:var(--border2);margin:0 2px;flex-shrink:0}
+.sticky-font-sel{background:var(--surface3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;max-width:100px;height:30px}
+.sticky-size-sel{background:var(--surface3);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:4px 6px;font-size:11px;cursor:pointer;width:56px;height:30px}
 .sticky-color-btn{width:24px;height:24px;border-radius:4px;border:2px solid var(--border2);cursor:pointer;padding:0}
 /* Enhanced color pickers */
 .sticky-color-group{position:relative;flex-shrink:0}
@@ -1432,6 +1515,25 @@ body{
   display:block;
   filter:drop-shadow(0 8px 24px rgba(0,0,0,0.2));
 }
+.landing-feature-visual img{
+  width:100%;
+  height:auto;
+  max-height:280px;
+  display:block;
+  border-radius:var(--radius);
+  box-shadow:0 12px 40px rgba(0,0,0,0.35);
+  object-fit:contain;
+}
+.landing-feature-visual video{
+  width:100%;
+  height:auto;
+  max-height:280px;
+  display:block;
+  border-radius:var(--radius);
+  box-shadow:0 12px 40px rgba(0,0,0,0.35);
+  object-fit:contain;
+  background:var(--surface2);
+}
 
 .landing-cta-section{
   position:relative;z-index:2;
@@ -1820,15 +1922,27 @@ select.input{cursor:pointer}
 .anki-front{font-family:var(--mono);font-size:12px;line-height:1.7;flex:1}
 .anki-meta{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:12px}
 
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-.cal-header{text-align:center;font-family:var(--mono);font-size:10px;color:var(--text3);padding:6px 0;letter-spacing:1px}
-.cal-day{min-height:70px;padding:6px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all var(--tr)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-header{text-align:center;font-family:var(--body);font-size:11px;font-weight:600;color:var(--text2);padding:8px 0;text-transform:uppercase;letter-spacing:0.5px}
+.cal-day{min-height:82px;padding:8px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all var(--tr);background:var(--surface);display:flex;flex-direction:column}
 .cal-day:hover{border-color:var(--border2);background:var(--surface2)}
-.cal-day.today{border-color:rgba(93,253,203,0.4);background:var(--accent-dim)}
-.cal-day.selected{border-color:rgba(123,147,255,0.4);background:var(--accent2-dim)}
-.cal-day-num{font-size:12px;font-weight:500;margin-bottom:4px}
-.cal-day.today .cal-day-num{color:var(--accent);font-family:var(--mono)}
-.cal-event-dot{font-size:10px;border-radius:4px;padding:1px 5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-day.today{border-color:var(--accent);background:var(--accent-dim);box-shadow:0 0 0 2px rgba(93,253,203,0.2)}
+.cal-day.selected{border-color:var(--accent2, #7b93ff);background:var(--accent2-dim,rgba(123,147,255,0.12))}
+.cal-day-num{font-size:13px;font-weight:600;margin-bottom:6px;color:var(--text2)}
+.cal-day.today .cal-day-num{color:var(--accent)}
+.cal-day.selected .cal-day-num{color:var(--accent2, #7b93ff)}
+.cal-event-dot{font-size:10px;border-radius:4px;padding:2px 6px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
+.cal-connect-card{background:linear-gradient(135deg,var(--surface2) 0%,var(--surface3) 100%);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+.cal-connect-card h3{font-family:var(--heading);font-size:16px;margin:0 0 8px;color:var(--text)}
+.cal-connect-steps{font-size:12px;color:var(--text2);line-height:1.7;margin:12px 0;padding-left:18px}
+.cal-connect-steps li{margin-bottom:4px}
+.cal-import-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--radius-sm);background:var(--accent);color:#070b14;border:none;font-weight:600;font-size:13px;cursor:pointer;font-family:var(--body);transition:all var(--tr)}
+.cal-import-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.cal-nav-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.cal-month-title{font-family:var(--heading);font-size:22px;font-weight:600;color:var(--text)}
+.cal-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.cal-legend-dot{width:10px;height:10px;border-radius:50%}
 
 .channel-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;color:var(--text);display:block;transition:all var(--tr)}
 .channel-card:hover{border-color:var(--border2);background:var(--surface2);transform:translateY(-2px)}
@@ -1892,12 +2006,14 @@ select.input{cursor:pointer}
     <div class="landing-shape landing-shape-2"></div>
     <div class="landing-hero-section">
       <h1 class="landing-hero">Medical school is hard.<br>Studying shouldn't be.</h1>
-      <p class="landing-sub">Notes, practice, and progress in one place — built for USMLE prep.</p>
+      <p class="landing-sub">Notes, practice, and progress in one place — built for Students.</p>
       <button class="landing-cta" id="landing-cta-hero" onclick="showScreen('auth-screen')">Get started</button>
     </div>
     <section class="landing-features" id="landing-features">
-      <h2 class="landing-features-title reveal">Everything you need for med-school prep — in one seamless app.</h2>
-
+      <!-- To use a VIDEO: replace the SVG inside .landing-feature-visual with:
+           <video src="path/to/feature.mp4" muted loop playsinline autoplay></video>
+           (autoplay only works when muted; use poster="path/to/poster.jpg" for a thumbnail.)
+           To use an IMAGE: replace with <img src="path/to/feature.png" alt="Description"> -->
       <div class="landing-feature-block" data-feature="notes">
         <div class="landing-feature-copy reveal">
           <span class="landing-feature-label">Notes & library</span>
@@ -2153,6 +2269,10 @@ select.input{cursor:pointer}
         <div class="s-logo-sub">← MAIN MENU</div>
       </div>
     </div>
+    <div class="sidebar-search-wrap" style="padding:8px 10px;border-bottom:1px solid var(--border);position:relative">
+      <input type="text" id="global-search-input" class="input" placeholder="Search notes, pads, events…" style="font-size:12px;padding:6px 10px;width:100%;box-sizing:border-box" oninput="onGlobalSearchInput(this.value)" onfocus="if(this.value.trim())showSearchResults(this.value)" onkeydown="if(event.key==='Escape')hideSearchResults()">
+      <div id="global-search-results" style="display:none;position:absolute;top:100%;left:8px;right:8px;margin-top:4px;max-height:320px;overflow-y:auto;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:200"></div>
+    </div>
     <nav class="sidebar-nav" id="sidebar-nav"></nav>
     <div class="sidebar-footer">
       <!-- User profile row -->
@@ -2398,102 +2518,103 @@ select.input{cursor:pointer}
     </div>
   </div>
   <div class="sticky-toolbar">
-    <!-- Undo / Redo -->
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('undo')" title="Undo (Ctrl+Z)">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
-    </button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('redo')" title="Redo (Ctrl+Y)">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
-    </button>
-    <div class="sticky-divider"></div>
-    <!-- Font & Size -->
-    <select class="sticky-font-sel" onchange="stickyExec('fontName',this.value)" title="Font Family">
-      <option value="Geist, sans-serif">Geist</option>
-      <option value="Georgia, serif">Georgia</option>
-      <option value="'Courier New', monospace">Mono</option>
-      <option value="Arial, sans-serif">Arial</option>
-      <option value="'Times New Roman', serif">Times</option>
-    </select>
-    <select class="sticky-size-sel" onchange="stickyExec('fontSize',this.value)" title="Font Size">
-      <option value="1">10px</option>
-      <option value="2">12px</option>
-      <option value="3" selected>14px</option>
-      <option value="4">16px</option>
-      <option value="5">20px</option>
-      <option value="6">26px</option>
-      <option value="7">32px</option>
-    </select>
-    <div class="sticky-divider"></div>
-    <!-- Formatting -->
-    <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-bold" onclick="stickyToggle('bold','st-bold')" title="Bold (Ctrl+B)"><b style="font-size:13px">B</b></button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-italic" onclick="stickyToggle('italic','st-italic')" title="Italic (Ctrl+I)"><i style="font-size:13px">I</i></button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-under" onclick="stickyToggle('underline','st-under')" title="Underline (Ctrl+U)"><u style="font-size:13px">U</u></button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-strike" onclick="stickyToggle('strikeThrough','st-strike')" title="Strikethrough" style="text-decoration:line-through;font-size:13px">S</button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('superscript')" title="Superscript" style="font-size:10px">x<sup>2</sup></button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('subscript')" title="Subscript" style="font-size:10px">x<sub>2</sub></button>
-    <div class="sticky-divider"></div>
-    <!-- Text Color with swatches -->
-    <div class="sticky-color-group" title="Text Color">
-      <div class="sticky-color-label" id="sc-text-preview" style="background:#5dfdcb" onmousedown="event.preventDefault()" onclick="toggleStickyColorPicker('text')">A</div>
-      <div class="sticky-color-swatches" id="scs-text" style="display:none">
-        <div class="sticky-swatch" style="background:#5dfdcb" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#5dfdcb')"></div>
-        <div class="sticky-swatch" style="background:#ff7b7b" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#ff7b7b')"></div>
-        <div class="sticky-swatch" style="background:#fbbf24" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#fbbf24')"></div>
-        <div class="sticky-swatch" style="background:#60a5fa" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#60a5fa')"></div>
-        <div class="sticky-swatch" style="background:#f472b6" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#f472b6')"></div>
-        <div class="sticky-swatch" style="background:#a78bfa" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#a78bfa')"></div>
-        <div class="sticky-swatch" style="background:#4ade80" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#4ade80')"></div>
-        <div class="sticky-swatch" style="background:#fb923c" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#fb923c')"></div>
-        <div class="sticky-swatch" style="background:#ffffff" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#ffffff')"></div>
-        <div class="sticky-swatch" style="background:#000000" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#000000')"></div>
-        <div class="sticky-swatch sticky-swatch-x" onmousedown="event.preventDefault()" onclick="setStickyTextColor('inherit')" title="Remove color">✕</div>
-        <input type="color" id="sc-text-custom" value="#5dfdcb" oninput="setStickyTextColor(this.value)" style="width:20px;height:20px;border:none;border-radius:3px;cursor:pointer;padding:0;background:none">
+    <div class="sticky-toolbar-group">
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('undo')" title="Undo (Ctrl+Z)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('redo')" title="Redo (Ctrl+Y)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+      </button>
+    </div>
+    <div class="sticky-toolbar-group">
+      <select class="sticky-font-sel" onchange="stickyExec('fontName',this.value)" title="Font">
+        <option value="Geist, sans-serif">Geist</option>
+        <option value="Georgia, serif">Georgia</option>
+        <option value="'Courier New', monospace">Mono</option>
+        <option value="Arial, sans-serif">Arial</option>
+        <option value="'Times New Roman', serif">Times</option>
+      </select>
+      <select class="sticky-size-sel" onchange="stickyExec('fontSize',this.value)" title="Size">
+        <option value="1">10</option>
+        <option value="2">12</option>
+        <option value="3" selected>14</option>
+        <option value="4">16</option>
+        <option value="5">20</option>
+        <option value="6">26</option>
+        <option value="7">32</option>
+      </select>
+    </div>
+    <div class="sticky-toolbar-group">
+      <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-bold" onclick="stickyToggle('bold','st-bold')" title="Bold (Ctrl+B)"><b>B</b></button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-italic" onclick="stickyToggle('italic','st-italic')" title="Italic (Ctrl+I)"><i>I</i></button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-under" onclick="stickyToggle('underline','st-under')" title="Underline (Ctrl+U)"><u>U</u></button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" id="st-strike" onclick="stickyToggle('strikeThrough','st-strike')" title="Strikethrough" style="text-decoration:line-through">S</button>
+      <div class="sticky-divider"></div>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('superscript')" title="Superscript" style="font-size:10px">x²</button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('subscript')" title="Subscript" style="font-size:10px">x₂</button>
+    </div>
+    <div class="sticky-toolbar-group">
+      <div class="sticky-color-group" title="Text color">
+        <div class="sticky-color-label" id="sc-text-preview" style="background:#5dfdcb" onmousedown="event.preventDefault()" onclick="toggleStickyColorPicker('text')">A</div>
+        <div class="sticky-color-swatches" id="scs-text" style="display:none">
+          <div class="sticky-swatch" style="background:#5dfdcb" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#5dfdcb')"></div>
+          <div class="sticky-swatch" style="background:#ff7b7b" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#ff7b7b')"></div>
+          <div class="sticky-swatch" style="background:#fbbf24" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#fbbf24')"></div>
+          <div class="sticky-swatch" style="background:#60a5fa" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#60a5fa')"></div>
+          <div class="sticky-swatch" style="background:#f472b6" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#f472b6')"></div>
+          <div class="sticky-swatch" style="background:#a78bfa" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#a78bfa')"></div>
+          <div class="sticky-swatch" style="background:#4ade80" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#4ade80')"></div>
+          <div class="sticky-swatch" style="background:#fb923c" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#fb923c')"></div>
+          <div class="sticky-swatch" style="background:#ffffff" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#ffffff')"></div>
+          <div class="sticky-swatch" style="background:#000000" onmousedown="event.preventDefault()" onclick="setStickyTextColor('#000000')"></div>
+          <div class="sticky-swatch sticky-swatch-x" onmousedown="event.preventDefault()" onclick="setStickyTextColor('inherit')" title="Remove color">✕</div>
+          <input type="color" id="sc-text-custom" value="#5dfdcb" oninput="setStickyTextColor(this.value)" style="width:20px;height:20px;border:none;border-radius:3px;cursor:pointer;padding:0;background:none">
+        </div>
+      </div>
+      <div class="sticky-color-group" title="Highlight">
+        <div class="sticky-color-label sticky-hl-label" id="sc-hl-preview" style="background:#ffff00;color:#000" onmousedown="event.preventDefault()" onclick="toggleStickyColorPicker('hl')">H</div>
+        <div class="sticky-color-swatches" id="scs-hl" style="display:none">
+          <div class="sticky-swatch" style="background:#ffff00" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#ffff00')"></div>
+          <div class="sticky-swatch" style="background:#90ee90" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#90ee90')"></div>
+          <div class="sticky-swatch" style="background:#add8e6" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#add8e6')"></div>
+          <div class="sticky-swatch" style="background:#ffb6c1" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#ffb6c1')"></div>
+          <div class="sticky-swatch" style="background:#ffa500" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#ffa500')"></div>
+          <div class="sticky-swatch" style="background:#dda0dd" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#dda0dd')"></div>
+          <div class="sticky-swatch" style="background:#5dfdcb" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#5dfdcb')"></div>
+          <div class="sticky-swatch sticky-swatch-x" onmousedown="event.preventDefault()" onclick="setStickyHlColor('transparent')" title="Remove highlight">✕</div>
+          <input type="color" id="sc-hl-custom" value="#ffff00" oninput="setStickyHlColor(this.value)" style="width:20px;height:20px;border:none;border-radius:3px;cursor:pointer;padding:0;background:none">
+        </div>
       </div>
     </div>
-    <!-- Highlight Color with swatches -->
-    <div class="sticky-color-group" title="Highlight Color">
-      <div class="sticky-color-label sticky-hl-label" id="sc-hl-preview" style="background:#ffff00;color:#000" onmousedown="event.preventDefault()" onclick="toggleStickyColorPicker('hl')">H</div>
-      <div class="sticky-color-swatches" id="scs-hl" style="display:none">
-        <div class="sticky-swatch" style="background:#ffff00" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#ffff00')"></div>
-        <div class="sticky-swatch" style="background:#90ee90" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#90ee90')"></div>
-        <div class="sticky-swatch" style="background:#add8e6" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#add8e6')"></div>
-        <div class="sticky-swatch" style="background:#ffb6c1" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#ffb6c1')"></div>
-        <div class="sticky-swatch" style="background:#ffa500" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#ffa500')"></div>
-        <div class="sticky-swatch" style="background:#dda0dd" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#dda0dd')"></div>
-        <div class="sticky-swatch" style="background:#5dfdcb" onmousedown="event.preventDefault()" onclick="setStickyHlColor('#5dfdcb')"></div>
-        <div class="sticky-swatch sticky-swatch-x" onmousedown="event.preventDefault()" onclick="setStickyHlColor('transparent')" title="Remove highlight">✕</div>
-        <input type="color" id="sc-hl-custom" value="#ffff00" oninput="setStickyHlColor(this.value)" style="width:20px;height:20px;border:none;border-radius:3px;cursor:pointer;padding:0;background:none">
-      </div>
+    <div class="sticky-toolbar-group">
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('justifyLeft')" title="Align left">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+      </button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('justifyCenter')" title="Center">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('justifyRight')" title="Align right">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
-    <div class="sticky-divider"></div>
-    <!-- Alignment -->
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('justifyLeft')" title="Align Left">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
-    </button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('justifyCenter')" title="Center">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-    </button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('justifyRight')" title="Align Right">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg>
-    </button>
-    <div class="sticky-divider"></div>
-    <!-- Lists -->
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('insertUnorderedList')" title="Bullet List">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg>
-    </button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('insertOrderedList')" title="Numbered List">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
-    </button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('indent')" title="Indent">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><polyline points="7,12 11,16 7,20"/><line x1="11" y1="16" x2="21" y2="16"/></svg>
-    </button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('outdent')" title="Outdent">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><polyline points="11,12 7,16 11,20"/><line x1="7" y1="16" x2="21" y2="16"/></svg>
-    </button>
-    <div class="sticky-divider"></div>
-    <!-- Clear formatting -->
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('removeFormat')" title="Clear Formatting" style="font-size:11px;font-weight:600">Tx</button>
-    <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyInsertHR()" title="Insert Divider">—</button>
+    <div class="sticky-toolbar-group">
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('insertUnorderedList')" title="Bullet list">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></svg>
+      </button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('insertOrderedList')" title="Numbered list">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+      </button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('indent')" title="Indent">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><polyline points="7,12 11,16 7,20"/><line x1="11" y1="16" x2="21" y2="16"/></svg>
+      </button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('outdent')" title="Outdent">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><polyline points="11,12 7,16 11,20"/><line x1="7" y1="16" x2="21" y2="16"/></svg>
+      </button>
+    </div>
+    <div class="sticky-toolbar-group">
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyExec('removeFormat')" title="Clear formatting" style="font-size:11px;font-weight:600">Tx</button>
+      <button class="sticky-tool" onmousedown="event.preventDefault()" onclick="stickyInsertHR()" title="Insert divider">—</button>
+    </div>
   </div>
   <div class="sticky-editor" id="sticky-editor" contenteditable="true" data-placeholder="Start writing your notes here..."></div>
   <div id="pad-note-ctx" style="display:none;padding:5px 12px;background:var(--accent-dim);border-top:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--accent);flex-shrink:0"></div>
@@ -2581,6 +2702,7 @@ function getSyncKeys() {
   return [
     userKey('notes'), userKey('folders'), userKey('wrong_answers'), userKey('cal_events'),
     userKey('saved_pads'), userKey('pad_folders'), userKey('pad_open_folders'),
+    userKey('anki_decks'),
     userKey('open_folders'), userKey('open_tabs'), userKey('active_tab'),
     userKey('note_sidebar_collapsed'), userKey('profile'), userKey('prev_q_stems'),
     'tesserly_tab_order', 'tesserly_custom_icons', 'tesserly_custom_labels',
@@ -2787,6 +2909,8 @@ const STATE = {
   notes: [],
   questions: [], revealed: {}, selectedAnswers: {}, wrongAnswers: [],
   ankiCards: [], ankiFlipped: {},
+  ankiDecks: [],
+  ankiStudyDeck: null, ankiStudyIndex: 0, ankiStudyFlipped: false,
   calEvents: [],
   calYear: null, calMonth: null, calSelectedDate: null,
   aiTopics: [],
@@ -2820,6 +2944,7 @@ function loadUserData(){
   STATE.savedPads=ls(userKey('saved_pads'),[]);
  STATE.padFolders=ls(userKey('pad_folders'),[]);
  STATE.openPadFolders=ls(userKey('pad_open_folders'),[]);
+  STATE.ankiDecks=ls(userKey('anki_decks'),[]);
   STATE.folders=ls(userKey('folders'),[]);
   STATE.openFolders=ls(userKey('open_folders'),[]);
   STATE.openTabs=ls(userKey('open_tabs'),[]);
@@ -2845,6 +2970,7 @@ function saveUserTabs(){ sv(userKey('open_tabs'), STATE.openTabs); sv(userKey('a
 function saveUserWrong(){ sv(userKey('wrong_answers'), STATE.wrongAnswers); syncToSupabase(); }
 function saveUserEvents(){ sv(userKey('cal_events'),STATE.calEvents); syncToSupabase(); }
 function saveUserPads(){ sv(userKey('saved_pads'),STATE.savedPads); sv(userKey('pad_folders'),STATE.padFolders); sv(userKey('pad_open_folders'),STATE.openPadFolders); syncToSupabase(); }
+function saveUserAnkiDecks(){ sv(userKey('anki_decks'),STATE.ankiDecks); syncToSupabase(); }
 function saveUserProfile(){ sv(userKey('profile'),{username:AUTH.currentUser.username,avatar:AUTH.currentUser.avatar}); syncToSupabase(); }
 
 // ════════════════════════════════════════════
@@ -3340,6 +3466,41 @@ function navigate(tabId) {
   if (sBtn) sBtn.classList.toggle('hidden', tabId === 'pads');
   if(window._cmapCleanup){ window._cmapCleanup(); window._cmapCleanup=null; }
   ({ notes:renderNotes, questions:renderQuestions, anki:renderAnki, calendar:renderCalendar, videos:renderVideos, pads:renderPads, summarize:renderSummarize, conceptmap:renderConceptMap })[tabId]?.();
+}
+
+// Global search
+let _searchDebounce = null;
+function runGlobalSearch(q) {
+  const s = (q||'').trim().toLowerCase();
+  if (!s) return { notes: [], pads: [], events: [] };
+  const notes = STATE.notes.map((n,i)=>({note:n,index:i})).filter(({note:n})=>(n.name||'').toLowerCase().includes(s)||(n.content||'').toLowerCase().includes(s)).slice(0,15);
+  const pads = STATE.savedPads.map((p,i)=>({pad:p,index:i})).filter(({pad:p})=>(p.name||'').toLowerCase().includes(s)||(p.content||'').replace(/<[^>]+>/g,' ').toLowerCase().includes(s)).slice(0,15);
+  const events = (STATE.calEvents||[]).filter(e=>(e.title||'').toLowerCase().includes(s)||(e.note||'').toLowerCase().includes(s)).slice(0,10).map(e=>({...e,date:e.date}));
+  return { notes, pads, events };
+}
+function onGlobalSearchInput(val) {
+  if (_searchDebounce) clearTimeout(_searchDebounce);
+  _searchDebounce = setTimeout(() => {
+    _searchDebounce = null;
+    if ((val||'').trim()) showSearchResults(val.trim());
+    else hideSearchResults();
+  }, 200);
+}
+function showSearchResults(q) {
+  const qArg = typeof q === 'string' ? q : (qs('#global-search-input')?.value||'').trim();
+  if (!qArg) { hideSearchResults(); return; }
+  const res = runGlobalSearch(qArg);
+  const el = qs('#global-search-results');
+  if (!el) return;
+  const parts = [];
+  if (res.notes.length) parts.push(`<div class="search-result-section" style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;margin-bottom:6px;padding:0 12px">Notes</div>${res.notes.map(({note:n,index:i})=>`<button type="button" class="search-result-row" onclick="hideSearchResults();navigate('notes');setTimeout(function(){viewNote(${i});},100)" style="display:block;width:100%;text-align:left;padding:6px 12px;background:transparent;border:none;color:var(--text);font-size:12px;cursor:pointer;font-family:var(--body)">${(n.name||'Untitled').replace(/</g,'&lt;').slice(0,50)}</button>`).join('')}</div>`);
+  if (res.pads.length) parts.push(`<div class="search-result-section" style="padding:8px 0;border-bottom:1px solid var(--border)"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;margin-bottom:6px;padding:0 12px">Pads</div>${res.pads.map(({pad:p,index:i})=>`<button type="button" class="search-result-row" onclick="hideSearchResults();navigate('pads');setTimeout(function(){openPadModal(${i});},100)" style="display:block;width:100%;text-align:left;padding:6px 12px;background:transparent;border:none;color:var(--text);font-size:12px;cursor:pointer">${(p.name||'Untitled').replace(/</g,'&lt;').slice(0,50)}</button>`).join('')}</div>`);
+  if (res.events.length) parts.push(`<div class="search-result-section" style="padding:8px 0"><div style="font-size:10px;color:var(--text3);text-transform:uppercase;margin-bottom:6px;padding:0 12px">Calendar</div>${res.events.map(ev=>{ const idx = (STATE.calEvents||[]).indexOf(ev); return `<button type="button" class="search-result-row" onclick="hideSearchResults();navigate('calendar');setTimeout(function(){selectCalDate('${ev.date}');},150)" style="display:block;width:100%;text-align:left;padding:6px 12px;background:transparent;border:none;color:var(--text);font-size:12px;cursor:pointer">${(ev.title||'Event').replace(/</g,'&lt;').slice(0,40)} · ${ev.date||''}</button>`; }).join('')}</div>`);
+  el.innerHTML = parts.length ? parts.join('') : '<div style="padding:16px;color:var(--text3);font-size:12px">No results</div>';
+  el.style.display = 'block';
+}
+function hideSearchResults() {
+  const el = qs('#global-search-results'); if (el) { el.style.display = 'none'; el.innerHTML = ''; }
 }
 
 
@@ -4521,6 +4682,8 @@ function viewNote(i) {
   `;
 
   if (isPDF) {
+    const pdfLinkedPads = getPadsLinkedToNote(n);
+    const pdfLinkedHTML = pdfLinkedPads.length ? `<div class="note-viewer-linked-pads" style="padding:6px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="font-size:11px;color:var(--text3);font-family:var(--mono)">Linked pads:</span>${pdfLinkedPads.map(({pad:p,index:pidx})=>`<button type="button" class="btn btn-ghost btn-sm" style="font-size:11px" onclick="closeNoteViewer();navigate('pads');setTimeout(function(){openPadModal(${pidx});},80)">${(p.name||'Untitled').replace(/</g,'&lt;')}</button>`).join('')}</div>` : '';
     overlay.innerHTML = `
       <div class="pdf-viewer-bar">
         <button class="btn btn-secondary btn-sm" onclick="closeNoteViewer()">${icon(`<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>`)}</button>
@@ -4534,6 +4697,7 @@ function viewNote(i) {
         <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" style="flex-shrink:0">Open Original</button>
         <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" style="flex-shrink:0">Download</button>
       </div>
+      ${pdfLinkedHTML}
       <div class="pdf-viewer-body" id="pdf-container"></div>`;
     document.body.appendChild(overlay);
     const container = qs('#pdf-container');
@@ -4766,10 +4930,16 @@ function viewNote(i) {
 
     // If we know it's a PDF/PPTX/DOCX but no embedded original, offer quick attach
   const needsAttach = (n.fileName && (n.fileName.toLowerCase().endsWith('.pdf') || n.fileName.toLowerCase().endsWith('.pptx') || n.fileName.toLowerCase().endsWith('.docx')));
+  const linkedPads = getPadsLinkedToNote(n);
+  const linkedPadsHTML = linkedPads.length ? `<div class="note-viewer-linked-pads" style="padding:8px 16px;background:var(--surface2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">Linked pads:</span>
+    ${linkedPads.map(({pad:p,index:pidx})=>`<button type="button" class="btn btn-ghost btn-sm" style="font-size:11px" onclick="closeNoteViewer();navigate('pads');setTimeout(function(){openPadModal(${pidx});},80)">${(p.name||'Untitled').replace(/</g,'&lt;')}</button>`).join('')}
+  </div>` : '';
   overlay.innerHTML = `
     <div class="pdf-viewer-bar">
       ${barBtns((needsAttach?`<button class=\"btn btn-ghost btn-sm\" onclick=\"attachOriginalFile(${i})\">Attach Original…</button>`:'')+`<button class=\"btn btn-ghost btn-sm\" onclick=\"addAnnotationImage(${i})\">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,14)} Image</button>`)}
     </div>
+    ${linkedPadsHTML}
     <div class="text-viewer-body" id="note-viewer-body">${n.type==='summary' ? n.content : n.content.replace(/</g,'&lt;')}${renderAnnotStrip(i)}</div>`;
   document.body.appendChild(overlay);
 }
@@ -4825,6 +4995,12 @@ function openOriginalInNewTab(i){
   window.open(url, '_blank');
 }
 
+function getPadsLinkedToNote(note){
+  if(!note) return [];
+  return STATE.savedPads.map((p,i)=>({pad:p,index:i})).filter(({pad:p})=>
+    (p.linkedNoteId!=null&&String(p.linkedNoteId)===String(note.id))||(p.linkedNote&&p.linkedNote===note.name)
+  );
+}
 function closeNoteViewer() {
   const o = qs('#note-viewer-overlay'); if(o) o.remove();
 }
@@ -4997,6 +5173,7 @@ async function processFiles(files) {
   }
   saveUserNotes(); // persist to localStorage under user account
   if(loadEl)loadEl.innerHTML='';
+  refreshFileTree(); // so imported files show in notes sidebar immediately
   const nl=qs('#notes-list');
   if(nl)nl.innerHTML=renderNotesList();
   renderSidebar();
@@ -5595,8 +5772,23 @@ Format rules:
 // ANKI
 // ════════════════════════════════════════════
 function renderAnki(){
+  if (STATE.ankiStudyDeck) { renderAnkiStudyView(); return; }
+  const decks = STATE.ankiDecks || [];
   qs('#content').innerHTML=`
     <div class="fade-up">
+      <div class="card" style="margin-bottom:24px">
+        <div style="font-family:var(--heading);font-size:18px;margin-bottom:12px">My Decks</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Save generated cards to a deck, then study or export them here.</p>
+        ${decks.length ? `<div style="display:flex;flex-direction:column;gap:8px">${decks.map((d,di)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+          <span style="font-weight:500">${(d.name||'Unnamed deck').replace(/</g,'&lt;')}</span>
+          <span style="font-size:11px;color:var(--text3)">${(d.cards||[]).length} cards</span>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-primary btn-sm" onclick="startAnkiStudy(${di})">Study</button>
+            <button class="btn btn-ghost btn-sm" onclick="exportAnkiDeck(${di})">Export .txt</button>
+            <button class="btn btn-ghost btn-sm" onclick="deleteAnkiDeck(${di})" style="color:var(--text3)">Delete</button>
+          </div>
+        </div>`).join('')}</div>` : '<div style="font-size:12px;color:var(--text3);padding:8px 0">No decks yet. Generate cards below, then click "Save to deck".</div>'}
+      </div>
       <div class="card" style="margin-bottom:24px">
         <div style="font-family:var(--heading);font-size:20px;margin-bottom:16px">Anki Card Generator</div>
 
@@ -5723,7 +5915,10 @@ function renderAnkiResults(){
   return`
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
       <div style="font-family:var(--heading);font-size:22px">${STATE.ankiCards.length} Cloze Cards <span style="color:var(--text3);font-size:13px;font-weight:400">· click to flip</span></div>
-      <button class="btn btn-secondary btn-sm" onclick="copyAnki()">${icon(`<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`)} Copy for Anki</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary btn-sm" onclick="openSaveAnkiDeckModal()">Save to deck</button>
+        <button class="btn btn-secondary btn-sm" onclick="copyAnki()">${icon(`<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>`)} Copy for Anki</button>
+      </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
       ${STATE.ankiCards.map((card,i)=>{
@@ -5770,6 +5965,87 @@ async function generateAnki(){
 
 function copyAnki(){navigator.clipboard.writeText(STATE.ankiCards.map(c=>`${c.front}\t${c.back}`).join('\n')).then(()=>showToast('Copied to clipboard!'))}
 
+function openSaveAnkiDeckModal(){
+  if(!STATE.ankiCards.length){showToast('No cards to save');return}
+  const decks=STATE.ankiDecks||[];
+  const modal=document.createElement('div');modal.className='overlay active';modal.id='save-anki-modal';modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';
+  modal.innerHTML=`
+    <div class="card" style="max-width:360px;width:100%;margin:16px">
+      <div style="font-family:var(--heading);font-size:18px;margin-bottom:12px">Save to deck</div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:12px">Save ${STATE.ankiCards.length} cards to a new or existing deck.</p>
+      <div style="margin-bottom:12px">
+        <label class="label">Deck</label>
+        <select class="input" id="save-anki-deck-sel" style="width:100%">
+          <option value="__new__">+ New deck</option>
+          ${decks.map((d,i)=>`<option value="${i}">${(d.name||'Unnamed').replace(/</g,'&lt;')}</option>`).join('')}
+        </select>
+      </div>
+      <div id="save-anki-new-name-wrap" style="margin-bottom:12px">
+        <label class="label">New deck name</label>
+        <input type="text" class="input" id="save-anki-new-name" placeholder="e.g. Pharmacology Ch.1" style="width:100%">
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('save-anki-modal').remove()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveCurrentCardsToDeck()">Save</button>
+      </div>
+    </div>`;
+  modal.onclick=e=>{if(e.target===modal)modal.remove()};
+  document.body.appendChild(modal);
+  const wrap=qs('#save-anki-new-name-wrap');const selEl=qs('#save-anki-deck-sel');
+  if(wrap)wrap.style.display=selEl?.value==='__new__'?'block':'none';
+  selEl.onchange=function(){ if(qs('#save-anki-new-name-wrap')) qs('#save-anki-new-name-wrap').style.display=this.value==='__new__'?'block':'none'; };
+}
+function saveCurrentCardsToDeck(){
+  const sel=qs('#save-anki-deck-sel');const newNameEl=qs('#save-anki-new-name');
+  const deckVal=sel?.value;
+  const cards=STATE.ankiCards.map(c=>({front:c.front,back:c.back,topic:c.topic,hint:c.hint}));
+  STATE.ankiDecks=STATE.ankiDecks||[];
+  if(deckVal==='__new__'){
+    const name=(newNameEl?.value||'').trim()||'New deck';
+    STATE.ankiDecks.push({id:'deck'+Date.now(),name,cards});
+  }else{
+    const idx=parseInt(deckVal,10);if(!isNaN(idx)&&STATE.ankiDecks[idx]) STATE.ankiDecks[idx].cards=(STATE.ankiDecks[idx].cards||[]).concat(cards);
+  }
+  saveUserAnkiDecks();
+  qs('#save-anki-modal')?.remove();
+  showToast('Cards saved to deck');
+  renderAnki();
+}
+function startAnkiStudy(deckIndex){
+  const deck=STATE.ankiDecks[deckIndex];if(!deck||!(deck.cards&&deck.cards.length)){showToast('Deck is empty');return}
+  STATE.ankiStudyDeck={...deck,deckIndex};STATE.ankiStudyIndex=0;STATE.ankiStudyFlipped=false;
+  renderAnki();
+}
+function renderAnkiStudyView(){
+  const deck=STATE.ankiStudyDeck;if(!deck||!deck.cards||!deck.cards.length){STATE.ankiStudyDeck=null;renderAnki();return}
+  const cards=deck.cards;const i=STATE.ankiStudyIndex;const card=cards[i];const flipped=STATE.ankiStudyFlipped;
+  const front=(card.front||'').replace(/\{\{c\d+::(.*?)\}\}/g,(_,w)=>`<strong style="color:var(--accent)">[${w}]</strong>`);
+  qs('#content').innerHTML=`
+    <div class="fade-up">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="STATE.ankiStudyDeck=null;renderAnki()">← Back to decks</button>
+        <span style="font-family:var(--mono);font-size:12px;color:var(--text3)">Card ${i+1} of ${cards.length}</span>
+      </div>
+      <div class="card" style="min-height:200px;cursor:pointer" onclick="STATE.ankiStudyFlipped=!STATE.ankiStudyFlipped;renderAnki()">
+        <div class="anki-front" style="font-size:16px;line-height:1.6">${flipped?(card.back||card.front):front}</div>
+        <div class="anki-meta" style="margin-top:12px">${!flipped?'Click to reveal' : ''} ${card.topic||''}</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:16px">
+        <button class="btn btn-secondary btn-sm" onclick="STATE.ankiStudyIndex=Math.max(0,STATE.ankiStudyIndex-1);STATE.ankiStudyFlipped=false;renderAnki()" ${i===0?'disabled':''}>← Previous</button>
+        <button class="btn btn-primary btn-sm" onclick="STATE.ankiStudyIndex=Math.min(cards.length-1,STATE.ankiStudyIndex+1);STATE.ankiStudyFlipped=false;renderAnki()" ${i>=cards.length-1?'disabled':''}>Next →</button>
+      </div>
+    </div>`;
+}
+function exportAnkiDeck(deckIndex){
+  const deck=STATE.ankiDecks[deckIndex];if(!deck||!(deck.cards&&deck.cards.length)){showToast('Deck is empty');return}
+  const text=deck.cards.map(c=>`${(c.front||'').replace(/\t/g,' ')}\t${(c.back||'').replace(/\t/g,' ')}`).join('\n');
+  navigator.clipboard.writeText(text).then(()=>showToast('Deck copied to clipboard! Paste into Anki import.'));
+}
+function deleteAnkiDeck(deckIndex){
+  if(!confirm('Delete this deck? Cards cannot be recovered.'))return;
+  STATE.ankiDecks.splice(deckIndex,1);saveUserAnkiDecks();renderAnki();showToast('Deck deleted');
+}
+
 // ════════════════════════════════════════════
 // CALENDAR
 // ════════════════════════════════════════════
@@ -5782,45 +6058,50 @@ function renderCalendar(){
   if(!STATE.calYear)STATE.calYear=now.getFullYear();
   if(STATE.calMonth===null)STATE.calMonth=now.getMonth();
   qs('#content').innerHTML=`
-    <div class="fade-up" style="display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start">
+    <div class="fade-up" style="display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start">
       <div>
-        <!-- Google Calendar Connect (compact) -->
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:8px 12px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text3);flex-shrink:0"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span style="font-size:12px;color:var(--text2);flex:1">Google Calendar</span>
-          <a href="https://calendar.google.com" target="_blank" rel="noopener" style="font-size:11px;color:var(--accent);text-decoration:none;font-family:var(--mono)">Open ↗</a>
-          <span style="color:var(--border);font-size:11px">|</span>
-          <button onclick="importGCalICS()" style="font-size:11px;color:var(--accent);background:none;border:none;cursor:pointer;font-family:var(--mono);padding:0">Import .ics</button>
-          <span style="color:var(--border);font-size:11px">|</span>
-          <button onclick="showGCalHelp()" style="font-size:11px;color:var(--text3);background:none;border:none;cursor:pointer;font-family:var(--mono);padding:0">?</button>
+        <!-- Google Calendar: prominent connect card -->
+        <div class="cal-connect-card">
+          <h3>Connect Google Calendar</h3>
+          <p style="font-size:12px;color:var(--text2);margin:0 0 12px">Import your events from Google Calendar so they appear here. No account linking—just export and import.</p>
+          <ol class="cal-connect-steps">
+            <li>Open <a href="https://calendar.google.com" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none">Google Calendar</a></li>
+            <li>Click the gear (Settings) → select your calendar</li>
+            <li>Under "Integrate calendar", click <strong>Export calendar</strong> and download the .ics file</li>
+            <li>Click the button below and choose that file</li>
+          </ol>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <button type="button" class="cal-import-btn" onclick="importGCalICS()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Import from Google Calendar (.ics)
+            </button>
+            <a href="https://calendar.google.com" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="font-size:12px">Open Google Calendar ↗</a>
+          </div>
           <input type="file" id="ics-input" accept=".ics" style="display:none" onchange="handleICSInput(this)">
-        </div>
-        <div id="gcal-help" style="display:none;margin-bottom:14px;padding:10px 12px;background:var(--surface2);border-radius:var(--radius-sm);font-size:11px;color:var(--text2);line-height:1.7">
-          <strong style="color:var(--text)">Export from Google Calendar:</strong><br>
-          Settings (gear) → your calendar → Export Calendar → download .ics → Import here
         </div>
 
         <div class="card">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px">
-            <button class="btn btn-ghost btn-sm" onclick="calNav(-1)">← Prev</button>
-            <div style="font-family:var(--heading);font-size:24px">${MONTHS[STATE.calMonth]} ${STATE.calYear}</div>
-            <button class="btn btn-ghost btn-sm" onclick="calNav(1)">Next →</button>
+          <div class="cal-nav-row">
+            <button class="btn btn-ghost btn-sm" onclick="calNav(-1)" style="padding:6px 12px">← Previous</button>
+            <div class="cal-month-title">${MONTHS[STATE.calMonth]} ${STATE.calYear}</div>
+            <button class="btn btn-ghost btn-sm" onclick="calNav(1)" style="padding:6px 12px">Next →</button>
           </div>
-          <div class="cal-grid" style="margin-bottom:8px">${WDAYS.map(d=>`<div class="cal-header">${d}</div>`).join('')}</div>
+          <div class="cal-grid" style="margin-bottom:6px">${WDAYS.map(d=>`<div class="cal-header">${d}</div>`).join('')}</div>
           <div class="cal-grid" id="cal-body"></div>
-        </div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px">
-          ${Object.entries(EV_COLORS).map(([t,c])=>`<div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)"><div style="width:9px;height:9px;border-radius:50%;background:${c}"></div>${t}</div>`).join('')}
+          <div class="cal-legend">
+            ${Object.entries(EV_COLORS).map(([t,c])=>`<div class="cal-legend-item"><span class="cal-legend-dot" style="background:${c}"></span>${t.charAt(0).toUpperCase()+t.slice(1)}</div>`).join('')}
+          </div>
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:18px">
         <div class="card" id="ev-form-card">
-          <div style="font-family:var(--heading);font-size:18px;margin-bottom:14px" id="ev-form-title">Add Event</div>
+          <div style="font-family:var(--heading);font-size:17px;font-weight:600;margin-bottom:14px;color:var(--text)" id="ev-form-title">Add Event</div>
+          <p style="font-size:11px;color:var(--text3);margin:-8px 0 12px">Click a day on the calendar to add an event for that date.</p>
           <div id="ev-form-inner">${renderEventForm()}</div>
         </div>
         <div class="card">
-          <div style="font-family:var(--heading);font-size:18px;margin-bottom:14px">Upcoming</div>
-          <div id="upcoming-list" style="max-height:300px;overflow-y:auto">${renderUpcoming()}</div>
+          <div style="font-family:var(--heading);font-size:17px;font-weight:600;margin-bottom:12px;color:var(--text)">Upcoming</div>
+          <div id="upcoming-list" style="max-height:320px;overflow-y:auto">${renderUpcoming()}</div>
         </div>
       </div>
     </div>`;
@@ -6113,7 +6394,7 @@ function openPadModal(i){
     </div>
     <div class="pad-modal-bar">
       <input class="pad-modal-title" id="pad-modal-title" value="${(p.name||'Untitled Pad').replace(/"/g,'&quot;')}" placeholder="Pad name…">
-      ${p.linkedNote?`<div style="font-family:var(--mono);font-size:10px;color:var(--accent);flex-shrink:0">📎 ${p.linkedNote}</div>`:''}
+      ${p.linkedNote||p.linkedNoteId?`<button type="button" class="btn btn-ghost btn-sm" onclick="openLinkedNoteFromPad(${i})" style="font-size:11px;flex-shrink:0" title="Open linked note">📎 ${(p.linkedNote||'Open note')}</button>`:''}
     </div>
     <div class="pad-modal-body">
       <div class="pad-modal-editor" id="pad-modal-editor" contenteditable="true" spellcheck="true">${p.content||''}</div>
@@ -6122,6 +6403,14 @@ function openPadModal(i){
   setTimeout(()=>qs('#pad-modal-editor')?.focus(),50);
 }
 function closePadModal(){ const m=qs('#pad-modal');if(m)m.remove(); }
+function openLinkedNoteFromPad(padIndex){
+  const p=STATE.savedPads[padIndex]; if(!p) return;
+  const noteIdx=p.linkedNoteId!= null ? STATE.notes.findIndex(n=>String(n.id)===String(p.linkedNoteId)) : p.linkedNote ? STATE.notes.findIndex(n=>n.name===p.linkedNote) : -1;
+  if(noteIdx<0){ showToast('Linked note not found'); return; }
+  closePadModal();
+  navigate('notes');
+  setTimeout(()=>viewNote(noteIdx),120);
+}
 function padModalExec(cmd,val){ document.execCommand(cmd,false,val||null); qs('#pad-modal-editor')?.focus(); }
 function savePadModal(i){
   const title=qs('#pad-modal-title')?.value.trim()||'Untitled Pad';
@@ -6159,9 +6448,8 @@ function openStickyPad(noteIdx){
     if(nameEl && !nameEl.value) nameEl.value=`Notes on: ${n.name}`;
     const editor=qs('#sticky-editor');
     if(editor) editor._linkedNoteIdx=noteIdx;
-    // Show mini note context
     const ctx=qs('#pad-note-ctx');
-    if(ctx){ ctx.textContent=`📎 Linked to: ${n.name}`; ctx.style.display='block'; }
+    if(ctx){ ctx.textContent=`📎 Linked to: ${n.name}`; ctx.style.display='block'; ctx.style.cursor='pointer'; ctx.onclick=()=>{ closeStickyPad(); navigate('notes'); setTimeout(()=>viewNote(noteIdx),80); }; }
   }
   setTimeout(()=>{const e=qs('#sticky-editor');if(e)e.focus()},50);
 }
@@ -6191,7 +6479,8 @@ function saveStickyPad(){
   const name=nameEl?.value.trim()||'Untitled Pad';
   const linkedIdx=editor._linkedNoteIdx;
   const linkedNote=linkedIdx!==undefined?STATE.notes[linkedIdx]?.name:null;
-  const pad={name,content,date:new Date().toLocaleDateString(),linkedNote:linkedNote||null};
+  const linkedNoteId=linkedIdx!==undefined?(STATE.notes[linkedIdx]?.id??null):null;
+  const pad={name,content,date:new Date().toLocaleDateString(),linkedNote:linkedNote||null,linkedNoteId:linkedNoteId||null};
   if(editor._editIndex!==undefined&&STATE.savedPads[editor._editIndex]){
     STATE.savedPads[editor._editIndex]={...pad};showToast('Pad updated!');
   }else{
@@ -6425,7 +6714,34 @@ function saveUserPrevStems(){ try{ sv(userKey('prev_q_stems'), STATE.prevQStems|
 // --- Saved Pads: simple stable helpers (revert-like) ---
 if (typeof padFolderListHTML !== 'function') {
   function padFolderListHTML(){
-    return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px"></div>`;
+    const folders = STATE.padFolders || [];
+    if (!folders.length) return `<div style="color:var(--text3);font-size:12px;text-align:center;padding:16px">No folders yet. Click "+ New Folder" to add one.</div>`;
+    return folders.map((f) => {
+      const name = (f.name || 'New folder').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+      return `<div class="pad-folder-item" style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:var(--surface2)" data-pad-folder-id="${f.id}">
+        <span style="font-size:13px;color:var(--text)">${name}</span>
+        <button type="button" class="btn btn-ghost btn-sm" style="padding:2px 6px;font-size:11px" onclick="deletePadFolder('${f.id}')" title="Delete folder">✕</button>
+      </div>`;
+    }).join('');
+  }
+}
+if (typeof createPadFolder !== 'function') {
+  function createPadFolder() {
+    STATE.padFolders = STATE.padFolders || [];
+    STATE.padFolders.push({ id: 'pf' + Date.now(), name: 'New folder' });
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
+    showToast('Folder created');
+  }
+}
+if (typeof deletePadFolder !== 'function') {
+  function deletePadFolder(id) {
+    if (!confirm('Delete this folder? Pads inside will not be deleted.')) return;
+    STATE.padFolders = (STATE.padFolders || []).filter(f => f.id !== id);
+    saveUserPads();
+    const list = qs('#pad-folder-list');
+    if (list) list.innerHTML = padFolderListHTML();
   }
 }
 if (typeof padItemHTML !== 'function' || String(padItemHTML).indexOf('pad-item-title')<0) {
