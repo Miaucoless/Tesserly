@@ -1141,10 +1141,11 @@ body[data-bg-pattern="noise"]:before{content:'';position:fixed;inset:0;backgroun
 
 /* ══ PDF VIEWER ══ */
 .pdf-viewer-overlay{ position:fixed;inset:0;z-index:500;background:rgba(8,8,12,0.96);display:flex;flex-direction:column; }
-.pdf-viewer-bar{ height:54px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;padding:0 16px;flex-shrink:0; }
-.pdf-viewer-bar-actions{ margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0; }
-.pdf-viewer-bar-actions .btn{ white-space:nowrap; }
-.pdf-viewer-bar .bar-divider{ width:1px;height:22px;background:var(--border2);margin:0 4px;flex-shrink:0; }
+.pdf-viewer-bar{ height:54px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;padding:0 16px;flex-shrink:0; }
+.pdf-viewer-bar-actions{ margin-left:auto;display:flex;align-items:center;gap:4px;flex-shrink:0; }
+.pdf-viewer-bar-actions .btn-icon-only{ width:36px;height:36px;padding:0;display:inline-flex;align-items:center;justify-content:center;min-width:36px }
+.pdf-viewer-bar .bar-divider{ width:1px;height:22px;background:var(--border2);margin:0 8px;flex-shrink:0; }
+.pdf-viewer-title{ font-family:var(--heading);font-size:15px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;margin-right:8px; }
 .timed-exam-overlay{position:fixed;inset:0;z-index:800;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
 .timed-exam-header{display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
 .timed-exam-timer{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--accent);min-width:80px;text-align:center}
@@ -1162,7 +1163,6 @@ body[data-bg-pattern="noise"]:before{content:'';position:fixed;inset:0;backgroun
 .annot-canvas-overlay{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.92);display:flex;flex-direction:column}
 .annot-toolbar{display:flex;align-items:center;gap:10px;padding:10px 18px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap}
 .annot-canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
-.pdf-viewer-title{ font-family:var(--heading);font-size:15px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0; }
 .pdf-viewer-body{ flex:1;overflow-y:auto;padding:24px 24px 32px;display:flex;flex-direction:column;align-items:center;gap:16px; }
 .pdf-page-wrap{ position:relative;flex-shrink:0;border-radius:8px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.6); }
 .pdf-page-canvas{ display:block; }
@@ -2474,12 +2474,14 @@ select.input{cursor:pointer}
       <div class="settings-section" style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px">
         <h4>🔑 AI Provider & API Key</h4>
         <div style="font-size:11px;color:var(--text3);margin-bottom:8px;line-height:1.5">Supports Anthropic Claude, OpenAI, OpenRouter, and Groq. Your key is stored locally only.</div>
-        <select class="setting-select" id="api-provider-sel" style="margin-bottom:8px;width:100%" onchange="(function(v){const m=qs('#custom-model-wrap');if(m)m.style.display=v==='openrouter'||v==='openai'?'block':'none'})(this.value)">
+        <label style="font-size:11px;color:var(--text2);display:block;margin-bottom:4px">1. Select provider first, then paste key and click Save</label>
+        <select class="setting-select" id="api-provider-sel" style="margin-bottom:6px;width:100%" onchange="(function(v){const m=qs('#custom-model-wrap');if(m)m.style.display=v==='openrouter'||v==='openai'?'block':'none';const w=qs('#groq-browser-note');if(w)w.style.display=v==='groq'?'block':'none'})(this.value)">
           <option value="anthropic">Anthropic (Claude) — sk-ant-…</option>
           <option value="openai">OpenAI — sk-…</option>
           <option value="openrouter">OpenRouter (any model) — sk-or-…</option>
           <option value="groq">Groq — FREE — gsk_…</option>
         </select>
+        <div id="groq-browser-note" style="display:none;font-size:10px;color:var(--text3);background:var(--surface2);padding:6px 8px;border-radius:6px;margin-bottom:8px;line-height:1.4">⚠ Groq often blocks requests from the browser (web app). Use the <strong>desktop app</strong> for Groq, or pick Anthropic/OpenRouter for the web version.</div>
         <div id="custom-model-wrap" style="display:none;margin-bottom:8px">
           <input class="input" id="custom-model-input" placeholder="Model name, e.g. openai/gpt-oss-120b or gpt-4o" style="font-size:12px;width:100%;font-family:var(--mono)" autocomplete="off">
           <div style="font-size:10px;color:var(--text3);margin-top:3px">OpenRouter: use format <code>provider/model</code> e.g. <code>openai/gpt-oss-120b</code></div>
@@ -3155,6 +3157,8 @@ function renderWidgetToggles() {
   const customModelWrap = qs('#custom-model-wrap');
   if (customModelInp) customModelInp.value = ls('tesserly_custom_model','');
   if (customModelWrap) customModelWrap.style.display = (storedProvider==='openrouter'||storedProvider==='openai') ? 'block' : 'none';
+  const groqNote = qs('#groq-browser-note');
+  if (groqNote) groqNote.style.display = storedProvider === 'groq' ? 'block' : 'none';
 
   const glassEl = qs('#toggle-glass'); if(glassEl) glassEl.checked = ls('tesserly_glass',false);
   const iconOnlyEl = qs('#toggle-icononly'); if(iconOnlyEl) iconOnlyEl.checked = ls('tesserly_icon_only',false);
@@ -3461,8 +3465,12 @@ async function callAI(system, user, maxTokens=2000) {
     const d=await r.json(); return d.content?.[0]?.text||'';
   } catch (e) {
     if (isNetworkError(e)) {
-      showToast('Connection error. Check internet and API key (Customize → API).');
-      throw new Error('Connection error. Check your internet and API key in Customize → API.');
+      const provider = ls('tesserly_api_provider','anthropic');
+      let msg = 'Connection error. ';
+      if (provider === 'groq') msg += 'Groq often blocks browser requests — try the desktop app, or use Anthropic/OpenRouter on web. ';
+      msg += 'Confirm you selected the right provider (e.g. Groq) and clicked Save in Customize → API.';
+      showToast(msg);
+      throw new Error(msg);
     }
     throw e;
   }
@@ -4692,14 +4700,14 @@ function viewNote(i) {
   const isPPTX = n.fileName && n.fileName.toLowerCase().endsWith('.pptx') && n._pptxBase64;
   const isDocx = n.fileName && n.fileName.toLowerCase().endsWith('.docx') && n._docxHtml;
 
-  // Common bar controls — actions grouped on the right with divider
+  // Common bar controls — actions grouped on the right, icon-only to reduce clutter
   const barBtns = (extra='') => `
-    <button class="btn btn-secondary btn-sm" onclick="closeNoteViewer()">${icon(`<line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/>`)} Close</button>
+    <button class="btn btn-secondary btn-sm" onclick="closeNoteViewer()">${icon(`<line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/>`)}</button>
     <div class="pdf-viewer-title">${n.name}</div>
     <div class="bar-divider"></div>
     <div class="pdf-viewer-bar-actions">
-      <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/><path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"/>`,14)} Pad</button>
       ${extra}
+      <button class="btn btn-ghost btn-sm btn-icon-only" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/><path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"/>`,16)}</button>
     </div>
   `;
 
@@ -4717,9 +4725,9 @@ function viewNote(i) {
         </div>
         <div class="bar-divider"></div>
         <div class="pdf-viewer-bar-actions">
-          <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
-          <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" title="Open in new tab">Original</button>
-          <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" title="Download file">Download</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,16)}</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="openOriginalInNewTab(${i})" title="Open in new tab">${icon(`<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>`,16)}</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="downloadOriginal(${i})" title="Download">${icon(`<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>`,16)}</button>
         </div>
       </div>
       ${pdfLinkedHTML}
@@ -4819,9 +4827,9 @@ function viewNote(i) {
         </div>
         <div class="bar-divider"></div>
         <div class="pdf-viewer-bar-actions">
-          <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
-          <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" title="Open in new tab">Original</button>
-          <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" title="Download">Download</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,16)}</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="openOriginalInNewTab(${i})" title="Open in new tab">${icon(`<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>`,16)}</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="downloadOriginal(${i})" title="Download">${icon(`<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>`,16)}</button>
         </div>
       </div>
       <div class="ppt-viewer-wrap">
@@ -4950,8 +4958,9 @@ function viewNote(i) {
         <div class="pdf-viewer-title">${n.name}</div>
         <div class="bar-divider"></div>
         <div class="pdf-viewer-bar-actions">
-          <button class="btn btn-ghost btn-sm" onclick="addAnnotationImage(${i})" title="Add image">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,14)} Image</button>
-          <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="addAnnotationImage(${i})" title="Add image">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,16)}</button>
+          <button class="btn btn-ghost btn-sm btn-icon-only" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,16)}</button>
+        </div>
       </div>
       <div class="docx-viewer-body">${n._docxHtml}${renderAnnotStrip(i)}</div>`;
     document.body.appendChild(overlay);
@@ -4967,7 +4976,7 @@ function viewNote(i) {
   </div>` : '';
   overlay.innerHTML = `
     <div class="pdf-viewer-bar">
-      ${barBtns((needsAttach?`<button class=\"btn btn-ghost btn-sm\" onclick=\"attachOriginalFile(${i})\">Attach Original…</button>`:'')+`<button class=\"btn btn-ghost btn-sm\" onclick=\"addAnnotationImage(${i})\">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,14)} Image</button>`)}
+      ${barBtns((needsAttach?`<button class="btn btn-ghost btn-sm btn-icon-only" onclick="attachOriginalFile(${i})" title="Attach original file">${icon(`<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>`,16)}</button>`:'')+`<button class="btn btn-ghost btn-sm btn-icon-only" onclick="addAnnotationImage(${i})" title="Add image">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,16)}</button>`)}
     </div>
     ${linkedPadsHTML}
     <div class="text-viewer-body" id="note-viewer-body">${n.type==='summary' ? n.content : n.content.replace(/</g,'&lt;')}${renderAnnotStrip(i)}</div>`;
