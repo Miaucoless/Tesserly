@@ -1177,10 +1177,60 @@ body{
 /* ══════════════════════════════════════════
    LANDING SCREEN
 ══════════════════════════════════════════ */
-#landing-screen{
+.landing-screen-scroll{display:flex;flex-direction:column;background:var(--bg);overflow:hidden}
+.landing-nav{
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 32px;
+  background:rgba(7,9,15,0.85);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(8px);
+  position:relative;z-index:20;
+}
+.landing-nav-logo{
+  font-family:var(--heading);
+  font-size:20px;
+  color:var(--text);
+  letter-spacing:0.02em;
+}
+.landing-nav-logo em{font-style:italic;color:var(--accent)}
+.landing-nav-right{display:flex;align-items:center;gap:16px}
+.landing-nav-link{
+  font-family:var(--body);
+  font-size:14px;
+  color:var(--text2);
+  cursor:pointer;
+  transition:color 0.2s ease;
+}
+.landing-nav-link:hover{color:var(--accent)}
+.landing-dashboard-wrap{display:flex;align-items:center;gap:12px}
+.landing-dashboard-wrap.hidden{display:none}
+.landing-nav-dashboard{
+  padding:8px 16px;
+  background:var(--accent);
+  color:#070b14;
+  font-family:var(--body);
+  font-size:13px;font-weight:600;
+  border:none;border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:filter 0.2s ease, transform 0.2s ease;
+}
+.landing-nav-dashboard:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.landing-nav-avatar{
+  width:36px;height:36px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#070b14;
+  font-family:var(--body);
+  font-size:14px;font-weight:600;
   display:flex;align-items:center;justify-content:center;
-  background:var(--bg);
-  overflow:hidden;
+}
+
+#landing-screen .landing-scroll{
+  flex:1;
+  overflow-y:auto;
+  overflow-x:hidden;
+  position:relative;
 }
 
 .landing-bg{
@@ -1190,6 +1240,7 @@ body{
     radial-gradient(ellipse 60% 80% at 80% 20%, rgba(123,147,255,0.06) 0%, transparent 50%),
     radial-gradient(ellipse 50% 50% at 20% 80%, rgba(93,253,203,0.04) 0%, transparent 50%);
   animation:landing-bg-shift 12s ease-in-out infinite alternate;
+  pointer-events:none;
 }
 
 @keyframes landing-bg-shift {
@@ -1201,6 +1252,7 @@ body{
   position:absolute;border-radius:50%;
   filter:blur(60px);opacity:0.35;
   animation:landing-float 8s ease-in-out infinite;
+  pointer-events:none;
 }
 .landing-shape-1{
   width:280px;height:280px;
@@ -1220,11 +1272,14 @@ body{
   50%{transform:translate(20px,-15px) scale(1.05)}
 }
 
-.landing-content{
+.landing-hero-section{
   position:relative;z-index:2;
   text-align:center;
   max-width:640px;
-  padding:0 24px;
+  margin:0 auto;
+  padding:80px 24px 100px;
+  min-height:70vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 
 .landing-hero{
@@ -1280,15 +1335,58 @@ body{
 }
 .landing-cta:active{transform:translateY(0)}
 
-.landing-logo{
-  position:absolute;top:28px;left:50%;
-  transform:translateX(-50%);
-  font-family:var(--heading);
-  font-size:18px;
-  color:var(--text3);
-  letter-spacing:0.05em;
-  z-index:2;
+.landing-features{
+  position:relative;z-index:2;
+  max-width:720px;
+  margin:0 auto;
+  padding:40px 24px 80px;
 }
+.landing-features-title{
+  font-family:var(--heading);
+  font-size:clamp(1.5rem,4vw,2rem);
+  color:var(--text);
+  text-align:center;
+  margin:0 0 48px;
+}
+
+.landing-feature{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+  margin-bottom:40px;
+  padding:24px;
+  background:rgba(13,16,24,0.6);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.5s ease, transform 0.5s ease, border-color 0.2s ease;
+}
+.landing-feature.visible{opacity:1;transform:translateY(0)}
+.landing-feature:hover{border-color:var(--border2)}
+.landing-feature-icon{font-size:32px;flex-shrink:0}
+.landing-feature-heading{
+  font-family:var(--body);
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--text);
+  margin:0 0 8px;
+}
+.landing-feature-text{
+  font-family:var(--body);
+  font-size:14px;
+  color:var(--text2);
+  line-height:1.5;
+  margin:0;
+}
+
+.landing-cta-section{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:60px 24px 80px;
+}
+.landing-cta-section .landing-sub{margin-bottom:20px;opacity:1;transform:none;animation:none}
+.landing-cta-section .landing-cta{opacity:1;transform:none;animation:none}
 
 /* ══════════════════════════════════════════
    AUTH SCREEN
@@ -1724,16 +1822,59 @@ select.input{cursor:pointer}
 <!-- ══════════════════════════════════════
      LANDING SCREEN
 ══════════════════════════════════════ -->
-<div id="landing-screen" class="screen">
-  <div class="landing-bg"></div>
-  <div class="landing-shape landing-shape-1"></div>
-  <div class="landing-shape landing-shape-2"></div>
-  <div class="landing-content">
-    <h1 class="landing-hero">Medical school is hard.<br>Studying shouldn't be.</h1>
-    <p class="landing-sub">Notes, practice, and progress in one place — built for USMLE prep.</p>
-    <button class="landing-cta" onclick="showScreen('auth-screen')">Get started</button>
+<div id="landing-screen" class="screen landing-screen-scroll">
+  <div class="landing-nav">
+    <div class="landing-nav-logo"><em>Tesserly</em></div>
+    <div class="landing-nav-right">
+      <span id="landing-sign-in" class="landing-nav-link" onclick="showScreen('auth-screen')">Sign in</span>
+      <div id="landing-dashboard-wrap" class="landing-dashboard-wrap hidden">
+        <button type="button" class="landing-nav-dashboard" id="landing-dashboard-btn">Dashboard</button>
+        <div class="landing-nav-avatar" id="landing-nav-avatar">—</div>
+      </div>
+    </div>
   </div>
-  <div class="landing-logo">Tesserly</div>
+  <div class="landing-scroll">
+    <div class="landing-bg"></div>
+    <div class="landing-shape landing-shape-1"></div>
+    <div class="landing-shape landing-shape-2"></div>
+    <div class="landing-hero-section">
+      <h1 class="landing-hero">Medical school is hard.<br>Studying shouldn't be.</h1>
+      <p class="landing-sub">Notes, practice, and progress in one place — built for USMLE prep.</p>
+      <button class="landing-cta" id="landing-cta-hero" onclick="showScreen('auth-screen')">Get started</button>
+    </div>
+    <section class="landing-features">
+      <h2 class="landing-features-title">Everything you need for USMLE prep</h2>
+      <div class="landing-feature landing-feature-1">
+        <div class="landing-feature-icon">📝</div>
+        <h3 class="landing-feature-heading">Notes & library</h3>
+        <p class="landing-feature-text">Import PDFs, DOCX, and slides. Organize by folder and link notes to study pads.</p>
+      </div>
+      <div class="landing-feature landing-feature-2">
+        <div class="landing-feature-icon">❓</div>
+        <h3 class="landing-feature-heading">USMLE Step 1 & 2 questions</h3>
+        <p class="landing-feature-text">Generate practice questions from your notes. Track wrong answers and review by topic.</p>
+      </div>
+      <div class="landing-feature landing-feature-3">
+        <div class="landing-feature-icon">🃏</div>
+        <h3 class="landing-feature-heading">Anki generator</h3>
+        <p class="landing-feature-text">Turn notes into cloze cards. Export for Anki or study in-app.</p>
+      </div>
+      <div class="landing-feature landing-feature-4">
+        <div class="landing-feature-icon">✨</div>
+        <h3 class="landing-feature-heading">Summarize & AI</h3>
+        <p class="landing-feature-text">Summarize imported notes, get explanations, and connect concepts with your own API key.</p>
+      </div>
+      <div class="landing-feature landing-feature-5">
+        <div class="landing-feature-icon">📅</div>
+        <h3 class="landing-feature-heading">Calendar</h3>
+        <p class="landing-feature-text">Schedule study blocks and events. Syncs across devices when you're signed in.</p>
+      </div>
+    </section>
+    <div class="landing-cta-section">
+      <p class="landing-sub">Ready to study smarter?</p>
+      <button class="landing-cta" onclick="showScreen('auth-screen')">Get started</button>
+    </div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -2496,6 +2637,28 @@ function showScreen(id) {
   qs('#'+id).classList.remove('hidden');
 }
 
+function updateLandingBar(signedIn) {
+  var signInEl = qs('#landing-sign-in');
+  var dashWrap = qs('#landing-dashboard-wrap');
+  var avatarEl = qs('#landing-nav-avatar');
+  var dashBtn = qs('#landing-dashboard-btn');
+  if (!signInEl || !dashWrap) return;
+  if (signedIn && AUTH.currentUser) {
+    signInEl.style.display = 'none';
+    dashWrap.classList.remove('hidden');
+    var name = AUTH.currentUser.name || AUTH.currentUser.email || 'User';
+    avatarEl.textContent = name.charAt(0).toUpperCase();
+    dashBtn.onclick = function() {
+      loadUserData();
+      enterApp();
+    };
+  } else {
+    signInEl.style.display = '';
+    dashWrap.classList.add('hidden');
+    dashBtn.onclick = null;
+  }
+}
+
 function enterApp() {
   const user = AUTH.currentUser;
   if (!user) return;
@@ -2627,18 +2790,27 @@ document.addEventListener('DOMContentLoaded', () => {
       window.supabase.auth.getSession().then(({ data: { session } }) => {
         if (session) {
           setUserFromSession(session);
-          fetchStateFromSupabase().then(() => {
-            loadUserData();
-            enterApp();
-          }).catch(() => { loadUserData(); enterApp(); });
+          fetchStateFromSupabase().then(() => loadUserData()).catch(() => loadUserData());
+          updateLandingBar(true);
+          showScreen('landing-screen');
         } else {
+          updateLandingBar(false);
           showScreen('landing-screen');
         }
-      }).catch(() => showScreen('landing-screen'));
+      }).catch(() => { updateLandingBar(false); showScreen('landing-screen'); });
     } else {
       if (AUTH.currentUser) enterApp();
-      else showScreen('landing-screen');
+      else { updateLandingBar(false); showScreen('landing-screen'); }
     }
+  }
+  var landingScroll = qs('#landing-screen .landing-scroll');
+  if (landingScroll) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, { rootMargin: '0px 0px -60px 0px', threshold: 0.1 });
+    qs('#landing-screen').querySelectorAll('.landing-feature').forEach(function(el) { io.observe(el); });
   }
   if (hasConfig) {
     ensureSupabaseLoaded(runAuthFlow);
