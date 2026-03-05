@@ -2,6 +2,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
+// Use "Tesserly" in Dock/CMD+Tab (avoids showing "Electron" when running npm start)
+app.setName('Tesserly');
+
 // --- Auto-update (electron-updater) ---
 const { autoUpdater } = require('electron-updater');
 

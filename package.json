@@ -21,7 +21,8 @@
     "build": "electron-builder",
     "build:mac": "electron-builder --mac",
     "build:win": "electron-builder --win",
-    "build:web": "node scripts/build-web.js"
+    "build:web": "node scripts/build-web.js",
+    "build:all": "npm run build:web && npm run build:mac"
   },
   "build": {
     "appId": "com.tesserly.app",
@@ -45,8 +46,7 @@
         "nsis",
         "portable",
         "zip"
-      ],
-      "arch": ["x64"]
+      ]
     },
     "publish": [
       {

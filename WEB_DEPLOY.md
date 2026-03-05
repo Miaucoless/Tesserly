@@ -40,3 +40,15 @@ Then open http://localhost:3000 (or the URL `serve` prints).
 Ensure Supabase is set up (see `SUPABASE.md`). For the web app you can either:
 - Set **Vercel env vars** `SUPABASE_URL` and `SUPABASE_ANON_KEY` (recommended for production), or
 - Use `src/supabase-config.js` with your project URL and anon key (and ensure it’s committed so the build can copy it).
+
+## Updating website and Mac app together
+
+1. **Build both targets:**
+   ```bash
+   npm run build:all
+   ```
+   This runs `build:web` (output in `public/`) then `build:mac` (output in `dist/`, including the `.dmg`).
+
+2. **Deploy the website:** Commit and push to `main`. Vercel will deploy from the new `public/` (it runs `build:web` on its own; your local `public/` is for reference).
+
+3. **Ship the Mac app:** Use the new `.dmg` from `dist/`. Optionally upload it to GitHub Releases for users to download.

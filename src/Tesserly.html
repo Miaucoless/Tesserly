@@ -6315,8 +6315,11 @@ async function getAITopics(noteIds){
 // ════════════════════════════════════════════
 function toggleSettings(){
   const panel=qs('#settings-panel');const overlay=qs('#overlay');
-  const open=panel.classList.contains('open');
-  panel.classList.toggle('open');overlay.classList.toggle('active',!open);
+  const wasOpen=panel.classList.contains('open');
+  panel.classList.toggle('open');overlay.classList.toggle('active',wasOpen);
+  const nowOpen=panel.classList.contains('open');
+  const sBtn=qs('#sticky-btn');
+  if(sBtn)sBtn.classList.toggle('hidden',nowOpen||STATE.currentTab==='pads');
 }
 function setFontSize(size,el){
   document.documentElement.setAttribute('data-fontsize',size);
