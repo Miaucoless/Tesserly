@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<!-- INJECT_SUPABASE_ENV -->
 <script>
 // Web stub when not running in Electron (so the same app works in browser)
 if (typeof window.tesserly === 'undefined') {
@@ -2168,13 +2169,43 @@ const AUTH = {
 };
 
 // Supabase client (set by initSupabase when URL/key are configured)
-window.supabase = null;
 
-function initSupabase() {
-  if (typeof supabase === 'undefined' || !window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) return;
-  if (window.SUPABASE_URL.includes('YOUR_PROJECT') || window.SUPABASE_ANON_KEY.includes('YOUR_')) return;
+function ensureSupabaseLoaded(done) {
+  var lib = null;
   try {
-    window.supabase = supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+    if (window.supabase != null && typeof window.supabase.createClient === 'function') lib = window.supabase;
+    else if (typeof supabase !== 'undefined' && supabase != null && typeof supabase.createClient === 'function') lib = supabase;
+  } catch (_) {}
+  if (lib) { done(); return; }
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.async = false;
+  s.onload = done;
+  document.head.appendChild(s);
+}
+
+function initSupabase(retryCount) {
+  retryCount = retryCount || 0;
+  if (!window.SUPABASE_URL || !window.SUPABASE_ANON_KEY) return;
+  if (window.SUPABASE_URL.includes('YOUR_PROJECT') || window.SUPABASE_ANON_KEY.includes('YOUR_')) return;
+  var lib = null;
+  try {
+    if (window.supabase != null && typeof window.supabase.createClient === 'function') lib = window.supabase;
+    else if (typeof supabase !== 'undefined' && supabase != null && typeof supabase.createClient === 'function') lib = supabase;
+  } catch (_) {}
+  if (!lib) {
+    if (retryCount < 2) { setTimeout(function(){ initSupabase(retryCount + 1); }, 400); return; }
+    if (retryCount === 2) {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+      s.async = false;
+      s.onload = function(){ initSupabase(0); };
+      document.head.appendChild(s);
+    }
+    return;
+  }
+  try {
+    window.supabase = lib.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
   } catch (e) { console.warn('Supabase init failed', e); }
 }
 
@@ -2217,9 +2248,9 @@ function setSyncBlob(blob) {
 
 function fetchStateFromSupabase() {
   if (!window.supabase || !AUTH.currentUser || !AUTH.currentUser.id) return Promise.resolve();
-  return window.supabase.from('user_data').select('state').eq('user_id', AUTH.currentUser.id).single()
+  return window.supabase.from('user_data').select('state').eq('user_id', AUTH.currentUser.id).maybeSingle()
     .then(({ data, error }) => {
-      if (error && error.code !== 'PGRST116') { console.warn('Supabase fetch state', error); return; }
+      if (error) { console.warn('Supabase fetch state', error); return; }
       if (data && data.state && typeof data.state === 'object') {
         Object.keys(data.state).forEach(k => {
           try {
@@ -2457,22 +2488,30 @@ const TABS = [
 // INIT
 // ════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  initSupabase();
-  if (window.supabase) {
-    window.supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setUserFromSession(session);
-        fetchStateFromSupabase().then(() => {
-          loadUserData();
-          enterApp();
-        }).catch(() => { loadUserData(); enterApp(); });
-      } else {
-        showScreen('auth-screen');
-      }
-    }).catch(() => showScreen('auth-screen'));
+  var hasConfig = window.SUPABASE_URL && window.SUPABASE_ANON_KEY && !window.SUPABASE_URL.includes('YOUR_PROJECT') && !window.SUPABASE_ANON_KEY.includes('YOUR_');
+  function runAuthFlow() {
+    initSupabase();
+    if (window.supabase) {
+      window.supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setUserFromSession(session);
+          fetchStateFromSupabase().then(() => {
+            loadUserData();
+            enterApp();
+          }).catch(() => { loadUserData(); enterApp(); });
+        } else {
+          showScreen('auth-screen');
+        }
+      }).catch(() => showScreen('auth-screen'));
+    } else {
+      if (AUTH.currentUser) enterApp();
+      else showScreen('auth-screen');
+    }
+  }
+  if (hasConfig) {
+    ensureSupabaseLoaded(runAuthFlow);
   } else {
-    if (AUTH.currentUser) enterApp();
-    else showScreen('auth-screen');
+    runAuthFlow();
   }
   // Enter key support
   document.querySelectorAll('.auth-input').forEach(inp => {

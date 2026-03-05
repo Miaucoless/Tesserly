@@ -15,9 +15,14 @@ The same Tesserly app runs in the browser. Auth and sync use Supabase (configure
    - Output Directory: `public`
    (Or set them if Vercel didn’t pick them up from `vercel.json`.)
 
-5. **Deploy.** Vercel will run `npm run build:web` (copying `src/Tesserly.html` → `public/index.html` and `src/supabase-config.js` → `public/supabase-config.js`), then serve the `public` folder.
+5. **Supabase on Vercel (recommended):** In the project **Settings → Environment Variables**, add:
+   - `SUPABASE_URL` = your Supabase project URL (e.g. `https://xxxx.supabase.co`)
+   - `SUPABASE_ANON_KEY` = your Supabase anon (publishable) key  
+   The build will inject these into the page so sync works even if `supabase-config.js` isn’t cached. Redeploy after adding them.
 
-6. Your app will be at `https://your-project.vercel.app`.
+6. **Deploy.** Vercel runs `npm run build:web` (copies `src/Tesserly.html` → `public/index.html`, copies `src/supabase-config.js` when present, and injects env config when `SUPABASE_URL` and `SUPABASE_ANON_KEY` are set), then serves the `public` folder.
+
+7. Your app will be at `https://your-project.vercel.app`.
 
 ## Local web build
 
@@ -32,4 +37,6 @@ Then open http://localhost:3000 (or the URL `serve` prints).
 
 ## Supabase
 
-Ensure Supabase is set up (see `SUPABASE.md`) and that `src/supabase-config.js` has your project URL and anon key. The web app uses the same Supabase project for auth and sync.
+Ensure Supabase is set up (see `SUPABASE.md`). For the web app you can either:
+- Set **Vercel env vars** `SUPABASE_URL` and `SUPABASE_ANON_KEY` (recommended for production), or
+- Use `src/supabase-config.js` with your project URL and anon key (and ensure it’s committed so the build can copy it).

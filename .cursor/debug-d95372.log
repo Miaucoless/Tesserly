@@ -1,0 +1,6 @@
+{"sessionId":"d95372","location":"Tesserly.html:2173","message":"initSupabase entry","data":{"retryCount":0,"hasUrl":true,"hasKey":true,"urlPlaceholder":true,"keyPlaceholder":true},"timestamp":1772717940096,"hypothesisId":"H1"}
+{"sessionId":"d95372","location":"Tesserly.html:2182","message":"after lib resolution","data":{"hasLib":true,"retryCount":0,"willRetry":true,"willInject":false},"timestamp":1772717940096,"hypothesisId":"H2"}
+{"sessionId":"d95372","location":"Tesserly.html:2194","message":"before createClient","data":{"hasLib":true,"hasCreateClient":true},"timestamp":1772717940096,"hypothesisId":"H4"}
+{"sessionId":"d95372","location":"Tesserly.html:2173","message":"initSupabase entry","data":{"retryCount":0,"hasUrl":true,"hasKey":true,"urlPlaceholder":true,"keyPlaceholder":true},"timestamp":1772718534400,"hypothesisId":"H1"}
+{"sessionId":"d95372","location":"Tesserly.html:2182","message":"after lib resolution","data":{"hasLib":true,"retryCount":0,"willRetry":true,"willInject":false},"timestamp":1772718534401,"hypothesisId":"H2"}
+{"sessionId":"d95372","location":"Tesserly.html:2194","message":"before createClient","data":{"hasLib":true,"hasCreateClient":true},"timestamp":1772718534401,"hypothesisId":"H4"}

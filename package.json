@@ -21,7 +21,7 @@
     "build": "electron-builder",
     "build:mac": "electron-builder --mac",
     "build:win": "electron-builder --win",
-    "build:web": "mkdir -p public && cp src/Tesserly.html public/index.html && cp src/supabase-config.js public/supabase-config.js"
+    "build:web": "node scripts/build-web.js"
   },
   "build": {
     "appId": "com.tesserly.app",
