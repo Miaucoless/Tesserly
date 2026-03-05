@@ -1,0 +1,59 @@
+{
+  "name": "tesserly",
+  "version": "1.0.4",
+  "description": "Tesserly – USMLE Prep Platform (Electron desktop app)",
+  "author": "You",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "src/main.js",
+  "dependencies": {
+    "electron-updater": "^6.8.3",
+    "electron-log": "^5.2.0"
+  },
+  "devDependencies": {
+    "electron": "^40.7.0",
+    "electron-builder": "^24.13.3"
+  },
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:web": "mkdir -p public && cp src/Tesserly.html public/index.html && cp src/supabase-config.js public/supabase-config.js"
+  },
+  "build": {
+    "appId": "com.tesserly.app",
+    "productName": "Tesserly",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "artifactName": "Tesserly-${version}-${os}-${arch}.${ext}",
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable",
+        "zip"
+      ],
+      "arch": ["x64"]
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Miaucoless",
+        "repo": "Tesserly"
+      }
+    ]
+  }
+}

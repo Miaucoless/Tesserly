@@ -1,0 +1,949 @@
+Last login: Tue Mar  3 19:51:32 on ttys000
+miaucoles@Joshs-Air-3 ~ % cd /Users/miaucoles/Downloads/Tesserly/electron-macos-tesserly/src/fonts 
+miaucoles@Joshs-Air-3 fonts % cd /Users/miaucoles/Downloads/Tesserly/electron-macos-tesserly/src/fonts 
+miaucoles@Joshs-Air-3 fonts % >....                                                                                     
+
+# --- JetBrains Mono (static TTFs from JetBrains) ---
+mkdir -p jetbrains-mono && cd jetbrains-mono
+curl -fsSL https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o JetBrainsMono.zip || true
+if [ -f JetBrainsMono.zip ]; then
+  unzip -o JetBrainsMono.zip "*/ttf/*.ttf"
+  mv */ttf/*.ttf ./ 2>/dev/null || true
+  rm -rf __MACOSX */ JetBrainsMono.zip
+fi
+cd ..
+
+# --- Fira Code (static TTFs from official release) ---
+mkdir -p fira-code && cd fira-code
+curl -fsSL https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip -o FiraCode.zip
+unzip -o FiraCode.zip "ttf/*.ttf"
+mv ttf/*.ttf ./ 2>/dev/null || true
+rm -rf ttf __MACOSX FiraCode.zip
+cd ..
+
+# --- Bebas Neue (static TTF) ---
+mkdir -p bebas-neue && cd bebas-neue
+curl -fsSL "https://fonts.google.com/download?family=Bebas%20Neue" -o BebasNeue.zip
+unzip -o BebasNeue.zip "*/BebasNeue-Regular.ttf"
+mv */BebasNeue-Regular.ttf ./ 2>/dev/null || true
+rm -rf __MACOSX */ BebasNeue.zip
+cd ..
+
+echo "✅ All 10 font families downloaded."
+EOF
+Downloading into /Users/miaucoles/Downloads/Tesserly/electron-macos-tesserly/src/fonts
+Archive:  Roboto.zip
+  End-of-central-directory signature not found.  Either this file is not
+  a zipfile, or it constitutes one disk of a multi-part archive.  In the
+  latter case the central directory and zipfile comment will be found on
+  the last disk(s) of this archive.
+unzip:  cannot find zipfile directory in one of Roboto.zip or
+        Roboto.zip.zip, and cannot find Roboto.zip.ZIP, period.
+miaucoles@Joshs-Air-3 fonts % >....                                                                                     
+mkdir -p lora && cd lora
+curl -fsSL https://github.com/cyrealtype/Lora-Cyrillic/releases/latest/download/Lora.zip -o Lora.zip
+unzip -o Lora.zip
+rm Lora.zip
+cd ..
+
+# --- JetBrains Mono (official) ---
+mkdir -p jetbrains-mono && cd jetbrains-mono
+curl -fsSL https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o JetBrainsMono.zip
+unzip -o JetBrainsMono.zip
+rm JetBrainsMono.zip
+cd ..
+
+# --- Fira Code (GitHub official release) ---
+mkdir -p fira-code && cd fira-code
+curl -fsSL https://github.com/tonsky/FiraCode/releases/latest/download/Fira_Code_v6.2.zip -o FiraCode.zip
+unzip -o FiraCode.zip
+rm FiraCode.zip
+cd ..
+
+# --- Bebas Neue (GitHub: DharmaType/Bebas-Neue) ---
+mkdir -p bebas-neue && cd bebas-neue
+curl -fsSL https://github.com/dharmatype/Bebas-Neue/releases/latest/download/BebasNeue.zip -o bebasneue.zip
+unzip -o bebasneue.zip
+rm bebasneue.zip
+cd ..
+
+echo "🎉 ALL 10 FONTS DOWNLOADED SUCCESSFULLY!"
+EOF
+Downloading ALL fonts into /Users/miaucoles/Downloads/Tesserly/electron-macos-tesserly/src/fonts
+curl: (56) The requested URL returned error: 404
+miaucoles@Joshs-Air-3 fonts % >....                                                                                     
+
+# --- 7) Lora (cyrealtype/Lora-Cyrillic) ---
+clone_copy cyrealtype/Lora-Cyrillic lora
+
+# --- 8) JetBrains Mono (official zip) ---
+mkdir -p jetbrains-mono && cd jetbrains-mono
+curl -fsSL https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o JetBrainsMono.zip
+unzip -oq JetBrainsMono.zip
+# pull ttf/woff2 if present
+find . \( -iname '*.ttf' -o -iname '*.woff2' \) -maxdepth 3 -print0 | xargs -0 -I{} bash -c 'd=$(dirname "{}"); f=$(basename "{}"); [ "$d" = "." ] || mv -v "{}" "./$f"'
+rm -rf __MACOSX JetBrainsMono.zip */ */*/ || true
+cd ..
+
+# --- 9) Fira Code (official release zip) ---
+mkdir -p fira-code && cd fira-code
+curl -fsSL https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip -o FiraCode.zip
+unzip -oq FiraCode.zip
+# move ttf up
+find . -iname '*.ttf' -maxdepth 3 -print0 | xargs -0 -I{} bash -c 'd=$(dirname "{}"); f=$(basename "{}"); [ "$d" = "." ] || mv -v "{}" "./$f"'
+rm -rf __MACOSX FiraCode.zip ttf */ || true
+cd ..
+
+# --- 10) Bebas Neue (DharmaType/Bebas-Neue) ---
+clone_copy dharmatype/Bebas-Neue bebas-neue
+
+echo "✅ Done. Fonts copied into subfolders."
+EOF
+Downloading into /Users/miaucoles/Downloads/Tesserly/electron-macos-tesserly/src/fonts
+Cloning into '.tmp_roboto'...
+remote: Enumerating objects: 7136, done.
+remote: Counting objects: 100% (7136/7136), done.
+remote: Compressing objects: 100% (1051/1051), done.
+remote: Total 7136 (delta 6818), reused 6269 (delta 6064), pack-reused 0 (from 0)
+Receiving objects: 100% (7136/7136), 6.53 MiB | 6.83 MiB/s, done.
+Resolving deltas: 100% (6818/6818), done.
+.tmp_roboto/src/hinted/Roboto-Medium.ttf -> roboto/Roboto-Medium.ttf
+.tmp_roboto/src/hinted/Roboto-Light.ttf -> roboto/Roboto-Light.ttf
+.tmp_roboto/src/hinted/RobotoCondensed-Bold.ttf -> roboto/RobotoCondensed-Bold.ttf
+.tmp_roboto/src/hinted/RobotoCondensed-Light.ttf -> roboto/RobotoCondensed-Light.ttf
+.tmp_roboto/src/hinted/Roboto-Regular.ttf -> roboto/Roboto-Regular.ttf
+.tmp_roboto/src/hinted/Roboto-MediumItalic.ttf -> roboto/Roboto-MediumItalic.ttf
+.tmp_roboto/src/hinted/RobotoCondensed-Italic.ttf -> roboto/RobotoCondensed-Italic.ttf
+.tmp_roboto/src/hinted/RobotoCondensed-BoldItalic.ttf -> roboto/RobotoCondensed-BoldItalic.ttf
+.tmp_roboto/src/hinted/RobotoCondensed-LightItalic.ttf -> roboto/RobotoCondensed-LightItalic.ttf
+.tmp_roboto/src/hinted/Roboto-ThinItalic.ttf -> roboto/Roboto-ThinItalic.ttf
+.tmp_roboto/src/hinted/RobotoCondensed-Regular.ttf -> roboto/RobotoCondensed-Regular.ttf
+.tmp_roboto/src/hinted/Roboto-BoldItalic.ttf -> roboto/Roboto-BoldItalic.ttf
+.tmp_roboto/src/hinted/Roboto-LightItalic.ttf -> roboto/Roboto-LightItalic.ttf
+.tmp_roboto/src/hinted/Roboto-Italic.ttf -> roboto/Roboto-Italic.ttf
+.tmp_roboto/src/hinted/Roboto-BlackItalic.ttf -> roboto/Roboto-BlackItalic.ttf
+.tmp_roboto/src/hinted/Roboto-Bold.ttf -> roboto/Roboto-Bold.ttf
+.tmp_roboto/src/hinted/Roboto-Thin.ttf -> roboto/Roboto-Thin.ttf
+.tmp_roboto/src/hinted/Roboto-Black.ttf -> roboto/Roboto-Black.ttf
+Cloning into '.tmp_open-sans'...
+remote: Enumerating objects: 63980, done.
+remote: Counting objects: 100% (63980/63980), done.
+remote: Compressing objects: 100% (5574/5574), done.
+remote: Total 63980 (delta 63583), reused 58508 (delta 58406), pack-reused 0 (from 0)
+Receiving objects: 100% (63980/63980), 27.57 MiB | 12.61 MiB/s, done.
+Resolving deltas: 100% (63583/63583), done.
+Updating files: 100% (68826/68826), done.
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg600wd100.ttf -> open-sans/OpenSans-Italic-wg600wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg400wd75.ttf -> open-sans/OpenSans-Roman-wg400wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg700wd100.ttf -> open-sans/OpenSans-Roman-wg700wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg700wd75.ttf -> open-sans/OpenSans-Italic-wg700wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg300wd100.ttf -> open-sans/OpenSans-Italic-wg300wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg400wd100.ttf -> open-sans/OpenSans-Italic-wg400wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg300wd75.ttf -> open-sans/OpenSans-Roman-wg300wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic.ttf -> open-sans/OpenSans-Italic.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg800wd75.ttf -> open-sans/OpenSans-Roman-wg800wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg800wd100.ttf -> open-sans/OpenSans-Roman-wg800wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg600wd75.ttf -> open-sans/OpenSans-Italic-wg600wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg600wd100.ttf -> open-sans/OpenSans-Roman-wg600wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg300wd75.ttf -> open-sans/OpenSans-Italic-wg300wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg700wd100.ttf -> open-sans/OpenSans-Italic-wg700wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg600wd75.ttf -> open-sans/OpenSans-Roman-wg600wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg800wd75.ttf -> open-sans/OpenSans-Italic-wg800wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg300wd100.ttf -> open-sans/OpenSans-Roman-wg300wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg400wd100.ttf -> open-sans/OpenSans-Roman-wg400wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman.ttf -> open-sans/OpenSans-Roman.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Roman-wg700wd75.ttf -> open-sans/OpenSans-Roman-wg700wd75.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg800wd100.ttf -> open-sans/OpenSans-Italic-wg800wd100.ttf
+.tmp_open-sans/original source/TTF_VTT_source/OpenSans-Italic-wg400wd75.ttf -> open-sans/OpenSans-Italic-wg400wd75.ttf
+.tmp_open-sans/fonts/variable/OpenSans[wdth,wght].ttf -> open-sans/OpenSans[wdth,wght].ttf
+.tmp_open-sans/fonts/variable/OpenSans-Italic[wdth,wght].ttf -> open-sans/OpenSans-Italic[wdth,wght].ttf
+.tmp_open-sans/fonts/ttf/OpenSans-SemiBold.ttf -> open-sans/OpenSans-SemiBold.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedBoldItalic.ttf -> open-sans/OpenSans-CondensedBoldItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedExtraBoldItalic.ttf -> open-sans/OpenSans-CondensedExtraBoldItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedBold.ttf -> open-sans/OpenSans-CondensedBold.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedRegular.ttf -> open-sans/OpenSans-CondensedRegular.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedLight.ttf -> open-sans/OpenSans-CondensedLight.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedItalic.ttf -> open-sans/OpenSans-CondensedItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-Light.ttf -> open-sans/OpenSans-Light.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-Italic.ttf -> open-sans/OpenSans-Italic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-ExtraBold.ttf -> open-sans/OpenSans-ExtraBold.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-LightItalic.ttf -> open-sans/OpenSans-LightItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedSemiBoldItalic.ttf -> open-sans/OpenSans-CondensedSemiBoldItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-Bold.ttf -> open-sans/OpenSans-Bold.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-SemiBoldItalic.ttf -> open-sans/OpenSans-SemiBoldItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedSemiBold.ttf -> open-sans/OpenSans-CondensedSemiBold.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-ExtraBoldItalic.ttf -> open-sans/OpenSans-ExtraBoldItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-Regular.ttf -> open-sans/OpenSans-Regular.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-BoldItalic.ttf -> open-sans/OpenSans-BoldItalic.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedExtraBold.ttf -> open-sans/OpenSans-CondensedExtraBold.ttf
+.tmp_open-sans/fonts/ttf/OpenSans-CondensedLightItalic.ttf -> open-sans/OpenSans-CondensedLightItalic.ttf
+.tmp_open-sans/fonts/noto-set/variable/OpenSans[wdth,wght].ttf -> open-sans/OpenSans[wdth,wght].ttf
+.tmp_open-sans/fonts/noto-set/variable/OpenSans-Italic[wdth,wght].ttf -> open-sans/OpenSans-Italic[wdth,wght].ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-SemiBold.ttf -> open-sans/OpenSans-SemiBold.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedBoldItalic.ttf -> open-sans/OpenSans-CondensedBoldItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedExtraBoldItalic.ttf -> open-sans/OpenSans-CondensedExtraBoldItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedBold.ttf -> open-sans/OpenSans-CondensedBold.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedRegular.ttf -> open-sans/OpenSans-CondensedRegular.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedLight.ttf -> open-sans/OpenSans-CondensedLight.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedItalic.ttf -> open-sans/OpenSans-CondensedItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-Light.ttf -> open-sans/OpenSans-Light.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-Italic.ttf -> open-sans/OpenSans-Italic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-ExtraBold.ttf -> open-sans/OpenSans-ExtraBold.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-LightItalic.ttf -> open-sans/OpenSans-LightItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedSemiBoldItalic.ttf -> open-sans/OpenSans-CondensedSemiBoldItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-Bold.ttf -> open-sans/OpenSans-Bold.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-SemiBoldItalic.ttf -> open-sans/OpenSans-SemiBoldItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedSemiBold.ttf -> open-sans/OpenSans-CondensedSemiBold.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-ExtraBoldItalic.ttf -> open-sans/OpenSans-ExtraBoldItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-Regular.ttf -> open-sans/OpenSans-Regular.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-BoldItalic.ttf -> open-sans/OpenSans-BoldItalic.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedExtraBold.ttf -> open-sans/OpenSans-CondensedExtraBold.ttf
+.tmp_open-sans/fonts/noto-set/ttf/OpenSans-CondensedLightItalic.ttf -> open-sans/OpenSans-CondensedLightItalic.ttf
+Cloning into '.tmp_montserrat'...
+remote: Enumerating objects: 243, done.
+remote: Counting objects: 100% (243/243), done.
+remote: Compressing objects: 100% (226/226), done.
+remote: Total 243 (delta 63), reused 126 (delta 14), pack-reused 0 (from 0)
+Receiving objects: 100% (243/243), 25.95 MiB | 15.11 MiB/s, done.
+Resolving deltas: 100% (63/63), done.
+.tmp_montserrat/sources/vtt/Montserrat-Italic[wght]-VTT.ttf -> montserrat/Montserrat-Italic[wght]-VTT.ttf
+.tmp_montserrat/sources/vtt/Montserrat[wght]-VTT.ttf -> montserrat/Montserrat[wght]-VTT.ttf
+.tmp_montserrat/fonts-underline/variable/MontserratUnderline-Italic[wght].ttf -> montserrat/MontserratUnderline-Italic[wght].ttf
+.tmp_montserrat/fonts-underline/variable/MontserratUnderline[wght].ttf -> montserrat/MontserratUnderline[wght].ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Thin.ttf -> montserrat/MontserratUnderline-Thin.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-ExtraBold.ttf -> montserrat/MontserratUnderline-ExtraBold.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Bold.ttf -> montserrat/MontserratUnderline-Bold.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Medium.ttf -> montserrat/MontserratUnderline-Medium.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-LightItalic.ttf -> montserrat/MontserratUnderline-LightItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-SemiBoldItalic.ttf -> montserrat/MontserratUnderline-SemiBoldItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-ExtraLightItalic.ttf -> montserrat/MontserratUnderline-ExtraLightItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-BlackItalic.ttf -> montserrat/MontserratUnderline-BlackItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Regular.ttf -> montserrat/MontserratUnderline-Regular.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-BoldItalic.ttf -> montserrat/MontserratUnderline-BoldItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Light.ttf -> montserrat/MontserratUnderline-Light.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-ExtraLight.ttf -> montserrat/MontserratUnderline-ExtraLight.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-ThinItalic.ttf -> montserrat/MontserratUnderline-ThinItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-SemiBold.ttf -> montserrat/MontserratUnderline-SemiBold.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-MediumItalic.ttf -> montserrat/MontserratUnderline-MediumItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Black.ttf -> montserrat/MontserratUnderline-Black.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-ExtraBoldItalic.ttf -> montserrat/MontserratUnderline-ExtraBoldItalic.ttf
+.tmp_montserrat/fonts-underline/ttf/MontserratUnderline-Italic.ttf -> montserrat/MontserratUnderline-Italic.ttf
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-ThinItalic.woff2 -> montserrat/MontserratUnderline-ThinItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Italic.woff2 -> montserrat/MontserratUnderline-Italic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-BlackItalic.woff2 -> montserrat/MontserratUnderline-BlackItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Black.woff2 -> montserrat/MontserratUnderline-Black.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-BoldItalic.woff2 -> montserrat/MontserratUnderline-BoldItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Bold.woff2 -> montserrat/MontserratUnderline-Bold.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline[wght].woff2 -> montserrat/MontserratUnderline[wght].woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Thin.woff2 -> montserrat/MontserratUnderline-Thin.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-ExtraLight.woff2 -> montserrat/MontserratUnderline-ExtraLight.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Light.woff2 -> montserrat/MontserratUnderline-Light.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Italic[wght].woff2 -> montserrat/MontserratUnderline-Italic[wght].woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-MediumItalic.woff2 -> montserrat/MontserratUnderline-MediumItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Medium.woff2 -> montserrat/MontserratUnderline-Medium.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-SemiBoldItalic.woff2 -> montserrat/MontserratUnderline-SemiBoldItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-ExtraBoldItalic.woff2 -> montserrat/MontserratUnderline-ExtraBoldItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-Regular.woff2 -> montserrat/MontserratUnderline-Regular.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-LightItalic.woff2 -> montserrat/MontserratUnderline-LightItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-ExtraLightItalic.woff2 -> montserrat/MontserratUnderline-ExtraLightItalic.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-SemiBold.woff2 -> montserrat/MontserratUnderline-SemiBold.woff2
+.tmp_montserrat/fonts-underline/webfonts/MontserratUnderline-ExtraBold.woff2 -> montserrat/MontserratUnderline-ExtraBold.woff2
+.tmp_montserrat/fonts/variable/Montserrat-Italic[wght].ttf -> montserrat/Montserrat-Italic[wght].ttf
+.tmp_montserrat/fonts/variable/Montserrat[wght].ttf -> montserrat/Montserrat[wght].ttf
+.tmp_montserrat/fonts/ttf/Montserrat-LightItalic.ttf -> montserrat/Montserrat-LightItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Medium.ttf -> montserrat/Montserrat-Medium.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-BoldItalic.ttf -> montserrat/Montserrat-BoldItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Light.ttf -> montserrat/Montserrat-Light.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-ThinItalic.ttf -> montserrat/Montserrat-ThinItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-ExtraLight.ttf -> montserrat/Montserrat-ExtraLight.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Thin.ttf -> montserrat/Montserrat-Thin.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Bold.ttf -> montserrat/Montserrat-Bold.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-MediumItalic.ttf -> montserrat/Montserrat-MediumItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-BlackItalic.ttf -> montserrat/Montserrat-BlackItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-SemiBold.ttf -> montserrat/Montserrat-SemiBold.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-ExtraLightItalic.ttf -> montserrat/Montserrat-ExtraLightItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-ExtraBold.ttf -> montserrat/Montserrat-ExtraBold.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Black.ttf -> montserrat/Montserrat-Black.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Regular.ttf -> montserrat/Montserrat-Regular.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-Italic.ttf -> montserrat/Montserrat-Italic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-SemiBoldItalic.ttf -> montserrat/Montserrat-SemiBoldItalic.ttf
+.tmp_montserrat/fonts/ttf/Montserrat-ExtraBoldItalic.ttf -> montserrat/Montserrat-ExtraBoldItalic.ttf
+.tmp_montserrat/fonts/webfonts/Montserrat-Regular.woff2 -> montserrat/Montserrat-Regular.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-ExtraBoldItalic.woff2 -> montserrat/Montserrat-ExtraBoldItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Thin.woff2 -> montserrat/Montserrat-Thin.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-LightItalic.woff2 -> montserrat/Montserrat-LightItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Bold.woff2 -> montserrat/Montserrat-Bold.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-SemiBoldItalic.woff2 -> montserrat/Montserrat-SemiBoldItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Medium.woff2 -> montserrat/Montserrat-Medium.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-ExtraLight.woff2 -> montserrat/Montserrat-ExtraLight.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-SemiBold.woff2 -> montserrat/Montserrat-SemiBold.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Black.woff2 -> montserrat/Montserrat-Black.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat[wght].woff2 -> montserrat/Montserrat[wght].woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-MediumItalic.woff2 -> montserrat/Montserrat-MediumItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-BoldItalic.woff2 -> montserrat/Montserrat-BoldItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Italic[wght].woff2 -> montserrat/Montserrat-Italic[wght].woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-ThinItalic.woff2 -> montserrat/Montserrat-ThinItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-ExtraBold.woff2 -> montserrat/Montserrat-ExtraBold.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-ExtraLightItalic.woff2 -> montserrat/Montserrat-ExtraLightItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-BlackItalic.woff2 -> montserrat/Montserrat-BlackItalic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Italic.woff2 -> montserrat/Montserrat-Italic.woff2
+.tmp_montserrat/fonts/webfonts/Montserrat-Light.woff2 -> montserrat/Montserrat-Light.woff2
+.tmp_montserrat/fonts-alternates/variable/MontserratAlternates-Italic[wght].ttf -> montserrat/MontserratAlternates-Italic[wght].ttf
+.tmp_montserrat/fonts-alternates/variable/MontserratAlternates[wght].ttf -> montserrat/MontserratAlternates[wght].ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Thin.ttf -> montserrat/MontserratAlternates-Thin.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-BlackItalic.ttf -> montserrat/MontserratAlternates-BlackItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Bold.ttf -> montserrat/MontserratAlternates-Bold.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-ExtraLightItalic.ttf -> montserrat/MontserratAlternates-ExtraLightItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Black.ttf -> montserrat/MontserratAlternates-Black.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-LightItalic.ttf -> montserrat/MontserratAlternates-LightItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Medium.ttf -> montserrat/MontserratAlternates-Medium.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-MediumItalic.ttf -> montserrat/MontserratAlternates-MediumItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Italic.ttf -> montserrat/MontserratAlternates-Italic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-ExtraBoldItalic.ttf -> montserrat/MontserratAlternates-ExtraBoldItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-BoldItalic.ttf -> montserrat/MontserratAlternates-BoldItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Light.ttf -> montserrat/MontserratAlternates-Light.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-ExtraLight.ttf -> montserrat/MontserratAlternates-ExtraLight.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-Regular.ttf -> montserrat/MontserratAlternates-Regular.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-ThinItalic.ttf -> montserrat/MontserratAlternates-ThinItalic.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-SemiBold.ttf -> montserrat/MontserratAlternates-SemiBold.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-ExtraBold.ttf -> montserrat/MontserratAlternates-ExtraBold.ttf
+.tmp_montserrat/fonts-alternates/ttf/MontserratAlternates-SemiBoldItalic.ttf -> montserrat/MontserratAlternates-SemiBoldItalic.ttf
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Thin.woff2 -> montserrat/MontserratAlternates-Thin.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-ExtraLightItalic.woff2 -> montserrat/MontserratAlternates-ExtraLightItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Bold.woff2 -> montserrat/MontserratAlternates-Bold.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Medium.woff2 -> montserrat/MontserratAlternates-Medium.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Regular.woff2 -> montserrat/MontserratAlternates-Regular.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-LightItalic.woff2 -> montserrat/MontserratAlternates-LightItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-SemiBold.woff2 -> montserrat/MontserratAlternates-SemiBold.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Light.woff2 -> montserrat/MontserratAlternates-Light.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Italic.woff2 -> montserrat/MontserratAlternates-Italic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates[wght].woff2 -> montserrat/MontserratAlternates[wght].woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-ExtraBold.woff2 -> montserrat/MontserratAlternates-ExtraBold.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-ExtraLight.woff2 -> montserrat/MontserratAlternates-ExtraLight.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-MediumItalic.woff2 -> montserrat/MontserratAlternates-MediumItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-ExtraBoldItalic.woff2 -> montserrat/MontserratAlternates-ExtraBoldItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Black.woff2 -> montserrat/MontserratAlternates-Black.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-ThinItalic.woff2 -> montserrat/MontserratAlternates-ThinItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-Italic[wght].woff2 -> montserrat/MontserratAlternates-Italic[wght].woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-BlackItalic.woff2 -> montserrat/MontserratAlternates-BlackItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-BoldItalic.woff2 -> montserrat/MontserratAlternates-BoldItalic.woff2
+.tmp_montserrat/fonts-alternates/webfonts/MontserratAlternates-SemiBoldItalic.woff2 -> montserrat/MontserratAlternates-SemiBoldItalic.woff2
+Cloning into '.tmp_nunito'...
+remote: Enumerating objects: 152, done.
+remote: Counting objects: 100% (152/152), done.
+remote: Compressing objects: 100% (109/109), done.
+remote: Total 152 (delta 63), reused 108 (delta 41), pack-reused 0 (from 0)
+Receiving objects: 100% (152/152), 12.45 MiB | 17.16 MiB/s, done.
+Resolving deltas: 100% (63/63), done.
+.tmp_nunito/fonts/variable/NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf -> nunito/NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf
+.tmp_nunito/fonts/variable/NunitoSans[YTLC,opsz,wdth,wght].ttf -> nunito/NunitoSans[YTLC,opsz,wdth,wght].ttf
+.tmp_nunito/fonts/ttf/NunitoSans-LightItalic.ttf -> nunito/NunitoSans-LightItalic.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-BoldItalic.ttf -> nunito/NunitoSans-BoldItalic.ttf
+.tmp_nunito/fonts/ttf/NunitoSansExtraBlack-Regular.ttf -> nunito/NunitoSansExtraBlack-Regular.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-ExtraLight.ttf -> nunito/NunitoSans-ExtraLight.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-Light.ttf -> nunito/NunitoSans-Light.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-Medium.ttf -> nunito/NunitoSans-Medium.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-BlackItalic.ttf -> nunito/NunitoSans-BlackItalic.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-ExtraBold.ttf -> nunito/NunitoSans-ExtraBold.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-MediumItalic.ttf -> nunito/NunitoSans-MediumItalic.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-Regular.ttf -> nunito/NunitoSans-Regular.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-SemiBoldItalic.ttf -> nunito/NunitoSans-SemiBoldItalic.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-Italic.ttf -> nunito/NunitoSans-Italic.ttf
+.tmp_nunito/fonts/ttf/NunitoSansExtraBlack-Italic.ttf -> nunito/NunitoSansExtraBlack-Italic.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-Bold.ttf -> nunito/NunitoSans-Bold.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-SemiBold.ttf -> nunito/NunitoSans-SemiBold.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-Black.ttf -> nunito/NunitoSans-Black.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-ExtraBoldItalic.ttf -> nunito/NunitoSans-ExtraBoldItalic.ttf
+.tmp_nunito/fonts/ttf/NunitoSans-ExtraLightItalic.ttf -> nunito/NunitoSans-ExtraLightItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedExtraBold.ttf -> nunito/NunitoSansCondensed-CondensedExtraBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxLight.ttf -> nunito/NunitoSans-XmaxLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-ExpandedRegular.ttf -> nunito/NunitoSansHeavy-ExpandedRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-LightItalic.ttf -> nunito/NunitoSans-LightItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-BoldItalic.ttf -> nunito/NunitoSans-BoldItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszExtraLight.ttf -> nunito/NunitoSans-OpszExtraLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-OpszRegular.ttf -> nunito/NunitoSansHeavy-OpszRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszBold.ttf -> nunito/NunitoSans-OpszBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-ExtraLight.ttf -> nunito/NunitoSans-ExtraLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedBlack.ttf -> nunito/NunitoSansCondensed-CondensedBlack.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-Light.ttf -> nunito/NunitoSans-Light.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedExtraLight.ttf -> nunito/NunitoSansCondensed-CondensedExtraLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedSemiBold.ttf -> nunito/NunitoSansCondensed-CondensedSemiBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminExtraBold.ttf -> nunito/NunitoSans-XminExtraBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedLight.ttf -> nunito/NunitoSansExpanded-ExpandedLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxExtraBold.ttf -> nunito/NunitoSans-XmaxExtraBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszRegular.ttf -> nunito/NunitoSans-OpszRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxBold.ttf -> nunito/NunitoSans-XmaxBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxSemiBold.ttf -> nunito/NunitoSans-XmaxSemiBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminRegular.ttf -> nunito/NunitoSans-XminRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedBold.ttf -> nunito/NunitoSansExpanded-ExpandedBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-CondensedRegular.ttf -> nunito/NunitoSansHeavy-CondensedRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-BlackItalic.ttf -> nunito/NunitoSans-BlackItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminLight.ttf -> nunito/NunitoSans-XminLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-XminRegular.ttf -> nunito/NunitoSansHeavy-XminRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-ExtraBold.ttf -> nunito/NunitoSans-ExtraBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszBlack.ttf -> nunito/NunitoSans-OpszBlack.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminBlack.ttf -> nunito/NunitoSans-XminBlack.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedRegular.ttf -> nunito/NunitoSansCondensed-CondensedRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-Regular.ttf -> nunito/NunitoSans-Regular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedExtraBold.ttf -> nunito/NunitoSansExpanded-ExpandedExtraBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-SemiBoldItalic.ttf -> nunito/NunitoSans-SemiBoldItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-Italic.ttf -> nunito/NunitoSans-Italic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszLight.ttf -> nunito/NunitoSans-OpszLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedSemiBold.ttf -> nunito/NunitoSansExpanded-ExpandedSemiBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-Regular.ttf -> nunito/NunitoSansHeavy-Regular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-Bold.ttf -> nunito/NunitoSans-Bold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminBold.ttf -> nunito/NunitoSans-XminBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedBold.ttf -> nunito/NunitoSansCondensed-CondensedBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-SemiBold.ttf -> nunito/NunitoSans-SemiBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-Black.ttf -> nunito/NunitoSans-Black.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansCondensed-CondensedLight.ttf -> nunito/NunitoSansCondensed-CondensedLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-ExtraBoldItalic.ttf -> nunito/NunitoSans-ExtraBoldItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedExtraLight.ttf -> nunito/NunitoSansExpanded-ExpandedExtraLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminExtraLight.ttf -> nunito/NunitoSans-XminExtraLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxRegular.ttf -> nunito/NunitoSans-XmaxRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XminSemiBold.ttf -> nunito/NunitoSans-XminSemiBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-ExtraLightItalic.ttf -> nunito/NunitoSans-ExtraLightItalic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedBlack.ttf -> nunito/NunitoSansExpanded-ExpandedBlack.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansExpanded-ExpandedRegular.ttf -> nunito/NunitoSansExpanded-ExpandedRegular.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxBlack.ttf -> nunito/NunitoSans-XmaxBlack.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-Italic.ttf -> nunito/NunitoSansHeavy-Italic.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszExtraBold.ttf -> nunito/NunitoSans-OpszExtraBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-XmaxExtraLight.ttf -> nunito/NunitoSans-XmaxExtraLight.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSans-OpszSemiBold.ttf -> nunito/NunitoSans-OpszSemiBold.ttf
+.tmp_nunito/fonts/old statics/ttf/NunitoSansHeavy-XmaxRegular.ttf -> nunito/NunitoSansHeavy-XmaxRegular.ttf
+Cloning into '.tmp_merriweather'...
+remote: Enumerating objects: 68, done.
+remote: Counting objects: 100% (68/68), done.
+remote: Compressing objects: 100% (64/64), done.
+remote: Total 68 (delta 1), reused 40 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (68/68), 13.49 MiB | 8.83 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+.tmp_merriweather/fonts/variable/Merriweather[opsz,wdth,wght].ttf -> merriweather/Merriweather[opsz,wdth,wght].ttf
+.tmp_merriweather/fonts/variable/Merriweather-Italic[opsz,wdth,wght].ttf -> merriweather/Merriweather-Italic[opsz,wdth,wght].ttf
+.tmp_merriweather/fonts/ttf/Merriweather-Bold.ttf -> merriweather/Merriweather-Bold.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-Regular.ttf -> merriweather/Merriweather-Regular.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-Light.ttf -> merriweather/Merriweather-Light.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-BoldItalic.ttf -> merriweather/Merriweather-BoldItalic.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-BlackItalic.ttf -> merriweather/Merriweather-BlackItalic.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-Italic.ttf -> merriweather/Merriweather-Italic.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-Black.ttf -> merriweather/Merriweather-Black.ttf
+.tmp_merriweather/fonts/ttf/Merriweather-LightItalic.ttf -> merriweather/Merriweather-LightItalic.ttf
+.tmp_merriweather/fonts/webfonts/Merriweather-Regular.woff2 -> merriweather/Merriweather-Regular.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-Light.woff2 -> merriweather/Merriweather-Light.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-BoldItalic.woff2 -> merriweather/Merriweather-BoldItalic.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather[opsz,wdth,wght].woff2 -> merriweather/Merriweather[opsz,wdth,wght].woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-Black.woff2 -> merriweather/Merriweather-Black.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-Bold.woff2 -> merriweather/Merriweather-Bold.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-LightItalic.woff2 -> merriweather/Merriweather-LightItalic.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-Italic[opsz,wdth,wght].woff2 -> merriweather/Merriweather-Italic[opsz,wdth,wght].woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-Italic.woff2 -> merriweather/Merriweather-Italic.woff2
+.tmp_merriweather/fonts/webfonts/Merriweather-BlackItalic.woff2 -> merriweather/Merriweather-BlackItalic.woff2
+Cloning into '.tmp_lora'...
+remote: Enumerating objects: 70, done.
+remote: Counting objects: 100% (70/70), done.
+remote: Compressing objects: 100% (67/67), done.
+remote: Total 70 (delta 7), reused 33 (delta 1), pack-reused 0 (from 0)
+Receiving objects: 100% (70/70), 6.99 MiB | 13.29 MiB/s, done.
+Resolving deltas: 100% (7/7), done.
+.tmp_lora/fonts/variable/Lora-Italic[wght].ttf -> lora/Lora-Italic[wght].ttf
+.tmp_lora/fonts/variable/Lora[wght].ttf -> lora/Lora[wght].ttf
+.tmp_lora/fonts/ttf/Lora-Italic.ttf -> lora/Lora-Italic.ttf
+.tmp_lora/fonts/ttf/Lora-Bold.ttf -> lora/Lora-Bold.ttf
+.tmp_lora/fonts/ttf/Lora-SemiBold.ttf -> lora/Lora-SemiBold.ttf
+.tmp_lora/fonts/ttf/Lora-SemiBoldItalic.ttf -> lora/Lora-SemiBoldItalic.ttf
+.tmp_lora/fonts/ttf/Lora-MediumItalic.ttf -> lora/Lora-MediumItalic.ttf
+.tmp_lora/fonts/ttf/Lora-Medium.ttf -> lora/Lora-Medium.ttf
+.tmp_lora/fonts/ttf/Lora-BoldItalic.ttf -> lora/Lora-BoldItalic.ttf
+.tmp_lora/fonts/ttf/Lora-Regular.ttf -> lora/Lora-Regular.ttf
+.tmp_lora/fonts/webfonts/Lora-SemiBold.woff2 -> lora/Lora-SemiBold.woff2
+.tmp_lora/fonts/webfonts/Lora-BoldItalic.woff2 -> lora/Lora-BoldItalic.woff2
+.tmp_lora/fonts/webfonts/Lora-MediumItalic.woff2 -> lora/Lora-MediumItalic.woff2
+.tmp_lora/fonts/webfonts/Lora-Italic.woff2 -> lora/Lora-Italic.woff2
+.tmp_lora/fonts/webfonts/Lora-Italic[wght].woff2 -> lora/Lora-Italic[wght].woff2
+.tmp_lora/fonts/webfonts/Lora-Bold.woff2 -> lora/Lora-Bold.woff2
+.tmp_lora/fonts/webfonts/Lora-SemiBoldItalic.woff2 -> lora/Lora-SemiBoldItalic.woff2
+.tmp_lora/fonts/webfonts/Lora-Regular.woff2 -> lora/Lora-Regular.woff2
+.tmp_lora/fonts/webfonts/Lora-Medium.woff2 -> lora/Lora-Medium.woff2
+.tmp_lora/fonts/webfonts/Lora[wght].woff2 -> lora/Lora[wght].woff2
+./fonts/variable/JetBrainsMono[wght].ttf -> ./JetBrainsMono[wght].ttf
+./fonts/variable/JetBrainsMono-Italic[wght].ttf -> ./JetBrainsMono-Italic[wght].ttf
+./fonts/ttf/JetBrainsMono-Thin.ttf -> ./JetBrainsMono-Thin.ttf
+./fonts/ttf/JetBrainsMono-Bold.ttf -> ./JetBrainsMono-Bold.ttf
+./fonts/ttf/JetBrainsMono-Italic.ttf -> ./JetBrainsMono-Italic.ttf
+./fonts/ttf/JetBrainsMono-LightItalic.ttf -> ./JetBrainsMono-LightItalic.ttf
+./fonts/ttf/JetBrainsMono-Regular.ttf -> ./JetBrainsMono-Regular.ttf
+./fonts/ttf/JetBrainsMonoNL-ExtraLightItalic.ttf -> ./JetBrainsMonoNL-ExtraLightItalic.ttf
+./fonts/ttf/JetBrainsMono-ExtraLightItalic.ttf -> ./JetBrainsMono-ExtraLightItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-ExtraLight.ttf -> ./JetBrainsMonoNL-ExtraLight.ttf
+./fonts/ttf/JetBrainsMonoNL-MediumItalic.ttf -> ./JetBrainsMonoNL-MediumItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-ThinItalic.ttf -> ./JetBrainsMonoNL-ThinItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-Light.ttf -> ./JetBrainsMonoNL-Light.ttf
+./fonts/ttf/JetBrainsMonoNL-Italic.ttf -> ./JetBrainsMonoNL-Italic.ttf
+./fonts/ttf/JetBrainsMonoNL-BoldItalic.ttf -> ./JetBrainsMonoNL-BoldItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-SemiBold.ttf -> ./JetBrainsMonoNL-SemiBold.ttf
+./fonts/ttf/JetBrainsMono-SemiBoldItalic.ttf -> ./JetBrainsMono-SemiBoldItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-LightItalic.ttf -> ./JetBrainsMonoNL-LightItalic.ttf
+./fonts/ttf/JetBrainsMono-Light.ttf -> ./JetBrainsMono-Light.ttf
+./fonts/ttf/JetBrainsMono-MediumItalic.ttf -> ./JetBrainsMono-MediumItalic.ttf
+./fonts/ttf/JetBrainsMono-ExtraBold.ttf -> ./JetBrainsMono-ExtraBold.ttf
+./fonts/ttf/JetBrainsMono-SemiBold.ttf -> ./JetBrainsMono-SemiBold.ttf
+./fonts/ttf/JetBrainsMonoNL-Regular.ttf -> ./JetBrainsMonoNL-Regular.ttf
+./fonts/ttf/JetBrainsMonoNL-Medium.ttf -> ./JetBrainsMonoNL-Medium.ttf
+./fonts/ttf/JetBrainsMonoNL-Thin.ttf -> ./JetBrainsMonoNL-Thin.ttf
+./fonts/ttf/JetBrainsMonoNL-SemiBoldItalic.ttf -> ./JetBrainsMonoNL-SemiBoldItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-ExtraBoldItalic.ttf -> ./JetBrainsMonoNL-ExtraBoldItalic.ttf
+./fonts/ttf/JetBrainsMono-ExtraBoldItalic.ttf -> ./JetBrainsMono-ExtraBoldItalic.ttf
+./fonts/ttf/JetBrainsMono-ThinItalic.ttf -> ./JetBrainsMono-ThinItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-ExtraBold.ttf -> ./JetBrainsMonoNL-ExtraBold.ttf
+./fonts/ttf/JetBrainsMono-ExtraLight.ttf -> ./JetBrainsMono-ExtraLight.ttf
+./fonts/ttf/JetBrainsMono-Medium.ttf -> ./JetBrainsMono-Medium.ttf
+./fonts/ttf/JetBrainsMono-BoldItalic.ttf -> ./JetBrainsMono-BoldItalic.ttf
+./fonts/ttf/JetBrainsMonoNL-Bold.ttf -> ./JetBrainsMonoNL-Bold.ttf
+./fonts/webfonts/JetBrainsMono-Light.woff2 -> ./JetBrainsMono-Light.woff2
+./fonts/webfonts/JetBrainsMono-ThinItalic.woff2 -> ./JetBrainsMono-ThinItalic.woff2
+./fonts/webfonts/JetBrainsMono-BoldItalic.woff2 -> ./JetBrainsMono-BoldItalic.woff2
+./fonts/webfonts/JetBrainsMono-Regular.woff2 -> ./JetBrainsMono-Regular.woff2
+./fonts/webfonts/JetBrainsMono-SemiBold.woff2 -> ./JetBrainsMono-SemiBold.woff2
+./fonts/webfonts/JetBrainsMono-MediumItalic.woff2 -> ./JetBrainsMono-MediumItalic.woff2
+./fonts/webfonts/JetBrainsMono-ExtraLightItalic.woff2 -> ./JetBrainsMono-ExtraLightItalic.woff2
+./fonts/webfonts/JetBrainsMono-Medium.woff2 -> ./JetBrainsMono-Medium.woff2
+./fonts/webfonts/JetBrainsMono-LightItalic.woff2 -> ./JetBrainsMono-LightItalic.woff2
+./fonts/webfonts/JetBrainsMono-ExtraLight.woff2 -> ./JetBrainsMono-ExtraLight.woff2
+./fonts/webfonts/JetBrainsMono-Bold.woff2 -> ./JetBrainsMono-Bold.woff2
+./fonts/webfonts/JetBrainsMono-Thin.woff2 -> ./JetBrainsMono-Thin.woff2
+./fonts/webfonts/JetBrainsMono-SemiBoldItalic.woff2 -> ./JetBrainsMono-SemiBoldItalic.woff2
+./fonts/webfonts/JetBrainsMono-ExtraBoldItalic.woff2 -> ./JetBrainsMono-ExtraBoldItalic.woff2
+./fonts/webfonts/JetBrainsMono-ExtraBold.woff2 -> ./JetBrainsMono-ExtraBold.woff2
+./fonts/webfonts/JetBrainsMono-Italic.woff2 -> ./JetBrainsMono-Italic.woff2
+./variable_ttf/FiraCode-VF.ttf -> ./FiraCode-VF.ttf
+./ttf/FiraCode-Medium.ttf -> ./FiraCode-Medium.ttf
+./ttf/FiraCode-Regular.ttf -> ./FiraCode-Regular.ttf
+./ttf/FiraCode-Retina.ttf -> ./FiraCode-Retina.ttf
+./ttf/FiraCode-Bold.ttf -> ./FiraCode-Bold.ttf
+./ttf/FiraCode-SemiBold.ttf -> ./FiraCode-SemiBold.ttf
+./ttf/FiraCode-Light.ttf -> ./FiraCode-Light.ttf
+Cloning into '.tmp_bebas-neue'...
+remote: Enumerating objects: 73, done.
+remote: Counting objects: 100% (73/73), done.
+remote: Compressing objects: 100% (59/59), done.
+remote: Total 73 (delta 8), reused 57 (delta 8), pack-reused 0 (from 0)
+Receiving objects: 100% (73/73), 12.31 MiB | 7.63 MiB/s, done.
+Resolving deltas: 100% (8/8), done.
+.tmp_bebas-neue/fonts/BebasNeue(2014)ByFontFabric/BebasNeue-Book.ttf -> bebas-neue/BebasNeue-Book.ttf
+.tmp_bebas-neue/fonts/BebasNeue(2014)ByFontFabric/BebasNeue-Bold.ttf -> bebas-neue/BebasNeue-Bold.ttf
+.tmp_bebas-neue/fonts/BebasNeue(2014)ByFontFabric/BebasNeue-Thin.ttf -> bebas-neue/BebasNeue-Thin.ttf
+.tmp_bebas-neue/fonts/BebasNeue(2014)ByFontFabric/BebasNeue-Regular.ttf -> bebas-neue/BebasNeue-Regular.ttf
+.tmp_bebas-neue/fonts/BebasNeue(2014)ByFontFabric/BebasNeue-Light.ttf -> bebas-neue/BebasNeue-Light.ttf
+.tmp_bebas-neue/fonts/BebasNeue(2018)ByDhamraType/woff2-cffbased/BebasNeue-Regular.woff2 -> bebas-neue/BebasNeue-Regular.woff2
+.tmp_bebas-neue/fonts/BebasNeue(2018)ByDhamraType/ttf/BebasNeue-Regular.ttf -> bebas-neue/BebasNeue-Regular.ttf
+✅ Done. Fonts copied into subfolders.
+miaucoles@Joshs-Air-3 fonts % ls -1 inter roboto open-sans montserrat nunito merriweather lora jetbrains-mono fira-code bebas-neue
+bebas-neue:
+BebasNeue-Bold.ttf
+BebasNeue-Book.ttf
+BebasNeue-Light.ttf
+BebasNeue-Regular.ttf
+BebasNeue-Regular.woff2
+BebasNeue-Thin.ttf
+
+fira-code:
+fira_code.css
+FiraCode-Bold.ttf
+FiraCode-Light.ttf
+FiraCode-Medium.ttf
+FiraCode-Regular.ttf
+FiraCode-Retina.ttf
+FiraCode-SemiBold.ttf
+FiraCode-VF.ttf
+README.txt
+specimen.html
+
+inter:
+InterVariable-Italic.woff2
+InterVariable.woff2
+
+jetbrains-mono:
+AUTHORS.txt
+JetBrainsMono-Bold.ttf
+JetBrainsMono-Bold.woff2
+JetBrainsMono-BoldItalic.ttf
+JetBrainsMono-BoldItalic.woff2
+JetBrainsMono-ExtraBold.ttf
+JetBrainsMono-ExtraBold.woff2
+JetBrainsMono-ExtraBoldItalic.ttf
+JetBrainsMono-ExtraBoldItalic.woff2
+JetBrainsMono-ExtraLight.ttf
+JetBrainsMono-ExtraLight.woff2
+JetBrainsMono-ExtraLightItalic.ttf
+JetBrainsMono-ExtraLightItalic.woff2
+JetBrainsMono-Italic.ttf
+JetBrainsMono-Italic.woff2
+JetBrainsMono-Italic[wght].ttf
+JetBrainsMono-Light.ttf
+JetBrainsMono-Light.woff2
+JetBrainsMono-LightItalic.ttf
+JetBrainsMono-LightItalic.woff2
+JetBrainsMono-Medium.ttf
+JetBrainsMono-Medium.woff2
+JetBrainsMono-MediumItalic.ttf
+JetBrainsMono-MediumItalic.woff2
+JetBrainsMono-Regular.ttf
+JetBrainsMono-Regular.woff2
+JetBrainsMono-SemiBold.ttf
+JetBrainsMono-SemiBold.woff2
+JetBrainsMono-SemiBoldItalic.ttf
+JetBrainsMono-SemiBoldItalic.woff2
+JetBrainsMono-Thin.ttf
+JetBrainsMono-Thin.woff2
+JetBrainsMono-ThinItalic.ttf
+JetBrainsMono-ThinItalic.woff2
+JetBrainsMono[wght].ttf
+JetBrainsMonoNL-Bold.ttf
+JetBrainsMonoNL-BoldItalic.ttf
+JetBrainsMonoNL-ExtraBold.ttf
+JetBrainsMonoNL-ExtraBoldItalic.ttf
+JetBrainsMonoNL-ExtraLight.ttf
+JetBrainsMonoNL-ExtraLightItalic.ttf
+JetBrainsMonoNL-Italic.ttf
+JetBrainsMonoNL-Light.ttf
+JetBrainsMonoNL-LightItalic.ttf
+JetBrainsMonoNL-Medium.ttf
+JetBrainsMonoNL-MediumItalic.ttf
+JetBrainsMonoNL-Regular.ttf
+JetBrainsMonoNL-SemiBold.ttf
+JetBrainsMonoNL-SemiBoldItalic.ttf
+JetBrainsMonoNL-Thin.ttf
+JetBrainsMonoNL-ThinItalic.ttf
+OFL.txt
+
+lora:
+Lora-Bold.ttf
+Lora-Bold.woff2
+Lora-BoldItalic.ttf
+Lora-BoldItalic.woff2
+Lora-Italic.ttf
+Lora-Italic.woff2
+Lora-Italic[wght].ttf
+Lora-Italic[wght].woff2
+Lora-Medium.ttf
+Lora-Medium.woff2
+Lora-MediumItalic.ttf
+Lora-MediumItalic.woff2
+Lora-Regular.ttf
+Lora-Regular.woff2
+Lora-SemiBold.ttf
+Lora-SemiBold.woff2
+Lora-SemiBoldItalic.ttf
+Lora-SemiBoldItalic.woff2
+Lora[wght].ttf
+Lora[wght].woff2
+
+merriweather:
+Merriweather-Black.ttf
+Merriweather-Black.woff2
+Merriweather-BlackItalic.ttf
+Merriweather-BlackItalic.woff2
+Merriweather-Bold.ttf
+Merriweather-Bold.woff2
+Merriweather-BoldItalic.ttf
+Merriweather-BoldItalic.woff2
+Merriweather-Italic.ttf
+Merriweather-Italic.woff2
+Merriweather-Italic[opsz,wdth,wght].ttf
+Merriweather-Italic[opsz,wdth,wght].woff2
+Merriweather-Light.ttf
+Merriweather-Light.woff2
+Merriweather-LightItalic.ttf
+Merriweather-LightItalic.woff2
+Merriweather-Regular.ttf
+Merriweather-Regular.woff2
+Merriweather[opsz,wdth,wght].ttf
+Merriweather[opsz,wdth,wght].woff2
+
+montserrat:
+Montserrat-Black.ttf
+Montserrat-Black.woff2
+Montserrat-BlackItalic.ttf
+Montserrat-BlackItalic.woff2
+Montserrat-Bold.ttf
+Montserrat-Bold.woff2
+Montserrat-BoldItalic.ttf
+Montserrat-BoldItalic.woff2
+Montserrat-ExtraBold.ttf
+Montserrat-ExtraBold.woff2
+Montserrat-ExtraBoldItalic.ttf
+Montserrat-ExtraBoldItalic.woff2
+Montserrat-ExtraLight.ttf
+Montserrat-ExtraLight.woff2
+Montserrat-ExtraLightItalic.ttf
+Montserrat-ExtraLightItalic.woff2
+Montserrat-Italic.ttf
+Montserrat-Italic.woff2
+Montserrat-Italic[wght]-VTT.ttf
+Montserrat-Italic[wght].ttf
+Montserrat-Italic[wght].woff2
+Montserrat-Light.ttf
+Montserrat-Light.woff2
+Montserrat-LightItalic.ttf
+Montserrat-LightItalic.woff2
+Montserrat-Medium.ttf
+Montserrat-Medium.woff2
+Montserrat-MediumItalic.ttf
+Montserrat-MediumItalic.woff2
+Montserrat-Regular.ttf
+Montserrat-Regular.woff2
+Montserrat-SemiBold.ttf
+Montserrat-SemiBold.woff2
+Montserrat-SemiBoldItalic.ttf
+Montserrat-SemiBoldItalic.woff2
+Montserrat-Thin.ttf
+Montserrat-Thin.woff2
+Montserrat-ThinItalic.ttf
+Montserrat-ThinItalic.woff2
+Montserrat[wght]-VTT.ttf
+Montserrat[wght].ttf
+Montserrat[wght].woff2
+MontserratAlternates-Black.ttf
+MontserratAlternates-Black.woff2
+MontserratAlternates-BlackItalic.ttf
+MontserratAlternates-BlackItalic.woff2
+MontserratAlternates-Bold.ttf
+MontserratAlternates-Bold.woff2
+MontserratAlternates-BoldItalic.ttf
+MontserratAlternates-BoldItalic.woff2
+MontserratAlternates-ExtraBold.ttf
+MontserratAlternates-ExtraBold.woff2
+MontserratAlternates-ExtraBoldItalic.ttf
+MontserratAlternates-ExtraBoldItalic.woff2
+MontserratAlternates-ExtraLight.ttf
+MontserratAlternates-ExtraLight.woff2
+MontserratAlternates-ExtraLightItalic.ttf
+MontserratAlternates-ExtraLightItalic.woff2
+MontserratAlternates-Italic.ttf
+MontserratAlternates-Italic.woff2
+MontserratAlternates-Italic[wght].ttf
+MontserratAlternates-Italic[wght].woff2
+MontserratAlternates-Light.ttf
+MontserratAlternates-Light.woff2
+MontserratAlternates-LightItalic.ttf
+MontserratAlternates-LightItalic.woff2
+MontserratAlternates-Medium.ttf
+MontserratAlternates-Medium.woff2
+MontserratAlternates-MediumItalic.ttf
+MontserratAlternates-MediumItalic.woff2
+MontserratAlternates-Regular.ttf
+MontserratAlternates-Regular.woff2
+MontserratAlternates-SemiBold.ttf
+MontserratAlternates-SemiBold.woff2
+MontserratAlternates-SemiBoldItalic.ttf
+MontserratAlternates-SemiBoldItalic.woff2
+MontserratAlternates-Thin.ttf
+MontserratAlternates-Thin.woff2
+MontserratAlternates-ThinItalic.ttf
+MontserratAlternates-ThinItalic.woff2
+MontserratAlternates[wght].ttf
+MontserratAlternates[wght].woff2
+MontserratUnderline-Black.ttf
+MontserratUnderline-Black.woff2
+MontserratUnderline-BlackItalic.ttf
+MontserratUnderline-BlackItalic.woff2
+MontserratUnderline-Bold.ttf
+MontserratUnderline-Bold.woff2
+MontserratUnderline-BoldItalic.ttf
+MontserratUnderline-BoldItalic.woff2
+MontserratUnderline-ExtraBold.ttf
+MontserratUnderline-ExtraBold.woff2
+MontserratUnderline-ExtraBoldItalic.ttf
+MontserratUnderline-ExtraBoldItalic.woff2
+MontserratUnderline-ExtraLight.ttf
+MontserratUnderline-ExtraLight.woff2
+MontserratUnderline-ExtraLightItalic.ttf
+MontserratUnderline-ExtraLightItalic.woff2
+MontserratUnderline-Italic.ttf
+MontserratUnderline-Italic.woff2
+MontserratUnderline-Italic[wght].ttf
+MontserratUnderline-Italic[wght].woff2
+MontserratUnderline-Light.ttf
+MontserratUnderline-Light.woff2
+MontserratUnderline-LightItalic.ttf
+MontserratUnderline-LightItalic.woff2
+MontserratUnderline-Medium.ttf
+MontserratUnderline-Medium.woff2
+MontserratUnderline-MediumItalic.ttf
+MontserratUnderline-MediumItalic.woff2
+MontserratUnderline-Regular.ttf
+MontserratUnderline-Regular.woff2
+MontserratUnderline-SemiBold.ttf
+MontserratUnderline-SemiBold.woff2
+MontserratUnderline-SemiBoldItalic.ttf
+MontserratUnderline-SemiBoldItalic.woff2
+MontserratUnderline-Thin.ttf
+MontserratUnderline-Thin.woff2
+MontserratUnderline-ThinItalic.ttf
+MontserratUnderline-ThinItalic.woff2
+MontserratUnderline[wght].ttf
+MontserratUnderline[wght].woff2
+
+nunito:
+NunitoSans-Black.ttf
+NunitoSans-BlackItalic.ttf
+NunitoSans-Bold.ttf
+NunitoSans-BoldItalic.ttf
+NunitoSans-ExtraBold.ttf
+NunitoSans-ExtraBoldItalic.ttf
+NunitoSans-ExtraLight.ttf
+NunitoSans-ExtraLightItalic.ttf
+NunitoSans-Italic.ttf
+NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf
+NunitoSans-Light.ttf
+NunitoSans-LightItalic.ttf
+NunitoSans-Medium.ttf
+NunitoSans-MediumItalic.ttf
+NunitoSans-OpszBlack.ttf
+NunitoSans-OpszBold.ttf
+NunitoSans-OpszExtraBold.ttf
+NunitoSans-OpszExtraLight.ttf
+NunitoSans-OpszLight.ttf
+NunitoSans-OpszRegular.ttf
+NunitoSans-OpszSemiBold.ttf
+NunitoSans-Regular.ttf
+NunitoSans-SemiBold.ttf
+NunitoSans-SemiBoldItalic.ttf
+NunitoSans-XmaxBlack.ttf
+NunitoSans-XmaxBold.ttf
+NunitoSans-XmaxExtraBold.ttf
+NunitoSans-XmaxExtraLight.ttf
+NunitoSans-XmaxLight.ttf
+NunitoSans-XmaxRegular.ttf
+NunitoSans-XmaxSemiBold.ttf
+NunitoSans-XminBlack.ttf
+NunitoSans-XminBold.ttf
+NunitoSans-XminExtraBold.ttf
+NunitoSans-XminExtraLight.ttf
+NunitoSans-XminLight.ttf
+NunitoSans-XminRegular.ttf
+NunitoSans-XminSemiBold.ttf
+NunitoSans[YTLC,opsz,wdth,wght].ttf
+NunitoSansCondensed-CondensedBlack.ttf
+NunitoSansCondensed-CondensedBold.ttf
+NunitoSansCondensed-CondensedExtraBold.ttf
+NunitoSansCondensed-CondensedExtraLight.ttf
+NunitoSansCondensed-CondensedLight.ttf
+NunitoSansCondensed-CondensedRegular.ttf
+NunitoSansCondensed-CondensedSemiBold.ttf
+NunitoSansExpanded-ExpandedBlack.ttf
+NunitoSansExpanded-ExpandedBold.ttf
+NunitoSansExpanded-ExpandedExtraBold.ttf
+NunitoSansExpanded-ExpandedExtraLight.ttf
+NunitoSansExpanded-ExpandedLight.ttf
+NunitoSansExpanded-ExpandedRegular.ttf
+NunitoSansExpanded-ExpandedSemiBold.ttf
+NunitoSansExtraBlack-Italic.ttf
+NunitoSansExtraBlack-Regular.ttf
+NunitoSansHeavy-CondensedRegular.ttf
+NunitoSansHeavy-ExpandedRegular.ttf
+NunitoSansHeavy-Italic.ttf
+NunitoSansHeavy-OpszRegular.ttf
+NunitoSansHeavy-Regular.ttf
+NunitoSansHeavy-XmaxRegular.ttf
+NunitoSansHeavy-XminRegular.ttf
+
+open-sans:
+OpenSans-Bold.ttf
+OpenSans-BoldItalic.ttf
+OpenSans-CondensedBold.ttf
+OpenSans-CondensedBoldItalic.ttf
+OpenSans-CondensedExtraBold.ttf
+OpenSans-CondensedExtraBoldItalic.ttf
+OpenSans-CondensedItalic.ttf
+OpenSans-CondensedLight.ttf
+OpenSans-CondensedLightItalic.ttf
+OpenSans-CondensedRegular.ttf
+OpenSans-CondensedSemiBold.ttf
+OpenSans-CondensedSemiBoldItalic.ttf
+OpenSans-ExtraBold.ttf
+OpenSans-ExtraBoldItalic.ttf
+OpenSans-Italic-wg300wd100.ttf
+OpenSans-Italic-wg300wd75.ttf
+OpenSans-Italic-wg400wd100.ttf
+OpenSans-Italic-wg400wd75.ttf
+OpenSans-Italic-wg600wd100.ttf
+OpenSans-Italic-wg600wd75.ttf
+OpenSans-Italic-wg700wd100.ttf
+OpenSans-Italic-wg700wd75.ttf
+OpenSans-Italic-wg800wd100.ttf
+OpenSans-Italic-wg800wd75.ttf
+OpenSans-Italic.ttf
+OpenSans-Italic[wdth,wght].ttf
+OpenSans-Light.ttf
+OpenSans-LightItalic.ttf
+OpenSans-Regular.ttf
+OpenSans-Roman-wg300wd100.ttf
+OpenSans-Roman-wg300wd75.ttf
+OpenSans-Roman-wg400wd100.ttf
+OpenSans-Roman-wg400wd75.ttf
+OpenSans-Roman-wg600wd100.ttf
+OpenSans-Roman-wg600wd75.ttf
+OpenSans-Roman-wg700wd100.ttf
+OpenSans-Roman-wg700wd75.ttf
+OpenSans-Roman-wg800wd100.ttf
+OpenSans-Roman-wg800wd75.ttf
+OpenSans-Roman.ttf
+OpenSans-SemiBold.ttf
+OpenSans-SemiBoldItalic.ttf
+OpenSans[wdth,wght].ttf
+
+roboto:
+Roboto-Black.ttf
+Roboto-BlackItalic.ttf
+Roboto-Bold.ttf
+Roboto-BoldItalic.ttf
+Roboto-Italic-VariableFont_wdth,wght.ttf
+Roboto-Italic.ttf
+Roboto-Light.ttf
+Roboto-LightItalic.ttf
+Roboto-Medium.ttf
+Roboto-MediumItalic.ttf
+Roboto-Regular.ttf
+Roboto-Thin.ttf
+Roboto-ThinItalic.ttf
+Roboto-VariableFont_wdth,wght.ttf
+Roboto.zip
+RobotoCondensed-Bold.ttf
+RobotoCondensed-BoldItalic.ttf
+RobotoCondensed-Italic.ttf
+RobotoCondensed-Light.ttf
+RobotoCondensed-LightItalic.ttf
+RobotoCondensed-Regular.ttf
+miaucoles@Joshs-Air-3 fonts % nano fonts.css
+
+  UW PICO 5.09                                        File: fonts.css                                         Modified  
+
+   
+/* =========================
+   BEBAS NEUE (static)
+   (Display font; no italic supplied)
+   ========================= */
+@font-face{
+  font-family: "Bebas Neue";
+  src: url("./bebas-neue/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face{
+  font-family: "Bebas Neue";
+  src: url("./bebas-neue/BebasNeue-Bold.ttf") format("truetype");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+   
+/* ========= Optional defaults for your UI ========= */
+:root{
+  --heading: "Montserrat","Inter",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  --body:    "Inter","Open Sans","Roboto",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+  --mono:    "JetBrains Mono","Fira Code",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+} 
+  
+
+  
+
+^G Get Help         ^O WriteOut         ^R Read File        ^Y Prev Pg          ^K Cut Text         ^C Cur Pos          
+^X Exit             ^J Justify          ^W Where is         ^V Next Pg          ^U UnCut Text       ^T To Spell        
