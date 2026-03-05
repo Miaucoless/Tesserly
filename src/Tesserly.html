@@ -1049,6 +1049,8 @@ body[data-bg-pattern="noise"]:before{content:'';position:fixed;inset:0;backgroun
   overflow-y:auto;color:var(--text);min-height:200px;
   font-family:var(--body);
 }
+/* Keep highlighted text readable (dark text on highlight) */
+.sticky-editor mark,.sticky-editor [style*="background-color"]{color:#1a1a2e !important;}
 .sticky-editor:empty::before{content:attr(data-placeholder);color:var(--text3);pointer-events:none}
 
 /* Saved Pads Tab */
@@ -1139,7 +1141,10 @@ body[data-bg-pattern="noise"]:before{content:'';position:fixed;inset:0;backgroun
 
 /* ══ PDF VIEWER ══ */
 .pdf-viewer-overlay{ position:fixed;inset:0;z-index:500;background:rgba(8,8,12,0.96);display:flex;flex-direction:column; }
-.pdf-viewer-bar{ height:54px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:0 14px;flex-shrink:0; }
+.pdf-viewer-bar{ height:54px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;padding:0 16px;flex-shrink:0; }
+.pdf-viewer-bar-actions{ margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0; }
+.pdf-viewer-bar-actions .btn{ white-space:nowrap; }
+.pdf-viewer-bar .bar-divider{ width:1px;height:22px;background:var(--border2);margin:0 4px;flex-shrink:0; }
 .timed-exam-overlay{position:fixed;inset:0;z-index:800;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
 .timed-exam-header{display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0}
 .timed-exam-timer{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--accent);min-width:80px;text-align:center}
@@ -2911,6 +2916,7 @@ const STATE = {
   ankiCards: [], ankiFlipped: {},
   ankiDecks: [],
   ankiStudyDeck: null, ankiStudyIndex: 0, ankiStudyFlipped: false,
+  stickyFormatUndoStack: [],
   calEvents: [],
   calYear: null, calMonth: null, calSelectedDate: null,
   aiTopics: [],
@@ -3413,40 +3419,53 @@ async function callAI(system, user, maxTokens=2000) {
   // Guard: ignore if the saved value is a literal template string (old bug)
   const customModel = (rawModel && !rawModel.includes('${')) ? rawModel : '';
 
-  if (provider === 'openai' || provider === 'groq' || provider === 'openrouter') {
-    const baseUrl = provider === 'groq'
-      ? 'https://api.groq.com/openai/v1/chat/completions'
-      : provider === 'openrouter'
-        ? 'https://openrouter.ai/api/v1/chat/completions'
-        : 'https://api.openai.com/v1/chat/completions';
-    const defaultModel = provider === 'groq'
-      ? 'llama-3.3-70b-versatile'
-      : provider === 'openrouter'
-        ? 'openai/gpt-4o'
-        : 'gpt-4o-mini';
-    const model = customModel || defaultModel;
-    const headers = {'Content-Type':'application/json','Authorization':'Bearer '+apiKey};
-    if (provider === 'openrouter') {
-      headers['HTTP-Referer'] = window.location.href;
-      headers['X-Title'] = 'Tesserly';
-    }
-    const r = await fetch(baseUrl, {
-      method:'POST',
-      headers,
-      body:JSON.stringify({model, max_tokens:maxTokens, messages:[{role:'system',content:system},{role:'user',content:user}]})
-    });
-    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||`API error ${r.status}`);}
-    const d=await r.json(); return d.choices?.[0]?.message?.content||'';
+  function isNetworkError(e) {
+    const msg = (e&&e.message)||String(e);
+    return msg.includes('fetch')||msg.includes('NetworkError')||msg.includes('Failed to fetch')||e instanceof TypeError;
   }
 
-  // Default: Anthropic
-  const r = await fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system,messages:[{role:'user',content:user}]})
-  });
-  if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||`API error ${r.status}`);}
-  const d=await r.json(); return d.content?.[0]?.text||'';
+  try {
+    if (provider === 'openai' || provider === 'groq' || provider === 'openrouter') {
+      const baseUrl = provider === 'groq'
+        ? 'https://api.groq.com/openai/v1/chat/completions'
+        : provider === 'openrouter'
+          ? 'https://openrouter.ai/api/v1/chat/completions'
+          : 'https://api.openai.com/v1/chat/completions';
+      const defaultModel = provider === 'groq'
+        ? 'llama-3.3-70b-versatile'
+        : provider === 'openrouter'
+          ? 'openai/gpt-4o'
+          : 'gpt-4o-mini';
+      const model = customModel || defaultModel;
+      const headers = {'Content-Type':'application/json','Authorization':'Bearer '+apiKey};
+      if (provider === 'openrouter') {
+        headers['HTTP-Referer'] = window.location.href;
+        headers['X-Title'] = 'Tesserly';
+      }
+      const r = await fetch(baseUrl, {
+        method:'POST',
+        headers,
+        body:JSON.stringify({model, max_tokens:maxTokens, messages:[{role:'system',content:system},{role:'user',content:user}]})
+      });
+      if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||`API error ${r.status}`);}
+      const d=await r.json(); return d.choices?.[0]?.message?.content||'';
+    }
+
+    // Default: Anthropic
+    const r = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTokens,system,messages:[{role:'user',content:user}]})
+    });
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e?.error?.message||`API error ${r.status}`);}
+    const d=await r.json(); return d.content?.[0]?.text||'';
+  } catch (e) {
+    if (isNetworkError(e)) {
+      showToast('Connection error. Check internet and API key (Customize → API).');
+      throw new Error('Connection error. Check your internet and API key in Customize → API.');
+    }
+    throw e;
+  }
 }
 
 // ════════════════════════════════════════════
@@ -4673,12 +4692,15 @@ function viewNote(i) {
   const isPPTX = n.fileName && n.fileName.toLowerCase().endsWith('.pptx') && n._pptxBase64;
   const isDocx = n.fileName && n.fileName.toLowerCase().endsWith('.docx') && n._docxHtml;
 
-  // Common bar controls
+  // Common bar controls — actions grouped on the right with divider
   const barBtns = (extra='') => `
     <button class="btn btn-secondary btn-sm" onclick="closeNoteViewer()">${icon(`<line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/>`)} Close</button>
     <div class="pdf-viewer-title">${n.name}</div>
-    <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad" style="margin-left:auto;flex-shrink:0">${icon(`<path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/><path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"/>`,14)} Pad</button>
-    ${extra}
+    <div class="bar-divider"></div>
+    <div class="pdf-viewer-bar-actions">
+      <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d=\"M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/><path d=\"M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z\"/>`,14)} Pad</button>
+      ${extra}
+    </div>
   `;
 
   if (isPDF) {
@@ -4693,9 +4715,12 @@ function viewNote(i) {
           <span class="pdf-nav-label" id="pdf-page-lbl">… / …</span>
           <button class="btn btn-ghost btn-sm" onclick="window._pdfNav(1)" style="padding:4px 10px">›</button>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" style="flex-shrink:0">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
-        <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" style="flex-shrink:0">Open Original</button>
-        <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" style="flex-shrink:0">Download</button>
+        <div class="bar-divider"></div>
+        <div class="pdf-viewer-bar-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
+          <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" title="Open in new tab">Original</button>
+          <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" title="Download file">Download</button>
+        </div>
       </div>
       ${pdfLinkedHTML}
       <div class="pdf-viewer-body" id="pdf-container"></div>`;
@@ -4792,9 +4817,12 @@ function viewNote(i) {
           <span class="pdf-nav-label" id="ppt-page-lbl">… / …</span>
           <button class="btn btn-ghost btn-sm" onclick="window._pptNav(1)" style="padding:4px 12px">Next ›</button>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" style="flex-shrink:0">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
-        <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" style="flex-shrink:0">Open Original</button>
-        <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" style="flex-shrink:0">Download</button>
+        <div class="bar-divider"></div>
+        <div class="pdf-viewer-bar-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
+          <button class="btn btn-ghost btn-sm" onclick="openOriginalInNewTab(${i})" title="Open in new tab">Original</button>
+          <button class="btn btn-ghost btn-sm" onclick="downloadOriginal(${i})" title="Download">Download</button>
+        </div>
       </div>
       <div class="ppt-viewer-wrap">
         <div class="ppt-stage" id="pptx-stage"></div>
@@ -4920,8 +4948,10 @@ function viewNote(i) {
       <div class="pdf-viewer-bar">
         <button class="btn btn-secondary btn-sm" onclick="closeNoteViewer()">${icon(`<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>`)}</button>
         <div class="pdf-viewer-title">${n.name}</div>
-        <button class="btn btn-ghost btn-sm" onclick="addAnnotationImage(${i})" style="margin-left:auto;flex-shrink:0">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,14)} Add Image</button>
-        <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" style="flex-shrink:0">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
+        <div class="bar-divider"></div>
+        <div class="pdf-viewer-bar-actions">
+          <button class="btn btn-ghost btn-sm" onclick="addAnnotationImage(${i})" title="Add image">${icon(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,14)} Image</button>
+          <button class="btn btn-ghost btn-sm" onclick="openStickyPad(${i})" title="Open Pad">${icon(`<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>`,14)} Pad</button>
       </div>
       <div class="docx-viewer-body">${n._docxHtml}${renderAnnotStrip(i)}</div>`;
     document.body.appendChild(overlay);
@@ -6494,15 +6524,28 @@ function saveStickyPad(){
 
 function stickyExec(cmd,val){
   const ed = qs('#sticky-editor');
+  if(cmd==='undo'){
+    if(ed&&STATE.stickyFormatUndoStack&&STATE.stickyFormatUndoStack.length>0){
+      const prev=STATE.stickyFormatUndoStack.pop();
+      ed.innerHTML=prev;ed.focus();return;
+    }
+  }
   const saved = ed?._savedRange;
   if(saved){ const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(saved); }
   document.execCommand(cmd,false,val||null);
   ed?.focus();
 }
+function stickyPushFormatUndo(){
+  const ed=qs('#sticky-editor');if(!ed)return;
+  STATE.stickyFormatUndoStack=STATE.stickyFormatUndoStack||[];
+  STATE.stickyFormatUndoStack.push(ed.innerHTML);
+  if(STATE.stickyFormatUndoStack.length>30)STATE.stickyFormatUndoStack.shift();
+}
 function stickyToggle(cmd, btnId){
   const ed = qs('#sticky-editor');
   const saved = ed?._savedRange;
   if(saved){ const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(saved); }
+  stickyPushFormatUndo();
   document.execCommand(cmd,false,null);
   const active = document.queryCommandState(cmd);
   const btn = document.getElementById(btnId);
@@ -6531,6 +6574,7 @@ function setStickyTextColor(c){
   const ed = qs('#sticky-editor');
   const saved = ed?._savedRange;
   if(saved){ const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(saved); }
+  stickyPushFormatUndo();
   document.execCommand('foreColor',false,c==='inherit'?'#d8e2f4':c);
   ed?.focus();
   const prev = qs('#sc-text-preview');
@@ -6541,6 +6585,7 @@ function setStickyHlColor(c){
   const ed = qs('#sticky-editor');
   const saved = ed?._savedRange;
   if(saved){ const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(saved); }
+  stickyPushFormatUndo();
   document.execCommand('hiliteColor',false,c==='transparent'?'transparent':c);
   ed?.focus();
   const prev = qs('#sc-hl-preview');
