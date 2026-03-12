@@ -36,6 +36,7 @@ function createWindow() {
     }
   });
 
+  win.webContents.session.clearStorageData({ storages: ['serviceworkers'] }).catch(() => {});
   win.loadFile(path.join(__dirname, 'Tesserly.html'));
 }
 

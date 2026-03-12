@@ -3,3 +3,6 @@ dist/
 public/
 .cursor/
 .DS_Store
+build/
+snapshots/
+.vscode/

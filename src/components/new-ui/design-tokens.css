@@ -1,0 +1,138 @@
+/**
+ * Tesserly New UI — Design Tokens
+ * Matches homepage (#landing-screen) format: typography, spacing, radii, motion, colors.
+ * Scoped to internal screens only (#auth-screen, #menu-screen, #app-screen).
+ * Homepage is never targeted; do not use these tokens there.
+ */
+
+/* ═══ Dark theme (default) — aligned with :root landing vars ═══ */
+#auth-screen,
+#menu-screen,
+#app-screen {
+  /* Colors — same as body/landing */
+  --nui-bg: #07090f;
+  --nui-bg-subtle: #0c0e16;
+  --nui-surface: #0d1018;
+  --nui-surface2: #131720;
+  --nui-surface-hover: rgba(255, 255, 255, 0.05);
+  --nui-surface-active: rgba(255, 255, 255, 0.08);
+  --nui-border: #1c2232;
+  --nui-border2: rgba(93, 253, 203, 0.15);
+  --nui-border-strong: rgba(93, 253, 203, 0.25);
+  --nui-text: #d8e2f4;
+  --nui-text-muted: #8a96b0;
+  --nui-text-subtle: #6a7690;
+  --nui-accent: #5dfdcb;
+  --nui-accent2: #7b93ff;
+  --nui-accent-dim: rgba(93, 253, 203, 0.1);
+  --nui-accent-glow: rgba(93, 253, 203, 0.25);
+  --nui-warn: #ff7b7b;
+  --nui-warn-dim: rgba(255, 123, 123, 0.12);
+  --nui-danger: #ef4444;
+  --nui-success: #22c55e;
+  --nui-gold: #f5c842;
+
+  /* Typography — match homepage (Instrument Serif, Geist, Geist Mono) */
+  --nui-font-heading: 'Instrument Serif', Georgia, serif;
+  --nui-font-body: 'Geist', system-ui, sans-serif;
+  --nui-font-mono: 'Geist Mono', ui-monospace, monospace;
+  --nui-text-xs: 11px;
+  --nui-text-sm: 13px;
+  --nui-text-base: 14px;
+  --nui-text-md: 15px;
+  --nui-text-lg: 16px;
+  --nui-text-xl: 20px;
+  --nui-text-2xl: clamp(1.35rem, 3.5vw, 1.85rem);
+  --nui-text-3xl: clamp(1.5rem, 3.5vw, 2rem);
+  --nui-text-hero: clamp(2.25rem, 6vw, 3.5rem);
+  --nui-leading-tight: 1.25;
+  --nui-leading-normal: 1.5;
+  --nui-leading-relaxed: 1.65;
+  --nui-tracking-tight: -0.02em;
+  --nui-tracking-label: 0.05em;
+
+  /* Spacing — 4/8pt scale + landing rhythm (48/56/64) */
+  --nui-space-1: 4px;
+  --nui-space-2: 8px;
+  --nui-space-3: 12px;
+  --nui-space-4: 16px;
+  --nui-space-5: 20px;
+  --nui-space-6: 24px;
+  --nui-space-8: 32px;
+  --nui-space-10: 40px;
+  --nui-space-12: 48px;
+  --nui-space-14: 56px;
+  --nui-space-16: 64px;
+  --nui-section-pad: 48px 24px;
+  --nui-section-pad-lg: 64px 24px;
+  --nui-content-max: 1200px;
+
+  /* Radii — match homepage --radius 14px, --radius-sm 9px */
+  --nui-radius-sm: 9px;
+  --nui-radius: 14px;
+  --nui-radius-lg: 18px;
+  --nui-radius-xl: 20px;
+  --nui-radius-full: 9999px;
+
+  /* Shadows — match landing card/cta */
+  --nui-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --nui-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --nui-shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.22);
+  --nui-glow: 0 4px 24px var(--nui-accent-glow);
+  --nui-glow-hover: 0 6px 28px var(--nui-accent-glow);
+
+  /* Motion — landing: ease-out 0.9s hero, reveal cubic-bezier(0.22, 1, 0.36, 1) */
+  --nui-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --nui-ease-out: ease-out;
+  --nui-duration-fast: 180ms;
+  --nui-duration: 220ms;
+  --nui-duration-slow: 320ms;
+  --nui-duration-reveal: 320ms;
+  --nui-transition: var(--nui-duration) var(--nui-ease);
+}
+
+/* ═══ Light theme ═══ */
+#auth-screen[data-theme="light"],
+#menu-screen[data-theme="light"],
+#app-screen[data-theme="light"],
+body[data-nui-theme="light"] #auth-screen,
+body[data-nui-theme="light"] #menu-screen,
+body[data-nui-theme="light"] #app-screen,
+[data-theme="light"] #auth-screen,
+[data-theme="light"] #menu-screen,
+[data-theme="light"] #app-screen {
+  --nui-bg: #f2f0ec;
+  --nui-bg-subtle: #e8e6e2;
+  --nui-surface: #fafafa;
+  --nui-surface2: #edece8;
+  --nui-surface-hover: rgba(0, 0, 0, 0.04);
+  --nui-surface-active: rgba(0, 0, 0, 0.08);
+  --nui-border: #d0cdc5;
+  --nui-border2: #bbb8b0;
+  --nui-border-strong: rgba(13, 148, 136, 0.4);
+  --nui-text: #1a1c28;
+  --nui-text-muted: #555a70;
+  --nui-text-subtle: #8a8a8a;
+  --nui-accent: #0d9488;
+  --nui-accent2: #2563eb;
+  --nui-accent-dim: rgba(13, 148, 136, 0.12);
+  --nui-accent-glow: rgba(13, 148, 136, 0.2);
+  --nui-warn: #ea580c;
+  --nui-warn-dim: rgba(234, 88, 12, 0.12);
+  --nui-danger: #dc2626;
+  --nui-success: #16a34a;
+  --nui-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+  --nui-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --nui-shadow-lg: 0 18px 42px rgba(0, 0, 0, 0.18);
+}
+
+/* Z-index scale */
+#auth-screen,
+#menu-screen,
+#app-screen {
+  --nui-z-dropdown: 100;
+  --nui-z-sticky: 150;
+  --nui-z-modal: 200;
+  --nui-z-toast: 300;
+  --nui-z-drawer: 250;
+}

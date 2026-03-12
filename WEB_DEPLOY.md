@@ -18,9 +18,13 @@ The same Tesserly app runs in the browser. Auth and sync use Supabase (configure
 5. **Supabase on Vercel (recommended):** In the project **Settings → Environment Variables**, add:
    - `SUPABASE_URL` = your Supabase project URL (e.g. `https://xxxx.supabase.co`)
    - `SUPABASE_ANON_KEY` = your Supabase anon (publishable) key  
+   - `NVIDIA_API_KEY` = your server-side NVIDIA key (`nvapi-...`)  
+   - `NVIDIA_MODEL` = `qwen/qwen3.5-122b-a10b` (or your preferred default)  
    The build will inject these into the page so sync works even if `supabase-config.js` isn’t cached. Redeploy after adding them.
 
 6. **Deploy.** Vercel runs `npm run build:web` (copies `src/Tesserly.html` → `public/index.html`, copies `src/supabase-config.js` when present, and injects env config when `SUPABASE_URL` and `SUPABASE_ANON_KEY` are set), then serves the `public` folder.
+
+7. **Hosted AI default (all users):** The app uses server route `/api/chat` (`api/chat.js`) as the default provider when users do not save a personal key. This route reads `NVIDIA_API_KEY` and `NVIDIA_MODEL` from Vercel env vars and calls NVIDIA securely server-side.
 
 7. Your app will be at `https://your-project.vercel.app`.
 

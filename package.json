@@ -1,6 +1,6 @@
 {
   "name": "tesserly",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Tesserly – USMLE Prep Platform (Electron desktop app)",
   "author": "You",
   "license": "MIT",
@@ -9,17 +9,24 @@
   },
   "main": "src/main.js",
   "dependencies": {
-    "electron-updater": "^6.8.3",
-    "electron-log": "^5.2.0"
+    "electron-log": "^5.2.0",
+    "electron-updater": "^6.8.3"
   },
   "devDependencies": {
     "electron": "^40.7.0",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "gifenc": "^1.0.3",
+    "playwright": "^1.58.2",
+    "pngjs": "^7.0.0",
+    "sharp": "^0.34.5"
   },
   "scripts": {
+    "dev": "electron .",
     "start": "electron .",
     "build": "electron-builder",
     "build:mac": "electron-builder --mac",
+    "clean:dist": "rm -rf dist",
+    "build:mac:fresh": "npm run clean:dist && npm run build:mac",
     "build:win": "electron-builder --win",
     "build:web": "node scripts/build-web.js",
     "build:all": "npm run build:web && npm run build:mac"

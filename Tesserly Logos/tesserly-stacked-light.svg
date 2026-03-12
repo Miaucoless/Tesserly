@@ -1,0 +1,25 @@
+<svg width="320" height="240" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tesserly-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#4ade80" />
+    </linearGradient>
+    <linearGradient id="tesserly-gradient-2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#16a34a" />
+    </linearGradient>
+  </defs>
+  
+  <g transform="translate(96, 16)">
+    <path d="M 64 16 L 96 32 L 96 64 L 64 48 Z" fill="url(#tesserly-gradient-1)" opacity="0.9"/>
+    <path d="M 96 32 L 96 64 L 64 80 L 64 48 Z" fill="url(#tesserly-gradient-2)" opacity="0.85"/>
+    <path d="M 32 32 L 64 48 L 64 80 L 32 64 Z" fill="#22c55e" opacity="0.7"/>
+    <path d="M 64 56 L 76 62 L 76 74 L 64 80 L 52 74 L 52 62 Z" fill="rgba(255,255,255,0.4)" stroke="#ffffff" stroke-width="2"/>
+    <path d="M 32 64 L 64 80 L 64 112 L 32 96 Z" fill="#16a34a" opacity="0.6"/>
+    <path d="M 64 80 L 96 64 L 96 96 L 64 112 Z" fill="url(#tesserly-gradient-1)" opacity="0.75"/>
+  </g>
+  
+  <g transform="translate(23, 170)">
+    <text x="0" y="45" fill="#0f172a" font-size="48" font-weight="700" font-family="system-ui, -apple-system, sans-serif" letter-spacing="-0.02em">Tesserly</text>
+  </g>
+</svg>

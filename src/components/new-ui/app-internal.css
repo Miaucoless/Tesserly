@@ -1,0 +1,1332 @@
+/**
+ * Tesserly New UI — Internal screens only.
+ * Targets: #auth-screen, #menu-screen, #app-screen.
+ * Homepage #landing-screen is never modified.
+ */
+
+@import url('design-tokens.css');
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE LAYOUT — Auth, Menu, App shell
+══════════════════════════════════════════════════════════════════════════ */
+
+#auth-screen.nui,
+#menu-screen.nui,
+#app-screen.nui {
+  background: var(--nui-bg);
+  color: var(--nui-text);
+  font-family: var(--nui-font-body);
+  font-size: var(--nui-text-base);
+  line-height: var(--nui-leading-normal);
+  min-height: 100vh;
+}
+
+/* ── Auth ── */
+#auth-screen.nui {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nui-space-6);
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, var(--nui-accent-dim) 0%, transparent 55%);
+}
+
+#auth-screen.nui .nui-auth-box {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+#auth-screen.nui .nui-auth-logo {
+  margin-bottom: var(--nui-space-8);
+}
+
+#auth-screen.nui .nui-auth-logo-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto var(--nui-space-2);
+  background: linear-gradient(135deg, var(--nui-accent), #7b93ff);
+  border-radius: var(--nui-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--nui-text-xl);
+  color: #07090f;
+  box-shadow: var(--nui-glow);
+}
+
+#auth-screen.nui .nui-auth-card {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius-lg);
+  padding: var(--nui-space-6);
+  box-shadow: var(--nui-shadow);
+  backdrop-filter: blur(16px);
+}
+
+#auth-screen.nui .nui-tabs {
+  display: flex;
+  gap: var(--nui-space-1);
+  margin-bottom: var(--nui-space-5);
+  background: var(--nui-bg-subtle);
+  padding: var(--nui-space-1);
+  border-radius: var(--nui-radius-sm);
+}
+
+#auth-screen.nui .nui-tab {
+  flex: 1;
+  padding: var(--nui-space-2) var(--nui-space-4);
+  border: none;
+  background: transparent;
+  color: var(--nui-text-muted);
+  font-size: var(--nui-text-sm);
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color var(--nui-transition), background var(--nui-transition);
+}
+
+#auth-screen.nui .nui-tab:hover {
+  color: var(--nui-text);
+}
+
+#auth-screen.nui .nui-tab.active {
+  background: var(--nui-accent);
+  color: #07090f;
+}
+
+#auth-screen.nui .nui-form-field {
+  margin-bottom: var(--nui-space-4);
+  text-align: left;
+}
+
+#auth-screen.nui .nui-form-field label {
+  display: block;
+  font-size: var(--nui-text-sm);
+  font-weight: 500;
+  color: var(--nui-text-muted);
+  margin-bottom: var(--nui-space-1);
+}
+
+#auth-screen.nui .nui-input {
+  width: 100%;
+  padding: var(--nui-space-3) var(--nui-space-4);
+  background: var(--nui-bg-subtle);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius-sm);
+  color: var(--nui-text);
+  font-size: var(--nui-text-base);
+  transition: border-color var(--nui-transition), box-shadow var(--nui-transition);
+  box-sizing: border-box;
+}
+
+#auth-screen.nui .nui-input:focus {
+  outline: none;
+  border-color: var(--nui-accent);
+  box-shadow: 0 0 0 3px var(--nui-accent-dim);
+}
+
+#auth-screen.nui .nui-btn-primary {
+  width: 100%;
+  padding: var(--nui-space-3) var(--nui-space-4);
+  margin-top: var(--nui-space-2);
+  background: var(--nui-accent);
+  color: #07090f;
+  border: none;
+  border-radius: var(--nui-radius-sm);
+  font-weight: 600;
+  font-size: var(--nui-text-base);
+  cursor: pointer;
+  transition: transform var(--nui-duration-fast), box-shadow var(--nui-transition);
+}
+
+#auth-screen.nui .nui-btn-primary:hover {
+  box-shadow: var(--nui-glow);
+}
+
+#auth-screen.nui .nui-btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* ── Menu (Dashboard) ── */
+#menu-screen.nui {
+  padding-bottom: var(--nui-space-12);
+}
+
+#menu-screen.nui .nui-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--nui-space-4) var(--nui-space-6);
+  background: var(--nui-surface);
+  border-bottom: 1px solid var(--nui-border);
+  backdrop-filter: blur(12px);
+}
+
+#menu-screen.nui .nui-hero {
+  padding: var(--nui-space-8) var(--nui-space-6) var(--nui-space-6);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#menu-screen.nui .nui-hero-title {
+  font-family: var(--nui-font-heading);
+  font-size: var(--nui-text-2xl);
+  font-weight: 400;
+  margin-bottom: var(--nui-space-2);
+  letter-spacing: var(--nui-tracking-tight);
+}
+
+#menu-screen.nui .nui-hero-sub {
+  color: var(--nui-text-muted);
+  font-size: var(--nui-text-base);
+  margin-bottom: var(--nui-space-6);
+}
+
+#menu-screen.nui .nui-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--nui-space-4);
+  margin-bottom: var(--nui-space-8);
+}
+
+#menu-screen.nui .nui-stat-tile {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-4);
+  transition: transform var(--nui-transition), box-shadow var(--nui-transition);
+}
+
+#menu-screen.nui .nui-stat-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--nui-shadow);
+}
+
+#menu-screen.nui .nui-stat-val {
+  font-size: var(--nui-text-2xl);
+  font-weight: 700;
+  color: var(--nui-accent);
+}
+
+#menu-screen.nui .nui-stat-label {
+  font-size: var(--nui-text-xs);
+  color: var(--nui-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: var(--nui-space-1);
+}
+
+#menu-screen.nui .nui-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--nui-space-4);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--nui-space-6);
+}
+
+#menu-screen.nui .nui-card {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-5);
+  cursor: pointer;
+  transition: transform var(--nui-transition), box-shadow var(--nui-transition), border-color var(--nui-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+#menu-screen.nui .nui-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--nui-shadow-lg);
+  border-color: var(--nui-border-strong);
+}
+
+#menu-screen.nui .nui-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--nui-accent-dim);
+}
+
+#menu-screen.nui .nui-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--nui-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--nui-space-3);
+  color: var(--nui-accent);
+}
+
+#menu-screen.nui .nui-card-title {
+  font-size: var(--nui-text-lg);
+  font-weight: 600;
+  margin-bottom: var(--nui-space-2);
+}
+
+#menu-screen.nui .nui-card-desc {
+  font-size: var(--nui-text-sm);
+  color: var(--nui-text-muted);
+  line-height: var(--nui-leading-relaxed);
+  margin-bottom: var(--nui-space-4);
+}
+
+#menu-screen.nui .nui-card-cta {
+  font-size: var(--nui-text-sm);
+  font-weight: 600;
+  color: var(--nui-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nui-space-1);
+}
+
+/* ── App shell ── */
+#app-screen.nui {
+  display: flex;
+  min-height: 100vh;
+}
+
+#app-screen.nui .nui-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--nui-surface);
+  border-right: 1px solid var(--nui-border);
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(12px);
+}
+
+#app-screen.nui .nui-sidebar-logo {
+  padding: var(--nui-space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--nui-space-3);
+  cursor: pointer;
+  transition: opacity var(--nui-transition);
+}
+
+#app-screen.nui .nui-sidebar-logo:hover {
+  opacity: 0.9;
+}
+
+#app-screen.nui .nui-sidebar-nav {
+  flex: 1;
+  padding: var(--nui-space-2);
+  overflow-y: auto;
+}
+
+#app-screen.nui .nui-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--nui-space-3);
+  padding: var(--nui-space-2) var(--nui-space-3);
+  border-radius: var(--nui-radius-sm);
+  color: var(--nui-text-muted);
+  font-size: var(--nui-text-sm);
+  cursor: pointer;
+  transition: background var(--nui-transition), color var(--nui-transition);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+#app-screen.nui .nui-nav-item:hover {
+  background: var(--nui-surface-hover);
+  color: var(--nui-text);
+}
+
+#app-screen.nui .nui-nav-item.active {
+  background: var(--nui-accent-dim);
+  color: var(--nui-accent);
+}
+
+#app-screen.nui .nui-nav-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--nui-accent);
+}
+
+#app-screen.nui .nui-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#app-screen.nui .nui-topbar {
+  padding: var(--nui-space-3) var(--nui-space-5);
+  background: var(--nui-surface);
+  border-bottom: 1px solid var(--nui-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--nui-space-2);
+}
+
+#app-screen.nui .nui-topbar-title {
+  font-size: var(--nui-text-xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+#app-screen.nui .nui-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--nui-space-8) var(--nui-space-6);
+  max-width: var(--nui-content-max);
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PAGE & SECTION (homepage rhythm: hero → features → content → CTA)
+══════════════════════════════════════════════════════════════════════════ */
+
+#app-screen.nui .nui-page {
+  max-width: var(--nui-content-max);
+  margin: 0 auto;
+}
+
+#app-screen.nui .nui-page-head {
+  margin-bottom: var(--nui-space-8);
+}
+
+#app-screen.nui .nui-page-title {
+  font-family: var(--nui-font-heading);
+  font-size: var(--nui-text-2xl);
+  font-weight: 400;
+  margin: 0 0 var(--nui-space-2);
+  letter-spacing: var(--nui-tracking-tight);
+  color: var(--nui-text);
+  line-height: var(--nui-leading-tight);
+}
+
+#app-screen.nui .nui-page-sub {
+  font-family: var(--nui-font-body);
+  font-size: var(--nui-text-md);
+  color: var(--nui-text-muted);
+  margin: 0 0 var(--nui-space-6);
+  line-height: var(--nui-leading-relaxed);
+}
+
+#auth-screen.nui .nui-page-section,
+#menu-screen.nui .nui-page-section,
+#app-screen.nui .nui-page-section {
+  margin-bottom: var(--nui-space-8);
+}
+
+#app-screen.nui .nui-section {
+  padding: var(--nui-space-6) 0;
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, var(--nui-border) 15%, var(--nui-border) 85%, transparent) 1;
+}
+
+#app-screen.nui .nui-section:last-of-type {
+  border-bottom: none;
+}
+
+#app-screen.nui .nui-section-title {
+  font-family: var(--nui-font-heading);
+  font-size: var(--nui-text-3xl);
+  font-weight: 400;
+  color: var(--nui-text);
+  margin: 0 0 var(--nui-space-3);
+  letter-spacing: var(--nui-tracking-tight);
+}
+
+#app-screen.nui .nui-section-desc {
+  font-size: var(--nui-text-sm);
+  color: var(--nui-text-muted);
+  margin-bottom: var(--nui-space-4);
+  line-height: var(--nui-leading-relaxed);
+}
+
+/* Feature card — landing-feature-card style (glass, hover lift + glow) */
+#app-screen.nui .nui-feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--nui-border2);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-6);
+  transition: transform var(--nui-duration) var(--nui-ease), box-shadow var(--nui-duration) var(--nui-ease), border-color var(--nui-duration);
+}
+
+#app-screen.nui .nui-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--nui-shadow-lg);
+  border-color: rgba(93, 253, 203, 0.27);
+}
+
+#app-screen.nui .nui-feature-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--nui-radius-lg);
+  background: var(--nui-accent-dim);
+  border: 1px solid var(--nui-border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--nui-space-4);
+  color: var(--nui-accent);
+}
+
+#app-screen.nui .nui-feature-card-title {
+  font-family: var(--nui-font-heading);
+  font-size: 1.2rem;
+  color: var(--nui-text);
+  margin: 0 0 var(--nui-space-2);
+  line-height: 1.3;
+}
+
+#app-screen.nui .nui-feature-card-text {
+  font-size: var(--nui-text-base);
+  color: var(--nui-text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* FAQ / Accordion — chevron rotation, height transition */
+#app-screen.nui .nui-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+#app-screen.nui .nui-faq-item {
+  border-bottom: 1px solid var(--nui-border);
+}
+
+#app-screen.nui .nui-faq-item:first-child {
+  border-top: 1px solid var(--nui-border);
+}
+
+#app-screen.nui .nui-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nui-space-3);
+  padding: var(--nui-space-5) 0;
+  background: none;
+  border: none;
+  color: var(--nui-text);
+  font-family: var(--nui-font-body);
+  font-size: var(--nui-text-md);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--nui-transition);
+}
+
+#app-screen.nui .nui-faq-q:hover {
+  color: var(--nui-accent);
+}
+
+#app-screen.nui .nui-faq-chevron {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  margin-top: -4px;
+  transition: transform 0.35s var(--nui-ease);
+}
+
+#app-screen.nui .nui-faq-item.open .nui-faq-chevron {
+  transform: rotate(-135deg);
+}
+
+#app-screen.nui .nui-faq-a {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s var(--nui-ease);
+}
+
+#app-screen.nui .nui-faq-item.open .nui-faq-a {
+  max-height: 400px;
+}
+
+#app-screen.nui .nui-faq-a p {
+  padding: 0 0 var(--nui-space-5);
+  margin: 0;
+  font-size: var(--nui-text-base);
+  color: var(--nui-text-muted);
+  line-height: 1.65;
+}
+
+/* Modal / Sheet */
+#app-screen.nui .nui-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: var(--nui-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nui-space-4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--nui-transition), visibility var(--nui-transition);
+}
+
+#app-screen.nui .nui-modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+#app-screen.nui .nui-modal {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-6);
+  max-width: 420px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--nui-shadow-lg);
+  transform: scale(0.97);
+  transition: transform var(--nui-transition);
+}
+
+#app-screen.nui .nui-modal-overlay.open .nui-modal {
+  transform: scale(1);
+}
+
+/* Toast */
+#app-screen.nui .nui-toast,
+#menu-screen.nui .nui-toast {
+  position: fixed;
+  bottom: var(--nui-space-6);
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  padding: var(--nui-space-3) var(--nui-space-5);
+  background: var(--nui-surface2);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius-sm);
+  box-shadow: var(--nui-shadow);
+  font-size: var(--nui-text-sm);
+  color: var(--nui-text);
+  z-index: var(--nui-z-toast);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--nui-transition), transform var(--nui-transition), visibility var(--nui-transition);
+}
+
+#app-screen.nui .nui-toast.show,
+#menu-screen.nui .nui-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Tabs (content area) */
+#app-screen.nui .nui-tabs-row {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--nui-space-5);
+  background: var(--nui-surface2);
+  border-radius: var(--nui-radius-sm);
+  padding: 3px;
+}
+
+#app-screen.nui .nui-tab-btn {
+  flex: 1;
+  text-align: center;
+  padding: var(--nui-space-2) var(--nui-space-4);
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: var(--nui-text-sm);
+  color: var(--nui-text-muted);
+  background: transparent;
+  border: none;
+  transition: all var(--nui-transition);
+}
+
+#app-screen.nui .nui-tab-btn:hover {
+  color: var(--nui-text);
+}
+
+#app-screen.nui .nui-tab-btn.active {
+  background: var(--nui-accent);
+  color: #07090f;
+  box-shadow: 0 2px 12px var(--nui-accent-glow);
+}
+
+/* DataTable */
+#app-screen.nui .nui-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius-sm);
+}
+
+#app-screen.nui .nui-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--nui-text-sm);
+}
+
+#app-screen.nui .nui-table th,
+#app-screen.nui .nui-table td {
+  padding: var(--nui-space-3) var(--nui-space-4);
+  text-align: left;
+  border-bottom: 1px solid var(--nui-border);
+}
+
+#app-screen.nui .nui-table th {
+  font-family: var(--nui-font-mono);
+  font-size: var(--nui-text-xs);
+  letter-spacing: var(--nui-tracking-label);
+  text-transform: uppercase;
+  color: var(--nui-text-subtle);
+  background: var(--nui-surface2);
+}
+
+#app-screen.nui .nui-table tr:last-child td {
+  border-bottom: none;
+}
+
+#app-screen.nui .nui-table tr:hover td {
+  background: var(--nui-surface-hover);
+}
+
+/* Tooltip */
+#app-screen.nui .nui-tooltip {
+  position: absolute;
+  z-index: var(--nui-z-dropdown);
+  padding: var(--nui-space-2) var(--nui-space-3);
+  background: var(--nui-surface2);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius-sm);
+  font-size: var(--nui-text-xs);
+  color: var(--nui-text);
+  box-shadow: var(--nui-shadow-sm);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--nui-duration-fast), visibility var(--nui-duration-fast);
+}
+
+#app-screen.nui .nui-tooltip.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHARED COMPONENTS (internal screens)
+══════════════════════════════════════════════════════════════════════════ */
+
+#app-screen.nui .nui-card-panel {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-5);
+  margin-bottom: var(--nui-space-4);
+  transition: transform var(--nui-transition), box-shadow var(--nui-transition), border-color var(--nui-transition);
+}
+
+#app-screen.nui .nui-card-panel:hover {
+  border-color: var(--nui-border2);
+}
+
+#app-screen.nui .nui-label {
+  display: block;
+  font-family: var(--nui-font-mono);
+  font-size: var(--nui-text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nui-text-subtle);
+  margin-bottom: var(--nui-space-2);
+}
+
+#app-screen.nui .nui-hint {
+  font-size: var(--nui-text-xs);
+  color: var(--nui-text-subtle);
+  margin-top: var(--nui-space-1);
+}
+
+/* Form fields in content (same as auth) */
+#app-screen.nui .nui-form-field {
+  margin-bottom: var(--nui-space-4);
+}
+
+#app-screen.nui .nui-form-field .nui-input,
+#app-screen.nui .nui-input {
+  width: 100%;
+  padding: var(--nui-space-3) var(--nui-space-4);
+  background: var(--nui-surface2);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius-sm);
+  color: var(--nui-text);
+  font-family: var(--nui-font-body);
+  font-size: var(--nui-text-base);
+  transition: border-color var(--nui-transition), box-shadow var(--nui-transition);
+  box-sizing: border-box;
+}
+
+#app-screen.nui .nui-input:focus {
+  outline: none;
+  border-color: var(--nui-accent);
+  box-shadow: 0 0 0 3px var(--nui-accent-dim);
+}
+
+#app-screen.nui .nui-input::placeholder {
+  color: var(--nui-text-subtle);
+}
+
+/* Animated stat counter (for dashboard / analytics) */
+#app-screen.nui .nui-stat-num,
+#menu-screen.nui .nui-stat-num {
+  font-family: var(--nui-font-mono);
+  font-weight: 700;
+  color: var(--nui-accent);
+}
+
+#app-screen.nui .nui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nui-space-2);
+  padding: var(--nui-space-2) var(--nui-space-4);
+  font-size: var(--nui-text-sm);
+  font-weight: 600;
+  border-radius: var(--nui-radius-sm);
+  cursor: pointer;
+  transition: transform var(--nui-duration-fast), box-shadow var(--nui-transition), background var(--nui-transition);
+  border: none;
+}
+
+#app-screen.nui .nui-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+#app-screen.nui .nui-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--nui-accent);
+}
+
+#app-screen.nui .nui-btn-primary {
+  background: var(--nui-accent);
+  color: #07090f;
+}
+
+#app-screen.nui .nui-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--nui-glow);
+}
+
+#app-screen.nui .nui-btn-secondary {
+  background: var(--nui-surface-active);
+  color: var(--nui-text);
+  border: 1px solid var(--nui-border);
+}
+
+#app-screen.nui .nui-btn-ghost {
+  background: transparent;
+  color: var(--nui-text-muted);
+}
+
+#app-screen.nui .nui-btn-ghost:hover {
+  background: var(--nui-surface-hover);
+  color: var(--nui-text);
+}
+
+#app-screen.nui .nui-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--nui-text-xs);
+  font-weight: 600;
+  border-radius: var(--nui-radius-full);
+  background: var(--nui-accent-dim);
+  color: var(--nui-accent);
+}
+
+#app-screen.nui .nui-empty-state {
+  text-align: center;
+  padding: var(--nui-space-12);
+  color: var(--nui-text-muted);
+  font-size: var(--nui-text-sm);
+}
+
+#app-screen.nui .nui-skeleton {
+  background: linear-gradient(90deg, var(--nui-surface) 25%, var(--nui-surface-hover) 50%, var(--nui-surface) 75%);
+  background-size: 200% 100%;
+  animation: nui-skeleton 1.2s ease-in-out infinite;
+  border-radius: var(--nui-radius-sm);
+}
+
+@keyframes nui-skeleton {
+  to { background-position: 200% 0; }
+}
+
+/* USMLE question cards & options (nui tokens) */
+#app-screen.nui .q-card {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-5);
+  transition: border-color var(--nui-transition), box-shadow var(--nui-transition);
+}
+
+#app-screen.nui .q-card:hover {
+  border-color: var(--nui-border2);
+}
+
+#app-screen.nui .q-option {
+  padding: var(--nui-space-3) var(--nui-space-4);
+  border-radius: var(--nui-radius-sm);
+  border: 1px solid var(--nui-border);
+  background: var(--nui-surface2);
+  margin-bottom: var(--nui-space-2);
+  transition: all var(--nui-transition);
+  font-size: var(--nui-text-base);
+}
+
+#app-screen.nui .q-option:hover:not(.answered) {
+  border-color: var(--nui-border2);
+  background: var(--nui-surface-hover);
+}
+
+#app-screen.nui .q-option.correct {
+  background: var(--nui-accent-dim);
+  border-color: var(--nui-border-strong);
+  color: var(--nui-accent);
+}
+
+#app-screen.nui .q-option.wrong {
+  background: var(--nui-warn-dim);
+  border-color: rgba(255, 123, 123, 0.35);
+  color: var(--nui-warn);
+}
+
+#app-screen.nui .q-explanation {
+  margin-top: var(--nui-space-4);
+  padding: var(--nui-space-4);
+  background: var(--nui-accent-dim);
+  border-radius: var(--nui-radius-sm);
+  border-left: 4px solid var(--nui-accent);
+}
+
+#app-screen.nui .q-explanation-title {
+  font-family: var(--nui-font-mono);
+  font-size: var(--nui-text-xs);
+  letter-spacing: 0.1em;
+  color: var(--nui-accent);
+  margin-bottom: var(--nui-space-2);
+}
+
+#app-screen.nui .q-explanation-text {
+  font-size: var(--nui-text-sm);
+  line-height: 1.7;
+  color: var(--nui-text);
+}
+
+/* Flashcard flip card (Anki) */
+#app-screen.nui .anki-card {
+  background: var(--nui-surface);
+  border: 1px solid var(--nui-border);
+  border-radius: var(--nui-radius);
+  padding: var(--nui-space-5);
+  min-height: 140px;
+  transition: all var(--nui-transition);
+}
+
+#app-screen.nui .anki-card:hover {
+  border-color: var(--nui-border2);
+  box-shadow: var(--nui-shadow);
+}
+
+#app-screen.nui .anki-card.flipped {
+  background: var(--nui-accent-dim);
+  border-color: var(--nui-border-strong);
+  box-shadow: var(--nui-glow);
+}
+
+#app-screen.nui .anki-front {
+  font-family: var(--nui-font-body);
+  font-size: var(--nui-text-base);
+  line-height: 1.7;
+  color: var(--nui-text);
+}
+
+#app-screen.nui .nui-accordion-item {
+  border-bottom: 1px solid var(--nui-border);
+}
+
+#app-screen.nui .nui-accordion-trigger {
+  width: 100%;
+  padding: var(--nui-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  color: var(--nui-text);
+  font-size: var(--nui-text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--nui-transition);
+}
+
+#app-screen.nui .nui-accordion-trigger:hover {
+  background: var(--nui-surface-hover);
+}
+
+#app-screen.nui .nui-accordion-trigger:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--nui-accent);
+}
+
+#app-screen.nui .nui-progress-bar {
+  height: 6px;
+  background: var(--nui-surface-active);
+  border-radius: var(--nui-radius-full);
+  overflow: hidden;
+}
+
+#app-screen.nui .nui-progress-fill {
+  height: 100%;
+  background: var(--nui-accent);
+  border-radius: var(--nui-radius-full);
+  transition: width var(--nui-transition);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANIMATIONS — enter, hover, scroll reveal
+══════════════════════════════════════════════════════════════════════════ */
+
+#auth-screen.nui .nui-fade-in,
+#menu-screen.nui .nui-fade-in,
+#app-screen.nui .nui-fade-in {
+  animation: nui-fade-in var(--nui-duration) var(--nui-ease) both;
+}
+
+@keyframes nui-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#menu-screen.nui .nui-card,
+#app-screen.nui .nui-card-panel {
+  transition: transform var(--nui-transition), box-shadow var(--nui-transition), border-color var(--nui-transition);
+}
+
+#menu-screen.nui .nui-card:hover,
+#app-screen.nui .nui-card-panel:hover {
+  transition-duration: var(--nui-duration);
+}
+
+/* Scroll-triggered reveal: add .nui-reveal and use IntersectionObserver in JS */
+#app-screen.nui .nui-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s var(--nui-ease), transform 0.5s var(--nui-ease);
+}
+
+#app-screen.nui .nui-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SAAS POLISH OVERRIDES (visual + interaction only)
+══════════════════════════════════════════════════════════════════════════ */
+
+#menu-screen.nui,
+#app-screen.nui {
+  position: relative;
+  isolation: isolate;
+}
+
+#menu-screen.nui::before,
+#app-screen.nui::before {
+  content: "";
+  position: fixed;
+  inset: -20% -12% auto -12%;
+  height: 70vh;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(93, 253, 203, 0.1), transparent 52%),
+    radial-gradient(circle at 80% 18%, rgba(123, 147, 255, 0.12), transparent 48%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+  animation: nui-atmo-drift 14s var(--nui-ease) infinite alternate;
+}
+
+@keyframes nui-atmo-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(0, 12px, 0) scale(1.03); }
+}
+
+#menu-screen.nui .menu-topbar,
+#app-screen.nui #sidebar,
+#app-screen.nui .app-topbar,
+#app-screen.nui #settings-panel,
+.menu-settings-panel {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+#menu-screen.nui .nui-card,
+#menu-screen.nui .nui-stat-tile,
+#app-screen.nui.app-redesign .app-content .card,
+#app-screen.nui .q-card,
+#app-screen.nui .anki-card,
+#app-screen.nui .note-item {
+  box-shadow: var(--nui-shadow-sm);
+  transition: transform var(--nui-duration) var(--nui-ease), box-shadow var(--nui-duration) var(--nui-ease), border-color var(--nui-duration) var(--nui-ease);
+}
+
+#menu-screen.nui .nui-card:hover,
+#menu-screen.nui .nui-stat-tile:hover,
+#app-screen.nui.app-redesign .app-content .card:hover,
+#app-screen.nui .q-card:hover,
+#app-screen.nui .anki-card:hover,
+#app-screen.nui .note-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--nui-shadow-lg);
+}
+
+#menu-screen.nui .menu-card-glow {
+  position: absolute;
+  inset: -30% auto auto -20%;
+  width: 190px;
+  height: 190px;
+  border-radius: 999px;
+  background: var(--card-accent, var(--nui-accent));
+  filter: blur(32px);
+  opacity: 0.12;
+  pointer-events: none;
+  transition: opacity var(--nui-duration) var(--nui-ease), transform var(--nui-duration) var(--nui-ease);
+  transform: translate3d(-10px, -8px, 0);
+}
+
+#menu-screen.nui .nui-card:hover .menu-card-glow {
+  opacity: 0.24;
+  transform: translate3d(0, 0, 0);
+}
+
+#menu-screen.nui .nui-card,
+#menu-screen.nui .nui-stat-tile {
+  animation: nui-rise-fade var(--nui-duration-slow) var(--nui-ease) both;
+}
+
+#menu-screen.nui .nui-cards-grid .nui-card:nth-child(1),
+#menu-screen.nui .nui-stat-grid .nui-stat-tile:nth-child(1) { animation-delay: 0ms; }
+#menu-screen.nui .nui-cards-grid .nui-card:nth-child(2),
+#menu-screen.nui .nui-stat-grid .nui-stat-tile:nth-child(2) { animation-delay: 50ms; }
+#menu-screen.nui .nui-cards-grid .nui-card:nth-child(3),
+#menu-screen.nui .nui-stat-grid .nui-stat-tile:nth-child(3) { animation-delay: 100ms; }
+#menu-screen.nui .nui-cards-grid .nui-card:nth-child(n+4) { animation-delay: 140ms; }
+
+@keyframes nui-rise-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#auth-screen.nui .nui-btn-primary,
+#menu-screen.nui .btn,
+#app-screen.nui .btn,
+#app-screen.nui .nui-btn,
+#app-screen.nui .dark-light-toggle,
+#app-screen.nui .sidebar-nav .nav-item {
+  transition: transform 200ms var(--nui-ease), box-shadow 200ms var(--nui-ease), border-color 200ms var(--nui-ease), background 200ms var(--nui-ease), color 200ms var(--nui-ease);
+  will-change: transform;
+}
+
+#auth-screen.nui .nui-btn-primary:hover,
+#menu-screen.nui .btn-primary:hover:not(:disabled),
+#app-screen.nui .btn-primary:hover:not(:disabled),
+#app-screen.nui .nui-btn-primary:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(93, 253, 203, 0.22);
+}
+
+#menu-screen.nui .btn:active:not(:disabled),
+#app-screen.nui .btn:active:not(:disabled),
+#auth-screen.nui .nui-btn-primary:active {
+  transform: scale(0.97) !important;
+  box-shadow: var(--nui-shadow-sm);
+}
+
+#auth-screen.nui button:focus-visible,
+#menu-screen.nui button:focus-visible,
+#menu-screen.nui [role="button"]:focus-visible,
+#app-screen.nui button:focus-visible,
+#app-screen.nui input:focus-visible,
+#app-screen.nui select:focus-visible,
+#app-screen.nui textarea:focus-visible,
+#app-screen.nui [role="button"]:focus-visible,
+#app-screen.nui .nav-item:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--nui-accent-dim), 0 0 0 1px var(--nui-accent);
+}
+
+#app-screen.nui .app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+#app-screen.nui.app-redesign .app-content .anki-mode-tabs {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#app-screen.nui.app-redesign .app-content .anki-mode-tab {
+  border-radius: 999px;
+  padding: 10px 14px;
+  position: relative;
+}
+
+#app-screen.nui.app-redesign .app-content .anki-mode-tab::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--nui-accent);
+  transform: scaleX(0);
+  transition: transform var(--nui-duration) var(--nui-ease);
+}
+
+#app-screen.nui.app-redesign .app-content .anki-mode-tab.active::after {
+  transform: scaleX(1);
+}
+
+#app-screen.nui .sidebar-nav .nav-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+#app-screen.nui .sidebar-nav .nav-item.active {
+  box-shadow: inset 0 0 0 1px rgba(93, 253, 203, 0.25), 0 8px 20px rgba(93, 253, 203, 0.1);
+}
+
+#app-screen.nui .app-content .fade-up,
+#app-screen.nui .app-content .card,
+#app-screen.nui .app-content .q-card,
+#app-screen.nui .app-content .anki-card {
+  animation-duration: var(--nui-duration-slow);
+  animation-timing-function: var(--nui-ease);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — ANKI CARD CALIBRATION
+══════════════════════════════════════════════════════════════════════════ */
+[data-theme="light"] #app-screen.nui .nui-card-panel,
+[data-theme="light"] #app-screen.nui .nui-feature-card,
+[data-theme="light"] #app-screen.nui .anki-card {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(23, 55, 92, 0.16);
+  box-shadow: 0 6px 16px rgba(22, 40, 75, 0.08);
+}
+
+[data-theme="light"] #app-screen.nui .nui-card-panel:hover,
+[data-theme="light"] #app-screen.nui .nui-feature-card:hover,
+[data-theme="light"] #app-screen.nui .anki-card:hover {
+  border-color: rgba(13, 148, 136, 0.30);
+  box-shadow: 0 12px 26px rgba(22, 40, 75, 0.12);
+}
+
+[data-theme="light"] #app-screen.nui .anki-card.flipped {
+  background: rgba(13, 148, 136, 0.10);
+  border-color: rgba(13, 148, 136, 0.38);
+  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.16);
+}
+
+[data-theme="light"] #app-screen.nui.app-redesign .app-content .anki-mode-tabs {
+  background: rgba(23, 55, 92, 0.04);
+  border-color: rgba(23, 55, 92, 0.16);
+}
+
+[data-theme="light"] #app-screen.nui.app-redesign .app-content .anki-mode-tab {
+  color: var(--nui-text-muted);
+}
+
+[data-theme="light"] #app-screen.nui.app-redesign .app-content .anki-mode-tab.active {
+  background: rgba(13, 148, 136, 0.14);
+  color: #0f5f58;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+══════════════════════════════════════════════════════════════════════════ */
+
+/* Responsive: content grids stack on small screens */
+@media (max-width: 768px) {
+  #app-screen.nui .nui-content {
+    padding: var(--nui-space-4);
+  }
+
+  #app-screen.nui .revamp-sum-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #app-screen.nui .nui-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #auth-screen.nui *,
+  #menu-screen.nui *,
+  #app-screen.nui * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  #menu-screen.nui .nui-stat-tile:hover,
+  #menu-screen.nui .nui-card:hover {
+    transform: none;
+  }
+
+  #app-screen.nui .nui-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  #app-screen.nui .nui-skeleton {
+    animation: none;
+  }
+
+  #menu-screen.nui::before,
+  #app-screen.nui::before,
+  #menu-screen.nui .nui-card,
+  #menu-screen.nui .nui-stat-tile {
+    animation: none !important;
+  }
+
+  #auth-screen.nui .nui-btn-primary:hover,
+  #menu-screen.nui .btn:hover,
+  #app-screen.nui .btn:hover,
+  #app-screen.nui .sidebar-nav .nav-item:hover {
+    transform: none !important;
+  }
+}
